@@ -5,7 +5,7 @@ import matter from "gray-matter";
 import { join } from "path";
 
 // `page` 目录存放所有 Markdown / MDX 文章文件
-const postsDirectory = join(process.cwd(), "page");
+const postsDirectory = join(process.cwd(), "/src/page");
 
 // 递归读取 `page` 目录下的所有 Markdown / MDX 文件，返回不带扩展名的 slug，
 // 并用 `/` 表示子目录层级，例如：`about/aa`、`blog/2025/first`

@@ -1,13 +1,12 @@
-// 应用根布局：包裹所有页面，负责全局样式、字体、Footer、主题切换等
-import Footer from "@/app/_components/footer";
 import { CMS_NAME, HOME_OG_IMAGE_URL } from "@/lib/constants";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import cn from "classnames";
-import { ThemeSwitcher } from "./_components/theme-switcher";
 
 // 全局样式（Tailwind 入口）
-import "./globals.css";
+import "@/app/assets/style/globals.css";
+import "@/app/assets/style/main.css";
+import "@/app/assets/style/prose.css";
 
 // 使用 Next.js 内置的 Inter 字体
 const inter = Inter({ subsets: ["latin"] });
@@ -67,12 +66,8 @@ export default function RootLayout({
       <body
         className={cn(inter.className, "dark:bg-slate-900 dark:text-slate-400")}
       >
-        {/* 负责注入避免 FOUC 的脚本 + 主题切换按钮 */}
-        <ThemeSwitcher />
         {/* 主体内容区域，最小高度撑满一屏 */}
         <div className="min-h-screen">{children}</div>
-        {/* 底部统一 Footer */}
-        <Footer />
       </body>
     </html>
   );

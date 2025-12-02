@@ -1,9 +1,9 @@
 // 单篇文章预览卡片，用于「More Stories」等列表中
 import { type Author } from "@/interfaces/author";
 import Link from "next/link";
-import Avatar from "./avatar";
-import CoverImage from "./cover-image";
-import DateFormatter from "./date-formatter";
+import Avatar from "../avatar";
+import CoverImage from "../cover-image";
+import DateFormatter from "../date-formatter";
 
 type Props = {
   title: string;

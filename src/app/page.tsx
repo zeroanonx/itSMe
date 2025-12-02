@@ -1,36 +1,24 @@
-// 博客首页：展示最新一篇文章和「更多文章」列表
-import Container from "@/app/_components/container";
-import { HeroPost } from "@/app/_components/hero-post";
-import { Intro } from "@/app/_components/intro";
-import { MoreStories } from "@/app/_components/more-stories";
-import { getAllPosts } from "@/lib/api";
+import Container from "@/app/components/Layout/Container";
+import { getPostBySlug } from "@/lib/api";
+import { PostBody } from "@/app/components/Post/post-body";
+import Header from "./components/Layout/Header";
+import Footer from "./components/Layout/Footer";
 
 export default function Index() {
-  // 读取所有文章（已按日期倒序排好）
-  const allPosts = getAllPosts();
-
-  // 最新的一篇作为首页大卡片
-  const heroPost = allPosts[0];
-
-  // 其余文章展示在「More Stories」列表中
-  const morePosts = allPosts.slice(1);
+  // 预留一个专门作为首页的 Markdown/MDX 文件，例如：page/home.md 或 page/home.mdx
+  // 你之后只需要在 `page` 目录里创建并编辑这篇文件即可。
+  const homePost = getPostBySlug("home");
+  const content = homePost.content || "";
 
   return (
     <main>
+      <Header />
       <Container>
-        {/* 顶部标题与说明区域 */}
-        <Intro />
-        {/* 首页主打文章卡片 */}
-        <HeroPost
-          title={heroPost.title}
-          coverImage={heroPost.coverImage}
-          date={heroPost.date}
-          author={heroPost.author}
-          slug={heroPost.slug}
-          excerpt={heroPost.excerpt}
-        />
-        {/* 如果还有其它文章，则渲染「More Stories」列表 */}
-        {morePosts.length > 0 && <MoreStories posts={morePosts} />}
+        {/* 首页只渲染一篇指定的 Markdown/MDX 文档 */}
+        <article className="py-12">
+          <PostBody content={content} />
+        </article>
+        <Footer />
       </Container>
     </main>
   );

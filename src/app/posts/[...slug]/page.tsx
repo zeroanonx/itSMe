@@ -5,11 +5,10 @@ import { notFound } from "next/navigation";
 import { getAllPosts, getPostBySlug } from "@/lib/api";
 import { CMS_NAME } from "@/lib/constants";
 // 布局与展示相关组件
-import Alert from "@/app/_components/alert";
-import Container from "@/app/_components/container";
-import Header from "@/app/_components/header";
-import { PostBody } from "@/app/_components/post-body";
-import { PostHeader } from "@/app/_components/post-header";
+import Container from "@/app/components/Layout/Container";
+import Header from "@/app/components/Layout/Header";
+import { PostBody } from "@/app/components/Post/post-body";
+import { PostHeader } from "@/app/components/Post/post-header";
 
 // 文章详情页服务端组件
 export default async function Post(props: Params) {
@@ -31,7 +30,6 @@ export default async function Post(props: Params) {
   return (
     // 使用全局布局下的主内容区域
     <main>
-      <Alert preview={post.preview} />
       <Container>
         <Header />
         <article className="mb-32">

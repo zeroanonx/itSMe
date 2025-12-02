@@ -1,6 +1,6 @@
 // 首页 / 详情页下方的「更多文章」列表
 import { Post } from "@/interfaces/post";
-import { PostPreview } from "./post-preview";
+import { PostPreview } from "./Post/post-preview";
 
 type Props = {
   posts: Post[];

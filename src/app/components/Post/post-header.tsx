@@ -1,8 +1,8 @@
 // 文章详情页头部：标题、作者信息、封面图与日期
-import Avatar from "./avatar";
-import CoverImage from "./cover-image";
-import DateFormatter from "./date-formatter";
-import { PostTitle } from "@/app/_components/post-title";
+import Avatar from "../avatar";
+import CoverImage from "../cover-image";
+import DateFormatter from "../date-formatter";
+import { PostTitle } from "@/app/components/Post/post-title";
 import { type Author } from "@/interfaces/author";
 
 type Props = {
