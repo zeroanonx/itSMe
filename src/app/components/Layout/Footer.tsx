@@ -34,7 +34,7 @@ export default function Footer() {
             className="flex items-center gap-1"
           >
             <Icon icon="simple-icons:juejin" className="text-lg" />
-            GitHub
+            Juejin
           </a>
           <a href="/wechat" className="flex items-center gap-1">
             <Icon icon="ic:baseline-wechat" className="text-lg" />
