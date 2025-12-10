@@ -1,8 +1,5 @@
-import Container from "@/app/components/Layout/Container";
 import { getPostBySlug } from "@/lib/api";
 import { PostBody } from "@/app/components/Post/post-body";
-import Header from "./components/Layout/Header";
-import Footer from "./components/Layout/Footer";
 
 export default function Index() {
   // 预留一个专门作为首页的 Markdown/MDX 文件，例如：page/home.md 或 page/home.mdx
@@ -12,14 +9,9 @@ export default function Index() {
 
   return (
     <main>
-      <Header />
-      <Container>
-        {/* 首页只渲染一篇指定的 Markdown/MDX 文档 */}
-        <article className="py-12">
-          <PostBody content={content} />
-        </article>
-        <Footer />
-      </Container>
+      <article className="py-12">
+        <PostBody content={content} />
+      </article>
     </main>
   );
 }

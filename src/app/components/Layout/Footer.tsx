@@ -3,8 +3,8 @@ import { Icon } from "@iconify/react";
 
 export default function Footer() {
   return (
-    <footer className="mt-24 border-t border-zinc-100 px-0 py-4 dark:border-zinc-800">
-      <div className="black items-center justify-center md:flex md:justify-between">
+    <footer className="flex items-center justify-center mt-10 ">
+      <div className="w-full max-w-screen-lg black border-t border-zinc-100 px-0 py-4 dark:border-zinc-800 items-center justify-center md:flex md:justify-between">
         <a
           href="https://github.com/LinHanlove"
           target="_blank"
@@ -13,13 +13,10 @@ export default function Footer() {
           <TextLoop className="text-xs text-zinc-500">
             <span>© 2025 LinHam.</span>
             <span>Thank you, nice to meet you.</span>
-            <p>
+            <p className="flex items-center gap-1">
               mail me at
-              <span font-mono>
-                hi
-                <span i-carbon-at />
-                2188817393@qq.com
-              </span>
+              <Icon icon="ic:baseline-email" className="text-base" />
+              2188817393@qq.com
             </p>
           </TextLoop>
         </a>

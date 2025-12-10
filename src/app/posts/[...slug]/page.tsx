@@ -28,22 +28,18 @@ export default async function Post(props: Params) {
   const content = post.content || "";
 
   return (
-    // 使用全局布局下的主内容区域
     <main>
-      <Container>
-        <Header />
-        <article className="mb-32">
-          {/* 文章头部区域：标题 / 封面图 / 作者 / 日期 */}
-          <PostHeader
-            title={post.title}
-            coverImage={post.coverImage}
-            date={post.date}
-            author={post.author}
-          />
-          {/* 文章正文区域：渲染 Markdown/MDX 内容 */}
-          <PostBody content={content} />
-        </article>
-      </Container>
+      <article className="mb-32">
+        {/* 文章头部区域：标题 / 封面图 / 作者 / 日期 */}
+        <PostHeader
+          title={post.title}
+          coverImage={post.coverImage}
+          date={post.date}
+          author={post.author}
+        />
+        {/* 文章正文区域：渲染 Markdown/MDX 内容 */}
+        <PostBody content={content} />
+      </article>
     </main>
   );
 }

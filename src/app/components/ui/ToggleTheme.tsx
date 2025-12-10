@@ -1,27 +1,29 @@
 "use client";
 
 import { Icon } from "@iconify/react";
-import { useUserInfo } from "@/app/store";
+import { useTheme } from "ahooks";
+import { useEffect } from "react";
 
 export default function ToggleTheme() {
-  const theme = useUserInfo((s) => s.theme);
-  const setTheme = useUserInfo((s) => s.setTheme);
+  const { theme, setThemeMode } = useTheme({
+    localStorageKey: "theme",
+  });
 
   const toggleDark = (event: any) => {
     // 检查浏览器是否支持 view-transitions
     const supportsViewTransitions = !!document.startViewTransition;
 
     // 检查用户是否启用了减少动画的偏好设置
-    const prefersReducedMotion = window.matchMedia(
+    const prefersReducedMotion = !window.matchMedia(
       "(prefers-reduced-motion: reduce)"
     ).matches;
 
     // 如果浏览器支持 view-transitions 且用户没有启用减少动画，则启用视图过渡
     const isAppearanceTransition =
-      supportsViewTransitions && !prefersReducedMotion;
+      supportsViewTransitions && prefersReducedMotion;
 
     if (!isAppearanceTransition) {
-      setTheme(theme === "dark" ? "light" : "dark");
+      setThemeMode(theme === "dark" ? "light" : "dark");
       return;
     }
 
@@ -32,7 +34,7 @@ export default function ToggleTheme() {
       Math.max(y, innerHeight - y)
     );
     const transition = document.startViewTransition(async () => {
-      setTheme(theme === "dark" ? "light" : "dark");
+      setThemeMode(theme === "dark" ? "light" : "dark");
     });
 
     transition.ready.then(() => {
@@ -47,6 +49,7 @@ export default function ToggleTheme() {
         {
           duration: 400,
           easing: "ease-out",
+          fill: "forwards",
           pseudoElement:
             theme === "dark"
               ? "::view-transition-old(root)"
@@ -55,6 +58,14 @@ export default function ToggleTheme() {
       );
     });
   };
+
+  useEffect(() => {
+    if (theme === "dark") {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  }, [theme]);
   return (
     <a className="select-none" title="Toggle Color Scheme" onClick={toggleDark}>
       {theme === "dark" ? (

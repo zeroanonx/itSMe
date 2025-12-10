@@ -7,6 +7,9 @@ import cn from "classnames";
 import "@/app/assets/style/globals.css";
 import "@/app/assets/style/main.css";
 import "@/app/assets/style/prose.css";
+import Header from "./components/Layout/Header";
+import Container from "./components/Layout/Container";
+import Footer from "./components/Layout/Footer";
 
 // 使用 Next.js 内置的 Inter 字体
 const inter = Inter({ subsets: ["latin"] });
@@ -63,11 +66,21 @@ export default function RootLayout({
         {/* 博客 RSS 订阅地址 */}
         <link rel="alternate" type="application/rss+xml" href="/feed.xml" />
       </head>
+
       <body
-        className={cn(inter.className, "dark:bg-slate-900 dark:text-slate-400")}
+        className={cn(
+          inter.className,
+          "dark:bg-[var(--c-bg)] dark:text-[var(--theme)]"
+        )}
       >
-        {/* 主体内容区域，最小高度撑满一屏 */}
-        <div className="min-h-screen">{children}</div>
+        <main>
+          <Header />
+          <Container>
+            {/* 主体内容区域，最小高度撑满一屏 */}
+            <div className="min-h-screen prose">{children}</div>
+          </Container>
+          <Footer />
+        </main>
       </body>
     </html>
   );

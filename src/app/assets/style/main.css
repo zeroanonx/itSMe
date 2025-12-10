@@ -181,23 +181,6 @@ html:not(.dark) [img-dark] {
   }
 }
 
-::view-transition-old(root),
-::view-transition-new(root) {
-  animation: none;
-  mix-blend-mode: normal;
-}
-::view-transition-old(root) {
-  z-index: 1;
-}
-::view-transition-new(root) {
-  z-index: 9999;
-}
-.dark::view-transition-old(root) {
-  z-index: 9999;
-}
-.dark::view-transition-new(root) {
-  z-index: 1;
-}
 
 /* Overrides Floating Vue */
 .v-popper--theme-dropdown .v-popper__inner,
@@ -231,4 +214,24 @@ html:not(.dark) [img-dark] {
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
+}
+
+
+/* 主题切换 */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+::view-transition-old(root) {
+  z-index: 9999;
+}
+::view-transition-new(root) {
+  z-index: 1;
+}
+.dark::view-transition-old(root) {
+  z-index: 1;
+}
+.dark::view-transition-new(root) {
+  z-index: 9999;
 }
