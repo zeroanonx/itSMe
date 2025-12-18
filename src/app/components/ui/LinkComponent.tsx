@@ -13,10 +13,10 @@ export default function LinkComponent(props: Props) {
       {props.link ? (
         <span className="text-zinc-500  transition-all hover:text-zinc-700 dark:hover:text-zinc-300 hover:underline inline-block">
           <a href={props.link} target="_blank">
-            <div className="flex items-center gap-1">
+            <span className="flex items-center gap-1">
               {props.icon && <Icon icon={props.icon} />}
               {props.title && <span>{props.title}</span>}
-            </div>
+            </span>
           </a>
         </span>
       ) : (

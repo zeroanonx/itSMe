@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getAllPosts, getPostBySlug } from "@/lib/api";
-import { CMS_NAME } from "@/lib/constants";
+import { getAllPosts, getPostBySlug } from "@/app/utils/generateRoutes";
+import { CMS_NAME } from "@/app/constants";
 import { PostBody } from "@/app/components/Layout/PostBody";
 
 // 文章详情页服务端组件
