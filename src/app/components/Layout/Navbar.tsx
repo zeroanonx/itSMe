@@ -6,7 +6,7 @@ import ToggleTheme from "@/app/components/ui/ToggleTheme";
 export default function Navbar() {
   return (
     <div className="right flex items-center gap-x-4 md:gap-x-8">
-      <Link href="/posts/preview" title="Blog">
+      <Link href="blog/aaa" title="Blog">
         <span className="hidden md:block">Blog</span>
         <Icon icon="ri:article-line" className="block md:hidden" />
       </Link>

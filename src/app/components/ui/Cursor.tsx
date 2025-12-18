@@ -62,8 +62,6 @@ export default function Cursor() {
   const bigBallRef = useRef<HTMLDivElement>(null);
   const smallBallRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
-    console.log("%cMade by https://linhan.atomnotion.com  ", styles);
-
     const bigBall = bigBallRef.current!;
     const smallBall = smallBallRef.current!;
 

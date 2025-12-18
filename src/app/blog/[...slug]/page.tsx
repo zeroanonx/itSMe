@@ -11,7 +11,7 @@ export default async function Post(props: Params) {
   const slug = Array.isArray(params.slug) ? params.slug.join("/") : params.slug;
 
   // 根据 slug 从本地 Markdown/MDX 文件中读取文章
-  const post = getPostBySlug(slug);
+  const post = getPostBySlug("blog/" + slug);
 
   // 如果找不到对应文章，则返回 404 页面
   if (!post) {
@@ -39,7 +39,8 @@ type Params = {
 export async function generateMetadata(props: Params): Promise<Metadata> {
   const params = await props.params;
   const slug = Array.isArray(params.slug) ? params.slug.join("/") : params.slug;
-  const post = getPostBySlug(slug);
+
+  const post = getPostBySlug("blog/" + slug);
 
   // 找不到文章时同样返回 404
   if (!post) {
@@ -60,7 +61,6 @@ export async function generateMetadata(props: Params): Promise<Metadata> {
 // 预定义所有可静态生成的 `[...slug]` 路径
 export async function generateStaticParams() {
   const posts = getAllPosts();
-
   // 返回形如 { slug: ['about', 'aa'] } 的对象数组
   return posts.map((post) => ({
     slug: post.slug.split("/"),
