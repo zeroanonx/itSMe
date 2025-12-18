@@ -1,4 +1,4 @@
-import { CMS_NAME, HOME_OG_IMAGE_URL } from "@/app/constants";
+import { MATE_TITLE, MATE_TITLE_IMG } from "@/app/constants";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import cn from "classnames";
@@ -17,10 +17,10 @@ const inter = Inter({ subsets: ["latin"] });
 
 // 默认全局的 SEO 信息（标题、描述、OG 图）
 export const metadata: Metadata = {
-  title: `Next.js Blog Example with ${CMS_NAME}`,
-  description: `A statically generated blog example using Next.js and ${CMS_NAME}.`,
+  title: `${MATE_TITLE}`,
+  description: `LinHan's personal website`,
   openGraph: {
-    images: [HOME_OG_IMAGE_URL],
+    images: [MATE_TITLE_IMG],
   },
 };
 

@@ -23,6 +23,9 @@ importers:
       date-fns:
         specifier: ^3.6.0
         version: 3.6.0
+      dayjs:
+        specifier: ^1.11.19
+        version: 1.11.19
       gray-matter:
         specifier: ^4.0.3
         version: 4.0.3

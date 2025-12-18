@@ -6,6 +6,10 @@ import { join } from "path";
 
 const postsDirectory = join(process.cwd(), "/src/page");
 
+/**
+ * @function getPostSlugs
+ * 获取所有文章的路径
+ */
 export function getPostSlugs(): string[] {
   const exts = [".md", ".mdx"];
 
@@ -36,7 +40,11 @@ export function getPostSlugs(): string[] {
   return walk(postsDirectory);
 }
 
-// 根据 slug 读取单篇文章的元数据和正文内容
+/**
+ * @function 根据 slug 读取单篇文章的元数据和正文内容
+ * @param slug
+ * @returns
+ */
 export function getPostBySlug(slug: string) {
   const realSlug = slug.replace(/\.(md|mdx)$/, "");
   const exts = [".md", ".mdx"];
@@ -62,7 +70,10 @@ export function getPostBySlug(slug: string) {
   return notFound();
 }
 
-// 获取所有文章，并按日期倒序排序
+/**
+ * @function 获取所有文章，并按日期倒序排序
+ * @returns 所有文章
+ */
 export function getAllPosts(): Post[] {
   const slugs = getPostSlugs();
 

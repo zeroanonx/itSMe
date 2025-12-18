@@ -1,11 +1,13 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getAllPosts, getPostBySlug } from "@/app/utils/generateRoutes";
-import { CMS_NAME } from "@/app/constants";
+import { MATE_TITLE } from "@/app/constants";
 import { PostBody } from "@/app/components/Layout/PostBody";
 
-// 文章详情页服务端组件
-export default async function Post(props: Params) {
+/**
+ * @function 获取文章路径
+ */
+const getSlug = async (props: Params) => {
   // 通过 `generateStaticParams` 传入的动态路由参数
   const params = await props.params;
   const slug = Array.isArray(params.slug) ? params.slug.join("/") : params.slug;
@@ -18,6 +20,12 @@ export default async function Post(props: Params) {
     return notFound();
   }
 
+  return post;
+};
+
+// 文章详情页服务端组件
+export default async function Post(props: Params) {
+  const post = await getSlug(props);
   // 将原始 Markdown/MDX 字符串传递给 `PostBody`，由 MDXRemote 负责解析渲染
   const content = post.content || "";
 
@@ -37,23 +45,14 @@ type Params = {
 
 // 为每篇文章动态生成 `<head>` 中的 SEO 信息
 export async function generateMetadata(props: Params): Promise<Metadata> {
-  const params = await props.params;
-  const slug = Array.isArray(params.slug) ? params.slug.join("/") : params.slug;
+  const post = await getSlug(props);
 
-  const post = getPostBySlug("blog/" + slug);
-
-  // 找不到文章时同样返回 404
-  if (!post) {
-    return notFound();
-  }
-
-  const title = `${post.title} | Next.js Blog Example with ${CMS_NAME}`;
+  const title = `${post.title} | ${MATE_TITLE}`;
 
   return {
     title,
     openGraph: {
       title,
-      images: [post.ogImage.url],
     },
   };
 }
