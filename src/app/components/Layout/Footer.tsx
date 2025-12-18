@@ -1,5 +1,6 @@
 import TextLoop from "@/app/components/ui/TextLoop";
 import { Icon } from "@iconify/react";
+import Link from "next/link";
 
 export default function Footer() {
   return (
@@ -36,10 +37,10 @@ export default function Footer() {
             <Icon icon="simple-icons:juejin" className="text-lg" />
             Juejin
           </a>
-          <a href="posts/wechat" className="flex items-center gap-1">
+          <Link href="/posts/wechat" className="flex items-center gap-1">
             <Icon icon="ic:baseline-wechat" className="text-lg" />
             Wechat
-          </a>
+          </Link>
         </div>
       </div>
     </footer>
