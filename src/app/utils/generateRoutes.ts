@@ -10,11 +10,14 @@ const postsDirectory = join(process.cwd(), "/src/page");
  * @function getPostSlugs
  * 获取所有文章的路径
  */
-export function getPostSlugs(): string[] {
+export function getPostSlugs(dir?: string): string[] {
   const exts = [".md", ".mdx"];
+  // 计算真正的扫描起点
+  const baseDir = dir ? join(postsDirectory, dir) : postsDirectory;
 
   const walk = (dir: string, parentSlug = ""): string[] => {
     const dirents = fs.readdirSync(dir, { withFileTypes: true });
+
     const slugs: string[] = [];
 
     for (const dirent of dirents) {
@@ -37,7 +40,7 @@ export function getPostSlugs(): string[] {
     return slugs;
   };
 
-  return walk(postsDirectory);
+  return walk(baseDir);
 }
 
 /**
@@ -74,10 +77,12 @@ export function getPostBySlug(slug: string) {
  * @function 获取所有文章，并按日期倒序排序
  * @returns 所有文章
  */
-export function getAllPosts(): Post[] {
-  const slugs = getPostSlugs();
+export function getAllPosts(dir?: string): Post[] {
+  const slugs = getPostSlugs(dir);
+  const fullSlugs = dir ? slugs.map((s) => `${dir}/${s}`) : slugs;
+  console.log(slugs);
 
-  const posts = slugs
+  const posts = fullSlugs
     // 根据 slug 逐个解析为 `Post`
     .map((slug) => getPostBySlug(slug))
     // 按日期从新到旧排序（descending）

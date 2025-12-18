@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { getAllPosts, getPostBySlug } from "@/app/utils/generateRoutes";
 import { MATE_TITLE } from "@/app/constants";
 import { PostBody } from "@/app/components/Layout/PostBody";
+import { join } from "path";
 
 /**
  * @function 获取文章路径
@@ -13,7 +14,7 @@ const getSlug = async (props: Params) => {
   const slug = Array.isArray(params.slug) ? params.slug.join("/") : params.slug;
 
   // 根据 slug 从本地 Markdown/MDX 文件中读取文章
-  const post = getPostBySlug("blog/" + slug);
+  const post = getPostBySlug(join("blog/", slug));
 
   // 如果找不到对应文章，则返回 404 页面
   if (!post) {
