@@ -23,9 +23,7 @@ export default function Navbar() {
         <span className="hidden md:block">Interesting</span>
         <Icon icon="solar:star-rings-broken" className="block md:hidden" />
       </Link>
-      {/* <Link to="/demos" title="Demos">
-            <div i-ri-screenshot-line />
-          </Link> */}
+
       <ToggleTheme />
     </div>
   );

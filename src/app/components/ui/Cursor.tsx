@@ -65,7 +65,6 @@ export default function Cursor() {
     const bigBall = bigBallRef.current!;
     const smallBall = smallBallRef.current!;
 
-    // 初始放到屏幕中心（Vue 原代码写的是 _window.clientX，实际 undefined，这里用 0 安全降级）
     gsap.set(bigBall, { x: 0, y: 0, opacity: 0 });
     gsap.set(smallBall, { x: 0, y: 0, opacity: 0 });
 

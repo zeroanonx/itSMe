@@ -80,7 +80,6 @@ export function getPostBySlug(slug: string) {
 export function getAllPosts(dir?: string): Post[] {
   const slugs = getPostSlugs(dir);
   const fullSlugs = dir ? slugs.map((s) => `${dir}/${s}`) : slugs;
-  console.log(slugs);
 
   const posts = fullSlugs
     // 根据 slug 逐个解析为 `Post`
