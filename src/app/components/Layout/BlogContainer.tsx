@@ -7,7 +7,6 @@ import { useEffect } from "react";
 import { PostListItem, PostsMap } from "@/app/types";
 import StrokeText from "../ui/StrokeText";
 import Link from "next/link";
-import { TargetCursor } from "../ui/TargetCursor";
 
 type Props = {
   posts: PostsMap[];
@@ -33,7 +32,7 @@ export default function BlogContainer({ posts }: Props) {
           <div
             key={item}
             className={cn(
-              "text-3xl cursor-target cursor-pointer !border-none opacity-20 hover:opacity-80 transition-all duration-300",
+              "text-3xl cursor-target cursor-pointer border-none! opacity-20 hover:opacity-80 transition-all duration-300",
               activeMenu === item && "opacity-100"
             )}
             onClick={() => setActiveMenu(item)}

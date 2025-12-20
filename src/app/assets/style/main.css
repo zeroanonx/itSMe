@@ -17,7 +17,7 @@ html {
 }
 
 html.dark {
-  --theme:#fff;
+  --theme: #fff;
   --c-bg: #050505;
   --c-scrollbar: #111;
   --c-scrollbar-hover: #222;
@@ -80,6 +80,21 @@ html.dark {
 ::-webkit-scrollbar-thumb:hover {
   background: var(--c-scrollbar-hover);
 }
+/* Chrome / Edge / Safari */
+::-webkit-scrollbar {
+  width: 0px;
+  height: 0px;
+}
+
+/* Firefox */
+* {
+  scrollbar-width: none;
+}
+
+/* IE / Edge Legacy */
+* {
+  -ms-overflow-style: none;
+}
 
 h2 + p > em:first-child {
   opacity: 0.5;
@@ -116,7 +131,9 @@ html:not(.dark) [img-dark] {
     --enter-step: 90ms;
     --enter-initial: 0ms;
     animation: slide-enter 1s both 1;
-    animation-delay: calc(var(--enter-initial) + var(--enter-stage) * var(--enter-step));
+    animation-delay: calc(
+      var(--enter-initial) + var(--enter-stage) * var(--enter-step)
+    );
   }
 
   .slide-enter-content > *:nth-child(1) {
@@ -181,7 +198,6 @@ html:not(.dark) [img-dark] {
   }
 }
 
-
 /* Overrides Floating Vue */
 .v-popper--theme-dropdown .v-popper__inner,
 .v-popper--theme-tooltip .v-popper__inner {
@@ -215,7 +231,6 @@ html:not(.dark) [img-dark] {
 .fade-leave-to {
   opacity: 0;
 }
-
 
 /* 主题切换 */
 ::view-transition-old(root),
