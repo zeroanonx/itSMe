@@ -1,29 +1,35 @@
 "use client";
 
 import { Icon } from "@iconify/react";
-import { useTheme } from "ahooks";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function ToggleTheme() {
-  const { theme, setThemeMode } = useTheme({
-    localStorageKey: "theme",
-  });
+  const [theme, setTheme] = useState<"light" | "dark">("light");
 
-  const toggleDark = (event: any) => {
-    // 检查浏览器是否支持 view-transitions
-    const supportsViewTransitions = !!document.startViewTransition;
+  /** 只在浏览器读取 */
+  useEffect(() => {
+    const stored = localStorage.getItem("theme");
+    if (stored === "dark") {
+      setTheme("dark");
+      document.documentElement.classList.add("dark");
+    }
+  }, []);
 
-    // 检查用户是否启用了减少动画的偏好设置
-    const prefersReducedMotion = !window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
-    ).matches;
+  const toggleTheme = (event: React.MouseEvent) => {
+    const next = theme === "dark" ? "light" : "dark";
 
-    // 如果浏览器支持 view-transitions 且用户没有启用减少动画，则启用视图过渡
-    const isAppearanceTransition =
-      supportsViewTransitions && prefersReducedMotion;
+    const supportsTransition =
+      "startViewTransition" in document &&
+      !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    if (!isAppearanceTransition) {
-      setThemeMode(theme === "dark" ? "light" : "dark");
+    const apply = () => {
+      setTheme(next);
+      localStorage.setItem("theme", next);
+      document.documentElement.classList.toggle("dark", next === "dark");
+    };
+
+    if (!supportsTransition) {
+      apply();
       return;
     }
 
@@ -33,15 +39,15 @@ export default function ToggleTheme() {
       Math.max(x, innerWidth - x),
       Math.max(y, innerHeight - y)
     );
-    const transition = document.startViewTransition(async () => {
-      setThemeMode(theme === "dark" ? "light" : "dark");
-    });
+
+    const transition = (document as any).startViewTransition(apply);
 
     transition.ready.then(() => {
       const clipPath = [
         `circle(0px at ${x}px ${y}px)`,
         `circle(${endRadius}px at ${x}px ${y}px)`,
       ];
+
       document.documentElement.animate(
         {
           clipPath: theme === "dark" ? [...clipPath].reverse() : clipPath,
@@ -59,20 +65,17 @@ export default function ToggleTheme() {
     });
   };
 
-  useEffect(() => {
-    if (theme === "dark") {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-  }, [theme]);
   return (
-    <a className="select-none" title="Toggle Color Scheme" onClick={toggleDark}>
+    <button
+      onClick={toggleTheme}
+      title="Toggle Color Scheme"
+      className="select-none"
+    >
       {theme === "dark" ? (
         <Icon icon="solar:moon-line-duotone" />
       ) : (
         <Icon icon="mingcute:sun-line" />
       )}
-    </a>
+    </button>
   );
 }

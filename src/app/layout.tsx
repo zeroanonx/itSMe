@@ -32,8 +32,23 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function () {
+                try {
+                  const theme = localStorage.getItem("theme");
+                  if (theme === "dark") {
+                    document.documentElement.classList.add("dark");
+                  }
+                } catch (_) {}
+              })();
+            `,
+          }}
+        />
+
         {/* 各种 favicon 与 PWA 相关配置 */}
         <link
           rel="apple-touch-icon"
@@ -72,7 +87,7 @@ export default function RootLayout({
       <body
         className={cn(
           inter.className,
-          "dark:bg-[var(--c-bg)] dark:text-[var(--theme)]"
+          "bg-white text-black dark:bg-[var(--c-bg)] dark:text-[var(--theme)]"
         )}
       >
         <main>
