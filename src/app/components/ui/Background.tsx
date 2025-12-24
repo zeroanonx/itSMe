@@ -7,7 +7,7 @@ import FlowBackground from "./FlowBackground";
 import TreeBackground from "./TreeBackground";
 import PatternBackground from "./PatternBackground";
 
-export default function BackgroundRoot() {
+export default function Background() {
   const [type, setType] = useState<BackgroundType>("off");
   const [mounted, setMounted] = useState(false);
 
@@ -18,12 +18,25 @@ export default function BackgroundRoot() {
 
   if (!mounted || type === "off") return null;
 
-  return createPortal(
+  return (
     <>
-      {type === "flow" && <FlowBackground />}
-      {type === "tree" && <TreeBackground />}
-      {type === "pattern" && <PatternBackground />}
-    </>,
-    document.body
+      {createPortal(
+        <>
+          {type === "flow" && <FlowBackground />}
+          {type === "tree" && <TreeBackground />}
+          {type === "pattern" && (
+            <PatternBackground
+              variant="Dot"
+              size="lg"
+              animate
+              direction="TopRight"
+              speed={90000}
+              className="fixed inset-0 -z-10 text-neutral-300 dark:text-neutral-700"
+            />
+          )}
+        </>,
+        document.body
+      )}
+    </>
   );
 }

@@ -13,9 +13,11 @@ export function useBackground() {
     },
   };
 }
-
 export function subscribeBackground(fn: (t: BackgroundType) => void) {
   listeners.add(fn);
   fn(currentType);
-  return () => listeners.delete(fn);
+
+  return () => {
+    listeners.delete(fn); // 👈 不 return
+  };
 }

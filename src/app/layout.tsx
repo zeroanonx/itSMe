@@ -88,7 +88,7 @@ export default function RootLayout({
       <body
         className={cn(
           inter.className,
-          "bg-white text-black dark:bg-[var(--c-bg)] dark:text-[var(--theme)]"
+          "bg-white text-black dark:bg-[var(--c-bg)] dark:text-[var(--theme)] relative"
         )}
       >
         <SlideEnterController />
