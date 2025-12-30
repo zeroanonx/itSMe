@@ -76,7 +76,7 @@ export default function FlowBackground() {
       destroyedRef.current = true;
 
       // 双重保护
-      const app = appRef.current;
+      const app = appRef.current as any;
       if (app && !app.destroyed) {
         app.destroy(true);
       }
