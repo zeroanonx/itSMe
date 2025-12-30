@@ -7,6 +7,8 @@ import { join } from "path";
 
 const postsDirectory = join(process.cwd(), "/src/page");
 
+const postCache = new Map<string, Post>(); // 缓存文章内容，避免重复读取
+
 /**
  * @function getPostSlugs
  * 获取所有文章的路径
@@ -50,21 +52,28 @@ export function getPostSlugs(dir?: string): string[] {
  * @returns
  */
 export function getPostBySlug(slug: string) {
+  if (postCache.has(slug)) {
+    return postCache.get(slug)!;
+  }
   const realSlug = slug.replace(/\.(md|mdx)$/, "");
   const exts = [".md", ".mdx"];
 
   // 1. 先按原路径找
   for (const ext of exts) {
     const candidate = join(postsDirectory, `${realSlug}${ext}`);
+
     if (fs.existsSync(candidate)) {
       const { data, content } = matter(fs.readFileSync(candidate, "utf-8"));
-      return {
+      const post = {
         ...data,
         slug: realSlug,
         content,
         date: dayjs(data.date).format("YYYY-MM-DD HH:mm:ss"),
         month: dayjs(data.date).format("MM-DD"),
       } as Post;
+
+      postCache.set(slug, post);
+      return post;
     }
   }
 
