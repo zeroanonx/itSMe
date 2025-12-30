@@ -2,13 +2,14 @@ import Link from "next/link";
 import React from "react";
 import { Icon } from "@iconify/react";
 import ToggleTheme from "@/app/components/ui/ToggleTheme";
+import Search from "./Search";
 
 export default function Navbar() {
   return (
     <div className="right flex items-center gap-x-4 md:gap-x-8">
       <Link href="/blog" title="Blog" className="cursor-target">
         <span className="hidden md:block">Blog</span>
-        <Icon icon="ri:article-line" className="block md:hidden" /> 
+        <Icon icon="ri:article-line" className="block md:hidden" />
       </Link>
       <Link href="/projects" title="Projects" className="cursor-target">
         <span className="hidden md:block">Projects</span>
@@ -25,6 +26,7 @@ export default function Navbar() {
       </Link>
 
       <ToggleTheme />
+      <Search />
     </div>
   );
 }
