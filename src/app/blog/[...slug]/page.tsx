@@ -6,11 +6,13 @@ import PostBody from "@/app/components/Layout/PostBody";
 import { join } from "path";
 import MoveTop from "@/app/components/ui/MoveTop";
 
-// ✅ 强制在 build 时生成 HTML
+//  强制在 build 时生成 HTML
 export const dynamic = "force-static";
 
-// ✅ 不允许运行时再生成新路径
+// 不允许运行时再生成新路径
 export const dynamicParams = false;
+
+const dirName = "blog";
 
 /**
  * @function 获取文章路径
@@ -21,7 +23,7 @@ const getSlug = async (props: Params) => {
   const slug = Array.isArray(params.slug) ? params.slug.join("/") : params.slug;
 
   // 根据 slug 从本地 Markdown/MDX 文件中读取文章
-  const post = getPostBySlug(join("blog/", slug!));
+  const post = getPostBySlug(join(`${dirName}/`, slug!));
 
   // 如果找不到对应文章，则返回 404 页面
   if (!post) {
@@ -72,10 +74,9 @@ export async function generateMetadata(props: Params): Promise<Metadata> {
 
 // 预定义所有可静态生成的 `[...slug]` 路径
 export async function generateStaticParams() {
-  const posts = getAllPosts("blog");
+  const posts = getAllPosts(dirName);
 
   return posts.map((post) => ({
-    // post.slug: "blog/about-typescript"
-    slug: post.slug.replace(/^blog\//, "").split("/"),
+    slug: post.slug.replace(new RegExp(`^${dirName}/`), "").split("/"),
   }));
 }

@@ -3,6 +3,12 @@ import { Post } from "../types";
 import BlogContainer from "../components/Layout/BlogContainer";
 import dayjs from "dayjs";
 
+//  强制在 build 时生成 HTML
+export const dynamic = "force-static";
+
+// 不允许运行时再生成新路径
+export const dynamicParams = false;
+
 export default function BlogPage() {
   // 获取所有文章
   const posts = getAllPosts("blog");
