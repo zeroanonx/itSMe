@@ -1,16 +1,15 @@
 "use client";
-import { DocSearch } from "@docsearch/react";
 
-import "@docsearch/css";
+import { useEffect } from "react";
 
-function Search() {
-  return (
-    <DocSearch
-      appId="fb7a9a76-dafa-48c4-a5d4-d167af9b5dfa"
-      apiKey="8e6f53c88fe532760456280b58d44671"
-      indexName="docsearch"
-    />
-  );
+export default function Search() {
+  useEffect(() => {
+    // @ts-ignore
+    new window.PagefindUI({
+      element: "#search",
+      showImages: false,
+    });
+  }, []);
+
+  return <div id="search" />;
 }
-
-export default Search;
