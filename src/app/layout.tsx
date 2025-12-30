@@ -75,7 +75,6 @@ export default function RootLayout({
           color="#000000"
         />
         <link rel="shortcut icon" href="/favicon/favicon.ico" />
-        <link rel="stylesheet" href="/pagefind/pagefind-ui.css" />
         <meta name="msapplication-TileColor" content="#000000" />
         <meta
           name="msapplication-config"
