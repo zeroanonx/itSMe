@@ -28,8 +28,6 @@ function hashString(str: string): number {
 
 /** 根据 pathname 稳定生成背景 */
 export function getBackgroundByPathname(pathname: string): BackgroundType {
-  if (!pathname || pathname === "/") return "off";
-
   // 可选：忽略 query / hash
   const purePath = pathname.split("?")[0].split("#")[0];
 
