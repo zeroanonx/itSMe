@@ -6,9 +6,9 @@ import "@docsearch/css";
 function Search() {
   return (
     <DocSearch
-      appId="fb7a9a76-dafa-48c4-a5d4-d167af9b5dfa"
-      apiKey="8e6f53c88fe532760456280b58d44671"
-      indexName="docsearch"
+      appId="EOAV23QT8V"
+      apiKey="9ef4f77dbe072f02c3f4196670958833"
+      indexName="zeroanonBlog"
     />
   );
 }
