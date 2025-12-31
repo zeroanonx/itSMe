@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, ReactNode } from "react";
 import { createPortal } from "react-dom";
 import { usePathname } from "next/navigation";
 
@@ -8,7 +8,7 @@ import TreeBackground from "./TreeBackground";
 import PatternBackground from "./PatternBackground";
 import { BackgroundType, getBackgroundByPathname } from "@/app/hooks";
 
-export default function Background() {
+export default function Background(): ReactNode {
   const pathname = usePathname();
 
   const [type, setType] = useState<BackgroundType>("off");
@@ -20,14 +20,13 @@ export default function Background() {
     if (!pathname) return;
 
     const bg = getBackgroundByPathname(pathname);
-    console.log("bg---", bg);
 
     setType(bg);
   }, [pathname]);
 
   if (!mounted || type === "off") return null;
 
-  return createPortal(
+  const portalContent = createPortal(
     <>
       {type === "tree" && <TreeBackground />}
 
@@ -44,4 +43,6 @@ export default function Background() {
     </>,
     document.body
   );
+
+  return <>{portalContent}</>;
 }
