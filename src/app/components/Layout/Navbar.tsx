@@ -3,6 +3,7 @@ import React from "react";
 import { Icon } from "@iconify/react";
 import ToggleTheme from "@/app/components/ui/ToggleTheme";
 import Search from "./Search";
+import { SearchDialog } from "../ui/SearchDialog";
 
 export default function Navbar() {
   return (
@@ -26,7 +27,7 @@ export default function Navbar() {
       </Link>
 
       <ToggleTheme />
-      <Search />
+      <SearchDialog />
     </div>
   );
 }

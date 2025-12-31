@@ -12,17 +12,23 @@ export default function Footer() {
           className="black"
         >
           <TextLoop className="text-xs text-zinc-500">
-            <span>© 2025 LinHam.</span>
+            <span>
+              © 2025 <span className="text-(--accent-primary)">LinHan.</span>
+            </span>
+            <span>
+              Made with ❤️ by
+              <span className="text-(--accent-primary)"> zeroanon</span>
+            </span>
             <span>Thank you, nice to meet you.</span>
             <p className="flex items-center gap-1">
               mail me at
               <Icon icon="ic:baseline-email" className="text-base" />
-              2188817393@qq.com
+              <span className="text-(--accent-primary)">2188817393@qq.com</span>
             </p>
           </TextLoop>
         </a>
         <div className="flex items-center gap-2 text-xs text-zinc-400">
-          <p>Find me on</p>
+          <p className="text-(--accent-secondary)">Find me on</p>
           <a
             href="https://github.com/LinHanlove"
             className="flex items-center gap-1"

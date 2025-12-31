@@ -8,6 +8,10 @@
   --animation-duration: 8s;
   --stroke-dashoffset: 2000;
   --stroke-width: 2px;
+  --accent-primary: #00f5d4;
+  --accent-secondary: #7b61ff;
+  --accent-tertiary: #ff6b6b;
+  --accent-warm: #ffd93d;
 }
 
 html {
@@ -282,4 +286,60 @@ html:not(.dark) [img-dark] {
   stroke: rgba(148, 163, 255, 0.5);
   opacity: 0.55;
   mix-blend-mode: screen;
+}
+
+/* 在全局样式文件中添加 */
+.cmdk-item-selected {
+  background-color: hsl(var(--accent));
+  border: 1px solid hsl(var(--primary) / 0.4);
+}
+
+/* 确保 cmdk 组件能正确接收焦点 */
+[cmdk-root] {
+  outline: none;
+}
+
+[cmdk-input] {
+  border: none;
+  outline: none;
+  box-shadow: none;
+}
+
+[cmdk-item] {
+  cursor: pointer;
+}
+
+[cmdk-item][data-selected="true"] {
+  background-color: hsl(var(--accent));
+}
+
+/* globals.css 或 styles/globals.css */
+[cmdk-item][data-selected="true"] {
+  background-color: hsl(var(--accent));
+  border-color: hsl(var(--primary) / 0.4);
+  border-width: 1px;
+}
+
+[cmdk-item][data-selected="true"] .cmdk-item-highlight {
+  color: hsl(var(--primary));
+}
+
+/* 或者使用更具体的选择器 */
+[cmdk-root] [cmdk-item][data-selected="true"] {
+  background-color: hsl(var(--accent));
+  border-color: hsl(var(--border));
+}
+
+/* 如果你想让选中的项目有更明显的样式 */
+[cmdk-item] {
+  transition: all 0.15s ease;
+}
+
+[cmdk-item]:hover {
+  background-color: hsl(var(--accent) / 0.5);
+}
+
+[cmdk-item][data-selected="true"] {
+  background-color: hsl(var(--accent));
+  box-shadow: 0 0 0 1px hsl(var(--primary) / 0.2);
 }

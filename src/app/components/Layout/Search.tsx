@@ -1,16 +1,37 @@
 "use client";
-import { DocSearch } from "@docsearch/react";
 
-import "@docsearch/css";
+import { useState } from "react";
+import Link from "next/link";
+import { useSearch } from "@/app/hooks";
 
-function Search() {
+export default function Search() {
+  const { search, ready } = useSearch();
+  const [q, setQ] = useState("");
+
+  const results = search(q);
+
   return (
-    <DocSearch
-      appId="EOAV23QT8V"
-      apiKey="9ef4f77dbe072f02c3f4196670958833"
-      indexName="zeroanonBlog"
-    />
+    <div className="relative">
+      <input
+        value={q}
+        onChange={(e) => setQ(e.target.value)}
+        placeholder="Search..."
+        className="border px-3 py-2 w-64"
+      />
+
+      {q && ready && results.length > 0 && (
+        <div className="absolute top-full left-0 w-full bg-white border mt-1 z-50">
+          {results.map((item) => (
+            <Link
+              key={item.id}
+              href={item.url}
+              className="block px-3 py-2 hover:bg-gray-100 text-gray-600"
+            >
+              {item.title}
+            </Link>
+          ))}
+        </div>
+      )}
+    </div>
   );
 }
-
-export default Search;

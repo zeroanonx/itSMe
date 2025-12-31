@@ -100,7 +100,7 @@ export default function RootLayout({
             <div className="min-h-screen prose">{children}</div>
           </Container>
           <Footer />
-          <TargetCursor />
+          {/* <TargetCursor /> */}
         </main>
       </body>
     </html>
