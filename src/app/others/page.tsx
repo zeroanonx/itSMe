@@ -10,9 +10,11 @@ export const dynamic = "force-static";
 // 不允许运行时再生成新路径
 export const dynamicParams = false;
 
-export default function BlogPage() {
+const dirName = "others";
+
+export default function OthersPage() {
   // 获取所有文章
-  const posts = getAllPosts("others");
+  const posts = getAllPosts(dirName);
 
   // 按 type 分组
   const groupedPosts = posts.reduce<Record<string, Post[]>>((acc, post) => {

@@ -10,9 +10,9 @@ export const dynamic = "force-static";
 // 不允许运行时再生成新路径
 export const dynamicParams = false;
 
-const dirName = "blog";
+const dirName = "myself";
 
-export default function BlogPage() {
+export default function MyselfPage() {
   // 获取所有文章
   const posts = getAllPosts(dirName);
 

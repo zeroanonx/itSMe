@@ -3,9 +3,10 @@ import ProjectsContainer from "../components/Layout/ProjectsContainer";
 import { ProjectsType } from "../types";
 import { getAllPosts } from "../utils/modules/generateRoutes";
 
+const dirName = "projects";
+
 export default function Projects() {
-  const posts = getAllPosts("projects")[0] as unknown as ProjectsType;
-  console.log(posts);
+  const posts = getAllPosts(dirName)[0] as unknown as ProjectsType;
 
   return (
     <Container size="wide">

@@ -13,7 +13,7 @@ export const dynamic = "force-static";
 // 不允许运行时再生成新路径
 export const dynamicParams = false;
 
-const dirName = "interesting";
+const dirName = "myself";
 
 /**
  * @function 获取文章路径
