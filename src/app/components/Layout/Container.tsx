@@ -7,9 +7,9 @@ interface Props {
 
 export default function Container({ size = "default", children }: Props) {
   const sizeClass = {
-    default: "w-full max-w-[74ch]",
-    wide: "w-full max-w-[94ch]",
-    full: "max-w-none",
+    default: "w-full md:max-w-[74ch] max-w-[96%]",
+    wide: "w-full md:max-w-[94ch] max-w-[96%]",
+    full: "max-w-none max-w-[98%]",
   }[size];
 
   return <div className={`mx-auto px-4 ${sizeClass}`}>{children}</div>;

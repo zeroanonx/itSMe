@@ -7,7 +7,7 @@ import { join } from "path";
 
 const postsDirectory = join(process.cwd(), "/src/page");
 
-const postCache = new Map<string, Post>(); // 缓存文章内容，避免重复读取
+const postCache = new Map<string, Post>(); // 仅在生产模式下使用缓存，开发时禁用以支持热重载
 
 /**
  * @function getPostSlugs
@@ -52,7 +52,7 @@ export function getPostSlugs(dir?: string): string[] {
  * @returns
  */
 export function getPostBySlug(slug: string) {
-  if (postCache.has(slug)) {
+  if (process.env.NODE_ENV === "production" && postCache.has(slug)) {
     return postCache.get(slug)!;
   }
   const realSlug = slug.replace(/\.(md|mdx)$/, "");
@@ -72,7 +72,9 @@ export function getPostBySlug(slug: string) {
         month: dayjs(data.date).format("MM-DD"),
       } as Post;
 
-      postCache.set(slug, post);
+      if (process.env.NODE_ENV === "production") {
+        postCache.set(slug, post);
+      }
       return post;
     }
   }

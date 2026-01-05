@@ -69,7 +69,7 @@ export default function ToggleTheme() {
     <button
       onClick={toggleTheme}
       title="Toggle Color Scheme"
-      className="select-none"
+      className="select-none flex items-center justify-center cursor-pointer"
     >
       {theme === "dark" ? (
         <Icon icon="solar:moon-line-duotone" />

@@ -26,13 +26,13 @@ export default function ProjectsContainer({ content }: Props) {
             <div className="mb-6">
               <StrokeText
                 text={groupName}
-                size="text-7xl"
-                left="-left-20"
+                size="md:text-7xl text-5xl"
+                left="md:-left-20 -left-0"
                 top="-top-10"
               />
             </div>
 
-            <div className="grid gap-4 grid-cols-3 z-50">
+            <div className="grid gap-4 md:grid-cols-3 grid-cols-1 z-50">
               {projects.map((project) => (
                 <Link
                   key={project.name}
@@ -55,7 +55,7 @@ export default function ProjectsContainer({ content }: Props) {
                       </div>
                     )}
 
-                    <div className="space-y-1 text-[#e5e7eb] ">
+                    <div className="space-y-1 text-(--theme)">
                       <h3 className="text-sm font-medium leading-none transition-all opacity-50 group-hover:opacity-100">
                         {project.name}
                       </h3>

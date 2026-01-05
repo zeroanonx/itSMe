@@ -84,6 +84,16 @@ export const TargetCursor = memo(
 
     // 用于记录上次检测到的目标元素
     const lastTargetRef = useRef<Element | null>(null);
+    // 当悬停在 .no-cursor 时抑制自定义光标的显示
+    const suppressCursorRef = useRef(false);
+    // 存储进入 .no-cursor 前的光标状态，便于离开后恢复（需要时可用）
+    const savedStateRef = useRef<{
+      wasOverTarget: boolean;
+      lastTarget: Element | null;
+    }>({
+      wasOverTarget: false,
+      lastTarget: null,
+    });
 
     // 检查鼠标位置下的元素是否匹配选择器
     const checkElementUnderMouse = useCallback(
@@ -108,6 +118,20 @@ export const TargetCursor = memo(
       },
       [targetSelector]
     );
+
+    // 检查鼠标位置下是否存在禁止自定义光标的元素（例如 .no-cursor）
+    const checkNoCursorUnderMouse = useCallback((x: number, y: number) => {
+      try {
+        const elements = document.elementsFromPoint(x, y);
+        for (const element of elements) {
+          const noCursor = (element as Element).closest(".no-cursor");
+          if (noCursor) return true;
+        }
+      } catch (error) {
+        console.warn("Error checking no-cursor under mouse:", error);
+      }
+      return false;
+    }, []);
 
     // 更新角点位置
     const updateCorners = useCallback(
@@ -281,6 +305,79 @@ export const TargetCursor = memo(
       if (!rafActive.current) return;
 
       const { x, y } = mousePosition.current;
+
+      // 处理 .no-cursor 的进入/退出逻辑：进入时抑制并隐藏光标，离开时恢复上次动画状态
+      const isOnNoCursor = checkNoCursorUnderMouse(x, y);
+
+      if (suppressCursorRef.current) {
+        // 仍在抑制中：如果已经离开 .no-cursor，则恢复显示并切回合适的光标
+        if (!isOnNoCursor) {
+          suppressCursorRef.current = false;
+          const targetUnderMouse = checkElementUnderMouse(x, y);
+
+          if (targetUnderMouse) {
+            isOverTargetRef.current = true;
+            lastTargetRef.current = targetUnderMouse;
+            if (onCursorStateChange) onCursorStateChange(true);
+            switchToTargetCursor(x, y, targetUnderMouse);
+          } else {
+            isOverTargetRef.current = false;
+            lastTargetRef.current = null;
+            if (onCursorStateChange) onCursorStateChange(false);
+            switchToNormalCursor(x, y);
+          }
+        } else {
+          // 仍在 .no-cursor 上，保持隐藏
+          animationFrameId.current =
+            requestAnimationFrame(checkAndUpdateCursor);
+          return;
+        }
+      } else if (isOnNoCursor) {
+        // 刚进入 .no-cursor：保存当前状态，抑制自定义光标显示并隐藏所有动画
+        savedStateRef.current = {
+          wasOverTarget: isOverTargetRef.current,
+          lastTarget: lastTargetRef.current,
+        };
+        suppressCursorRef.current = true;
+
+        if (isOverTargetRef.current && onCursorStateChange) {
+          onCursorStateChange(false);
+        }
+
+        isOverTargetRef.current = false;
+        lastTargetRef.current = null;
+
+        // 隐藏目标光标
+        if (targetCursorRef.current) {
+          gsap.killTweensOf(targetCursorRef.current);
+          gsap.to(targetCursorRef.current, {
+            opacity: 0,
+            duration: 0.1,
+            ease: "power2.out",
+            onComplete: () => {
+              if (targetCursorRef.current)
+                gsap.set(targetCursorRef.current, { display: "none" });
+            },
+          });
+        }
+
+        // 隐藏普通光标
+        if (cursorContainerRef.current) {
+          gsap.killTweensOf(cursorContainerRef.current);
+          gsap.to(cursorContainerRef.current, {
+            opacity: 0,
+            duration: 0.1,
+            ease: "power2.out",
+            onComplete: () => {
+              if (cursorContainerRef.current)
+                gsap.set(cursorContainerRef.current, { display: "none" });
+            },
+          });
+        }
+
+        animationFrameId.current = requestAnimationFrame(checkAndUpdateCursor);
+        return;
+      }
 
       // 检查鼠标位置下的元素
       const targetUnderMouse = checkElementUnderMouse(x, y);
