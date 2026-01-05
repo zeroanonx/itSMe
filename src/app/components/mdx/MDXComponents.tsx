@@ -5,9 +5,9 @@ import { JSX } from "react/jsx-runtime";
 import CodeBlock from "../Layout/CodeBlock";
 import { highlightCode } from "@/app/utils/modules/shiki";
 import { slugify } from "@/app/utils";
-import LinkComponent from "../ui/LinkComponent";
-import Logo from "../ui/Logo";
-import Image from "../ui/Image";
+import LinkComponent from "@/app/components/ui/LinkComponent";
+import Logo from "@/app/components/ui/Logo";
+import Image from "@/app/components/ui/Image";
 
 type MDXComponents = ComponentProps<typeof MDXRemote>["components"];
 

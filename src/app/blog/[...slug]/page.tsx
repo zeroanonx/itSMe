@@ -5,6 +5,7 @@ import { MATE_TITLE } from "@/app/constants";
 import PostBody from "@/app/components/Layout/PostBody";
 import { join } from "path";
 import MoveTop from "@/app/components/ui/MoveTop";
+import Container from "@/app/components/Layout/Container";
 
 //  强制在 build 时生成 HTML
 export const dynamic = "force-static";
@@ -38,16 +39,18 @@ export default async function Post(props: Params) {
   const post = await getSlug(props);
 
   return (
-    <main>
-      <h1>{post.title}</h1>
-      <p>
-        <span>{post.date}</span>
-        <span> • </span>
-        <span>{post.duration}</span>
-      </p>
-      <PostBody post={post} />
-      <MoveTop />
-    </main>
+    <Container size="default">
+      <section className="prose mx-auto">
+        <h1>{post.title}</h1>
+        <p>
+          <span>{post.date}</span>
+          <span> • </span>
+          <span>{post.duration}</span>
+        </p>
+        <PostBody post={post} />
+        <MoveTop />
+      </section>
+    </Container>
   );
 }
 

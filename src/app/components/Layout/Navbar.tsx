@@ -1,9 +1,7 @@
 import Link from "next/link";
-import React from "react";
-import { Icon } from "@iconify/react";
+import { Icon } from "@iconify-icon/react";
 import ToggleTheme from "@/app/components/ui/ToggleTheme";
-import Search from "./Search";
-import { SearchDialog } from "../ui/SearchDialog";
+import { SearchDialog } from "@/app/components/ui/SearchDialog";
 
 export default function Navbar() {
   return (
@@ -15,11 +13,6 @@ export default function Navbar() {
       <Link href="/projects" title="Projects" className="cursor-target">
         <span className="hidden md:block">Projects</span>
         <Icon icon="ri:lightbulb-line" className="block md:hidden" />
-      </Link>
-
-      <Link href="/products" title="Products" className="cursor-target">
-        <span className="hidden md:block">Products</span>
-        <Icon icon="eos-icons:products-outlined" className="block md:hidden" />
       </Link>
       <Link href="/interesting" title="Interesting" className="cursor-target">
         <span className="hidden md:block">Interesting</span>

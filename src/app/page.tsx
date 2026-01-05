@@ -1,12 +1,15 @@
 import { getPostBySlug } from "@/app/utils/modules/generateRoutes";
 import PostBody from "@/app/components/Layout/PostBody";
+import Container from "./components/Layout/Container";
 
 export default function Index() {
   const homePost = getPostBySlug("index");
 
   return (
-    <main className="py-12 prose">
-      <PostBody post={homePost} />
-    </main>
+    <Container size="default">
+      <main className="py-12 prose mx-auto">
+        <PostBody post={homePost} />
+      </main>
+    </Container>
   );
 }

@@ -1,7 +1,7 @@
 "use client";
 
 import type { TocItem } from "@/app/utils";
-import { Icon } from "@iconify/react";
+import { Icon } from "@iconify-icon/react";
 
 type Props = {
   toc: TocItem[];

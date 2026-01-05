@@ -1,13 +1,16 @@
-type Props = {
-  children?: React.ReactNode;
-};
+type ContainerSize = "default" | "wide" | "full";
 
-const Container = ({ children }: Props) => {
-  return (
-    <div className="container relative mx-auto w-full max-w-[74ch] flex-1 px-4 pt-20">
-      {children}
-    </div>
-  );
-};
+interface Props {
+  size?: ContainerSize;
+  children: React.ReactNode;
+}
 
-export default Container;
+export default function Container({ size = "default", children }: Props) {
+  const sizeClass = {
+    default: "w-full max-w-[74ch]",
+    wide: "w-full max-w-[94ch]",
+    full: "max-w-none",
+  }[size];
+
+  return <div className={`mx-auto px-4 ${sizeClass}`}>{children}</div>;
+}

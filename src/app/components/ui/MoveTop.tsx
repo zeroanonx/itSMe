@@ -1,6 +1,6 @@
 "use client";
 
-import { Icon } from "@iconify/react";
+import { Icon } from "@iconify-icon/react";
 import { useScroll } from "ahooks";
 import { usePathname } from "next/navigation";
 import { useMemo } from "react";

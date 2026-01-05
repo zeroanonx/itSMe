@@ -2,6 +2,7 @@ import { getAllPosts } from "@/app/utils/modules/generateRoutes";
 import { Post } from "../types";
 import BlogContainer from "../components/Layout/BlogContainer";
 import dayjs from "dayjs";
+import Container from "../components/Layout/Container";
 
 //  强制在 build 时生成 HTML
 export const dynamic = "force-static";
@@ -40,8 +41,10 @@ export default function BlogPage() {
   });
 
   return (
-    <>
-      <BlogContainer posts={list} />
-    </>
+    <Container size="default">
+      <main className="prose mx-auto">
+        <BlogContainer posts={list} />
+      </main>
+    </Container>
   );
 }

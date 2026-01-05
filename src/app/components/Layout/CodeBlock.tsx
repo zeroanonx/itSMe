@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { Icon } from "@iconify/react";
+import { Icon } from "@iconify-icon/react";
 
 type Props = {
   html: string;

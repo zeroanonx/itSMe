@@ -1,5 +1,5 @@
 import TextLoop from "@/app/components/ui/TextLoop";
-import { Icon } from "@iconify/react";
+import { Icon } from "@iconify-icon/react";
 import Link from "next/link";
 
 export default function Footer() {

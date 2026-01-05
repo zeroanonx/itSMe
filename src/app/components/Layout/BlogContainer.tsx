@@ -1,11 +1,10 @@
-// app/blog/MenuTabs.tsx
 "use client";
 
 import { cn, firstLetterToUpperCase } from "@/app/utils";
 import { usePosts } from "@/app/store/modules";
 import { useEffect } from "react";
 import { PostListItem, PostsMap } from "@/app/types";
-import StrokeText from "../ui/StrokeText";
+import StrokeText from "@/app/components/ui/StrokeText";
 import Link from "next/link";
 
 type Props = {
@@ -26,7 +25,7 @@ export default function BlogContainer({ posts }: Props) {
   }, []);
 
   return (
-    <main>
+    <section>
       <section className="tabs w-full flex items-center gap-x-4">
         {menu.map((item) => (
           <div
@@ -75,6 +74,6 @@ export default function BlogContainer({ posts }: Props) {
             );
           })}
       </section>
-    </main>
+    </section>
   );
 }

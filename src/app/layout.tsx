@@ -73,10 +73,7 @@ export default function RootLayout({
         <Background />
         <main>
           <Header />
-          <Container>
-            {/* 主体内容区域，最小高度撑满一屏 */}
-            <div className="min-h-screen prose">{children}</div>
-          </Container>
+          <div className="min-h-screen  w-screen">{children}</div>
           <Footer />
           <TargetCursor />
         </main>
