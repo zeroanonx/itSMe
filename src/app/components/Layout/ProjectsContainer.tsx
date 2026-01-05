@@ -17,7 +17,9 @@ export default function ProjectsContainer({ content }: Props) {
     <section className="w-full">
       <header className="mb-30 text-center">
         <h1 className="text-2xl font-semibold tracking-tight">{title}</h1>
-        <p className="mt-2 text-sm text-muted-foreground">{description}</p>
+        <p className="mt-2 text-sm text-muted-foreground text-(--accent-primary)">
+          {description}
+        </p>
       </header>
 
       <div className="space-y-30">
