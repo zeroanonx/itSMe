@@ -436,7 +436,7 @@ export const TargetCursor = memo(
             }}
           />
           <div
-            className="absolute border-[2px] border-primary border-r-0 border-b-0 w-3 h-3 target-cursor-corner"
+            className="absolute border-2 border-primary border-r-0 border-b-0 w-3 h-3 target-cursor-corner"
             style={{
               willChange: "transform",
               left: "50%",
@@ -445,7 +445,7 @@ export const TargetCursor = memo(
             }}
           />
           <div
-            className="absolute border-[2px] border-primary border-b-0 border-l-0 w-3 h-3 target-cursor-corner"
+            className="absolute border-2 border-primary border-b-0 border-l-0 w-3 h-3 target-cursor-corner"
             style={{
               willChange: "transform",
               left: "50%",
@@ -454,7 +454,7 @@ export const TargetCursor = memo(
             }}
           />
           <div
-            className="absolute border-[2px] border-primary border-t-0 border-l-0 w-3 h-3 target-cursor-corner"
+            className="absolute border-2 border-primary border-t-0 border-l-0 w-3 h-3 target-cursor-corner"
             style={{
               willChange: "transform",
               left: "50%",
@@ -463,7 +463,7 @@ export const TargetCursor = memo(
             }}
           />
           <div
-            className="absolute border-[2px] border-primary border-t-0 border-r-0 w-3 h-3 target-cursor-corner"
+            className="absolute border-2 border-primary border-t-0 border-r-0 w-3 h-3 target-cursor-corner"
             style={{
               willChange: "transform",
               left: "50%",

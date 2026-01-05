@@ -16,7 +16,6 @@ export default function SlideEnterController() {
       html.classList.remove("no-sliding");
     }
 
-    // 首次加载后清一次（防止 hydration 后残留）
     requestAnimationFrame(() => {
       if (window.scrollY === 0) html.classList.remove("no-sliding");
     });

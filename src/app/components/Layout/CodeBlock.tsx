@@ -35,7 +35,6 @@ export default function CodeBlock({ html, language }: Props) {
 
   return (
     <div className="relative group my-6">
-      {/* 左：语言 */}
       {label && (
         <div
           className="
@@ -54,7 +53,6 @@ export default function CodeBlock({ html, language }: Props) {
         </div>
       )}
 
-      {/* 右：Copy */}
       <button
         onClick={handleCopy}
         className={`

@@ -6,9 +6,8 @@ import { useEffect, useState } from "react";
 let initialized = false;
 
 /**
- * 自定义Hook，用于实现搜索功能
- * 包括初始化搜索索引和执行搜索查询
- * @returns 返回包含ready状态和search函数的对象
+ * 搜索功能
+ * 初始化搜索索引和执行搜索查询
  */
 export function useSearch() {
   const [ready, setReady] = useState(false);
@@ -37,9 +36,8 @@ export function useSearch() {
   }, []);
 
   /**
-   * 执行搜索功能，根据查询字符串返回匹配的文档列表
+   * 根据查询字符串返回匹配的文档列表
    * @param q - 搜索查询字符串
-   * @returns 返回匹配的SearchDoc数组，如果没有匹配项则返回空数组
    */
   const search = (q: string): SearchDoc[] => {
     // 如果查询字符串为空或搜索索引未准备就绪，直接返回空数组
@@ -51,13 +49,10 @@ export function useSearch() {
     // 使用Set来存储文档ID，确保结果唯一性
     const ids = new Set<string>();
 
-    // 遍历搜索结果，将所有文档ID添加到Set中
     raw.forEach((group) => {
       group.result.forEach((id) => ids.add(id as string));
     });
 
-    // 将Set转换为数组，并通过docMap获取完整的文档对象
-    // 然后过滤掉可能为null或undefined的值
     return Array.from(ids)
       .map((id) => docMap.get(id))
       .filter(Boolean) as SearchDoc[];

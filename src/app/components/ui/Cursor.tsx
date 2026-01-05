@@ -91,7 +91,7 @@ export default function Cursor() {
     };
   }, []);
 
-  console.log("%cMade by https://linhan.atomnotion.com ", styles);
+  console.log("%cMade by https://zeroanon.com ", styles);
   return (
     <CursorComponents>
       <div className="cursor">

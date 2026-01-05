@@ -11,10 +11,6 @@ export const BACKGROUNDS: BackgroundType[] = [
   "pattern",
 ];
 
-/**
- * FNV-1a hash
- * 分布比简单位运算好很多
- */
 function hashString(str: string): number {
   let hash = 0x811c9dc5; // FNV offset basis
 

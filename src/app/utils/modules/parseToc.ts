@@ -1,4 +1,3 @@
-// utils/parseToc.ts
 export type TocItem = {
   id: string;
   text: string;

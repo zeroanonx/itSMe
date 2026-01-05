@@ -9,7 +9,6 @@ import "@/app/assets/style/prose.css";
 import "@/app/assets/style/markdown.css";
 
 import Header from "./components/Layout/Header";
-import Container from "./components/Layout/Container";
 import Footer from "./components/Layout/Footer";
 import { TargetCursor } from "./components/ui/TargetCursor";
 import SlideEnterController from "./components/Layout/SlideEnterController";
@@ -66,7 +65,7 @@ export default function RootLayout({
       <body
         className={cn(
           inter.className,
-          "bg-white text-black dark:bg-[var(--c-bg)] dark:text-[var(--theme)] relative"
+          "bg-white text-black dark:bg-(--c-bg) dark:text-(--theme) relative"
         )}
       >
         <SlideEnterController />
