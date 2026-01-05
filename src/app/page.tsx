@@ -7,7 +7,7 @@ export default function Index() {
 
   return (
     <Container size="default">
-      <main className="py-12 prose mx-auto">
+      <main className="py-12 prose mx-auto slide-enter">
         <PostBody post={homePost} />
       </main>
     </Container>

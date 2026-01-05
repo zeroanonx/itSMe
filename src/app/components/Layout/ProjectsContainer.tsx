@@ -22,7 +22,7 @@ export default function ProjectsContainer({ content }: Props) {
 
       <div className="space-y-30">
         {Object.entries(list).map(([groupName, projects]) => (
-          <section key={groupName} className="relative ">
+          <section key={groupName} className="relative slide-enter ">
             <div className="mb-6">
               <StrokeText
                 text={groupName}
@@ -50,7 +50,7 @@ export default function ProjectsContainer({ content }: Props) {
                 >
                   <div className="h-full flex items-start gap-3">
                     {project.icon && (
-                      <div className="w-[36px] h-full flex items-center justify-center shrink-0">
+                      <div className="w-9 h-full flex items-center justify-center shrink-0">
                         <Icon icon={project.icon} width="36" height="36" />
                       </div>
                     )}
