@@ -4,7 +4,7 @@ import * as React from "react";
 import { useRouter } from "next/navigation";
 import { CornerDownLeft, Search } from "lucide-react";
 import { Command } from "cmdk";
-import { Dialog, DialogContent } from "./dialog";
+import { Dialog, DialogContent } from "@/app/components/ui/dialog";
 import { DialogTitle } from "@radix-ui/react-dialog";
 import { useSearch } from "@/app/hooks";
 import { stripImagesAndTags } from "@/app/utils";

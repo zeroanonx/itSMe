@@ -1,5 +1,5 @@
-import Container from "../components/Layout/Container";
-import ProjectsContainer from "../components/Layout/ProjectsContainer";
+import Container from "@/app/components/layout/Container";
+import ProjectsContainer from "@/app/components/layout/ProjectsContainer";
 import { ProjectsType } from "../types";
 import { getAllPosts } from "../utils/modules/generateRoutes";
 

@@ -4,8 +4,8 @@ import { useEffect, useState, ReactNode } from "react";
 import { createPortal } from "react-dom";
 import { usePathname } from "next/navigation";
 
-import TreeBackground from "./TreeBackground";
-import PatternBackground from "./PatternBackground";
+import TreeBackground from "@/app/components/ui/TreeBackground";
+import PatternBackground from "@/app/components/ui/PatternBackground";
 import { BackgroundType, getBackgroundByPathname } from "@/app/hooks";
 
 export default function Background(): ReactNode {

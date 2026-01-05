@@ -1,7 +1,8 @@
 import { getAllPosts } from "@/app/utils/modules/generateRoutes";
 import { Post } from "../types";
-import BlogContainer from "../components/Layout/BlogContainer";
+import BlogContainer from "@/app/components/layout/BlogContainer";
 import dayjs from "dayjs";
+import Container from "@/app/components/layout/Container";
 
 //  强制在 build 时生成 HTML
 export const dynamic = "force-static";
@@ -9,9 +10,9 @@ export const dynamic = "force-static";
 // 不允许运行时再生成新路径
 export const dynamicParams = false;
 
-const dirName = "myself";
+const dirName = "interesting";
 
-export default function InterestingPage() {
+export default function BlogPage() {
   // 获取所有文章
   const posts = getAllPosts(dirName);
 
@@ -42,8 +43,10 @@ export default function InterestingPage() {
   });
 
   return (
-    <>
-      <BlogContainer posts={list} />
-    </>
+    <Container size="default">
+      <main className="prose mx-auto">
+        <BlogContainer posts={list} />
+      </main>
+    </Container>
   );
 }

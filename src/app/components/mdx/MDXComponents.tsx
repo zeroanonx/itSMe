@@ -2,7 +2,7 @@ import type { ComponentProps } from "react";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { JSX } from "react/jsx-runtime";
 
-import CodeBlock from "../Layout/CodeBlock";
+import CodeBlock from "@/app/components/layout/CodeBlock";
 import { highlightCode } from "@/app/utils/modules/shiki";
 import { slugify } from "@/app/utils";
 import LinkComponent from "@/app/components/ui/LinkComponent";

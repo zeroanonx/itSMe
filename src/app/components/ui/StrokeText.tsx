@@ -1,5 +1,4 @@
 import { cn } from "@/app/utils";
-import React from "react";
 import styled from "styled-components";
 
 const StrokeTextComponents = styled.span`

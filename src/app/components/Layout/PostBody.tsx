@@ -1,7 +1,7 @@
 import { Post } from "@/app/types";
 import MDXRenderer from "../mdx/MDXRenderer";
 import { parseMarkdownToc } from "@/app/utils";
-import { TableOfContents } from "./TableOfContents";
+import { TableOfContents } from "@/app/components/layout/TableOfContents";
 
 export default function PostBodyServer({ post }: { post: Post }) {
   const toc = parseMarkdownToc(post.content);

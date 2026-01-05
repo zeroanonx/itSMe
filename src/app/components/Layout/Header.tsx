@@ -1,5 +1,5 @@
 import Logo from "@/app/components/ui/Logo";
-import NavBar from "@/app/components/Layout/Navbar";
+import NavBar from "@/app/components/layout/Navbar";
 import Link from "next/link";
 
 export default function Header() {

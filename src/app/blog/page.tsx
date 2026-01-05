@@ -1,8 +1,8 @@
 import { getAllPosts } from "@/app/utils/modules/generateRoutes";
 import { Post } from "../types";
-import BlogContainer from "../components/Layout/BlogContainer";
+import BlogContainer from "@/app/components/layout/BlogContainer";
 import dayjs from "dayjs";
-import Container from "../components/Layout/Container";
+import Container from "@/app/components/layout/Container";
 
 //  强制在 build 时生成 HTML
 export const dynamic = "force-static";

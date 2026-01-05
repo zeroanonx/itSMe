@@ -1,5 +1,5 @@
 import { getPostBySlug } from "@/app/utils/modules/generateRoutes";
-import PostBody from "@/app/components/Layout/PostBody";
+import PostBody from "@/app/components/layout/PostBody";
 import Container from "./components/Layout/Container";
 
 export default function Index() {

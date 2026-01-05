@@ -2,10 +2,10 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getAllPosts, getPostBySlug } from "@/app/utils/modules/generateRoutes";
 import { MATE_TITLE } from "@/app/constants";
-import PostBody from "@/app/components/Layout/PostBody";
+import PostBody from "@/app/components/layout/PostBody";
 import { join } from "path";
 import MoveTop from "@/app/components/ui/MoveTop";
-import Container from "@/app/components/Layout/Container";
+import Container from "@/app/components/layout/Container";
 
 //  强制在 build 时生成 HTML
 export const dynamic = "force-static";
