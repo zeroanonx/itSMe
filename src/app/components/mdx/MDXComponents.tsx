@@ -10,10 +10,10 @@ import Logo from "@/app/components/ui/Logo";
 import Image from "@/app/components/ui/Image";
 import SvgHover from "@/app/components/others/SvgHover";
 import RetinaLine from "@/app/components/others/RetinaLine";
-import RuleDropShadow from "../others/RuleDropShadow";
-import GhostAnimation from "../others/GhostAnimation";
-import CircleShadowLoading from "../others/CircleShadowLoading";
-import BallBlurLoading from "../others/BallBlurLoading";
+import RuleDropShadow from "@/app/components/others/RuleDropShadow";
+import GhostAnimation from "@/app/components/others/GhostAnimation";
+import CircleShadowLoading from "@/app/components/others/CircleShadowLoading";
+import BallBlurLoading from "@/app/components/others/BallBlurLoading";
 
 type MDXComponents = ComponentProps<typeof MDXRemote>["components"];
 
