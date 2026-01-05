@@ -1,6 +1,6 @@
 import { getPostBySlug } from "@/app/utils/modules/generateRoutes";
 import PostBody from "@/app/components/layout/PostBody";
-import Container from "./components/Layout/Container";
+import Container from "@/app/components/layout/Container";
 
 export default function Index() {
   const homePost = getPostBySlug("index");

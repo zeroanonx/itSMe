@@ -8,6 +8,12 @@ import { slugify } from "@/app/utils";
 import LinkComponent from "@/app/components/ui/LinkComponent";
 import Logo from "@/app/components/ui/Logo";
 import Image from "@/app/components/ui/Image";
+import SvgHover from "@/app/components/others/SvgHover";
+import RetinaLine from "@/app/components/others/RetinaLine";
+import RuleDropShadow from "../others/RuleDropShadow";
+import GhostAnimation from "../others/GhostAnimation";
+import CircleShadowLoading from "../others/CircleShadowLoading";
+import BallBlurLoading from "../others/BallBlurLoading";
 
 type MDXComponents = ComponentProps<typeof MDXRemote>["components"];
 
@@ -35,11 +41,17 @@ const createHeading = (level: number) => {
 
 export const mdxComponents: MDXComponents = {
   pre: Pre,
-  LinkComponent,
-  Logo,
-  Image,
   h1: createHeading(1),
   h2: createHeading(2),
   h3: createHeading(3),
   h4: createHeading(4),
+  LinkComponent,
+  Logo,
+  Image,
+  SvgHover,
+  RetinaLine,
+  RuleDropShadow,
+  GhostAnimation,
+  CircleShadowLoading,
+  BallBlurLoading,
 };

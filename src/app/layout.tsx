@@ -8,10 +8,10 @@ import "@/app/assets/style/main.css";
 import "@/app/assets/style/prose.css";
 import "@/app/assets/style/markdown.css";
 
-import Header from "./components/Layout/Header";
-import Footer from "./components/Layout/Footer";
+import Header from "@/app/components/layout/Header";
+import Footer from "@/app/components/layout/Footer";
 import { TargetCursor } from "./components/ui/TargetCursor";
-import SlideEnterController from "./components/Layout/SlideEnterController";
+import SlideEnterController from "@/app/components/layout/SlideEnterController";
 import Background from "./components/ui/Background";
 
 // 使用 Next.js 内置的 Inter 字体
