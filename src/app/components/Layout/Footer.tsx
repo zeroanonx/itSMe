@@ -7,7 +7,7 @@ export default function Footer() {
     <footer className="flex items-center justify-center mt-10 px-4">
       <div className="w-full max-w-5xl black border-t border-zinc-100 px-0 py-4 dark:border-zinc-800 items-center justify-center md:flex md:justify-between">
         <a
-          href="https://github.com/LinHanlove"
+          href="https://github.com/zeroanonx"
           target="_blank"
           className="black"
         >
@@ -30,7 +30,7 @@ export default function Footer() {
         <div className="flex items-center gap-2 text-xs text-zinc-400">
           <p className="text-(--accent-secondary)">Find me on</p>
           <a
-            href="https://github.com/LinHanlove"
+            href="https://github.com/zeroanonx"
             className="flex items-center gap-1"
           >
             <Icon icon="mdi:github" className="text-lg" />
