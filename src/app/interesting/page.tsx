@@ -45,6 +45,14 @@ export default function BlogPage() {
   return (
     <Container size="default">
       <main className="prose mx-auto">
+        <header className="mb-20 text-center">
+          <h1 className="text-2xl! font-semibold tracking-tight">
+            Inspiration
+          </h1>
+          <p className="mt-2 text-sm text-muted-foreground text-(--accent-primary)">
+            下面是陆陆续续收藏的或者开发的有趣的东西，不一定有用，但挺有趣的。
+          </p>
+        </header>
         <BlogContainer posts={list} />
       </main>
     </Container>
