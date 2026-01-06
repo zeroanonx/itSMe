@@ -41,7 +41,7 @@ export default function Footer() {
               GitHub
             </a>
             <a
-              href="https://juejin.cn/user/2670060580903288/postse"
+              href="https://juejin.cn/user/2670060580903288"
               className="flex items-center gap-1"
             >
               <Icon icon="simple-icons:juejin" className="text-lg" />
