@@ -2,12 +2,15 @@
 
 import type { TocItem } from "@/app/utils";
 import { Icon } from "@iconify-icon/react";
+import { usePathname } from "next/navigation";
 
 type Props = {
   toc: TocItem[];
 };
 
 export function TableOfContents({ toc }: Props) {
+  const pathname = usePathname();
+  if (pathname === "/") return null;
   const onClick = (id: string) => {
     const el = document.getElementById(id);
     if (!el) return;
