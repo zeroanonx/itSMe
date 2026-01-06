@@ -155,7 +155,7 @@
   padding-left: 1.1428571em;
 }
 .prose pre code {
-  background-color: transparent;
+  background-color: transparent !important;
   border-width: 0;
   border-radius: 0;
   padding: 0;

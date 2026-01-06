@@ -12,5 +12,9 @@ export default function Container({ size = "default", children }: Props) {
     full: "max-w-none max-w-[98%]",
   }[size];
 
-  return <div className={`mx-auto px-4 ${sizeClass}`}>{children}</div>;
+  return (
+    <div className={`mx-auto container relative px-4 ${sizeClass}`}>
+      {children}
+    </div>
+  );
 }

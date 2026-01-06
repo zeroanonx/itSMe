@@ -1,7 +1,7 @@
 "use client";
 
-import { useRef, useState } from "react";
 import { Icon } from "@iconify-icon/react";
+import { useRef, useState } from "react";
 
 type Props = {
   html: string;
@@ -19,7 +19,7 @@ const LANG_MAP: Record<string, string> = {
   json: "json",
 };
 
-export default function CodeBlock({ html, language }: Props) {
+export const CodeBlock = ({ html, language }: Props) => {
   const preRef = useRef<HTMLDivElement>(null);
   const [copied, setCopied] = useState(false);
 
@@ -89,4 +89,4 @@ export default function CodeBlock({ html, language }: Props) {
       />
     </div>
   );
-}
+};

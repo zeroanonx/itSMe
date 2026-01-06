@@ -1,0 +1,573 @@
+---
+title: plasmo - 浏览器插件框架
+date: 2025-04-14 18:26:00
+duration: 30min
+type: note
+---
+
+## 一、什么是浏览器插件？
+
+浏览器插件是一种能够增强和定制浏览器功能的软件组件。
+浏览器插件可通过自定义界面、观察浏览器事件和修改网络来提升浏览体验。
+
+## 二、浏览器插件是如何构建的？
+
+使用 Web 技术开构建插件：`HTML`、`CSS`、`JS`。
+
+## 三、浏览器插件可以做什么？
+
+### - 设计界面
+
+大多数扩展程序都需要某种类型的用户互动才能正常运行。扩展程序平台提供了多种方式来向您的扩展程序添加互动。这些方法包括从工具栏、侧边栏、上下文菜单等触发的弹出式窗口：
+
+- 侧边栏（`Side panel`）
+- 操作项（`Action`）
+- 菜单项（`Menus`）
+
+### 2.控制浏览器
+
+借助的扩展程序 API，可以改变浏览器的工作方式：
+
+- 覆盖页面和设置项：`Manifest.json` 配置 `chrome_settings_overrides`
+- 扩展开发者工具：`Manifest.json` 配置 `devtools_page`
+- 显示通知：`chrome.notifications` API
+- 管理历史记录：`chrome.history` API
+- 控制标签页和窗口：`chrome.tabs`、`chrome.tabGroups` 和 `chrome.windows`等 API
+- 键盘快捷键：`chrome.commands` API
+- 身份认证：`chrome.identity` API
+- 管理插件：`chrome.management` API
+- 提供建议：`chrome.omnibox` API
+- 更新 Chrome 设置：`chrome.proxy` API
+- 下载管理：`chrome.downloads` API
+- 书签：`chrome.bookmarks` API
+- ...
+
+### 3. 控制网络
+
+可以通过注入脚本、拦截网络请求以及使用 Web API 与网页进行交互，来控制和修改 Web：
+
+- 注入 `JS` 和 `CSS` 文件
+- 访问当前 `Tab` 页
+- 控制 `Web` 请求
+- 录音和屏幕截图
+- 修改网站设置
+
+在众多的 Web 扩展开发框架中，WXT 和 Plasmo 凭借其丰富的工具和特性，以及简化的[开发流程](https://so.csdn.net/so/search?q=%E5%BC%80%E5%8F%91%E6%B5%81%E7%A8%8B&spm=1001.2101.3001.7020)，成为开发者们的首选。
+
+### Plasmo
+
+[官网链接](https://docs.plasmo.com/)
+`Plasmo` 是一个专为浏览器扩展开发者设计的全方位平台。它集成了开发、测试和发布扩展所需的一系列工具和服务，旨在简化整个开发流程，提高开发效率，并帮助开发者快速构建出功能强大、性能卓越的浏览器扩展。
+
+#### 特征
+
+- 支持 Recat + Typescript
+- 声明式开发 ， 自动生成 `mainfest.json`（MV3，Manifest Version 3）
+- 热加载
+- `.env\*` 文件
+- 远程代码打包（例如用于 gtag4）
+- 自动化部署（通过 BPP）
+
+#### 系统要求
+
+- Node.js 16.x 或更高版本
+- MacOS、Windows 或 Linux
+- 强烈推荐使用 pnpm
+
+#### 基本使用
+
+使用下面命令初始化项目
+
+::: code-group
+
+```sh [pnpm]
+pnpm create plasmo
+```
+
+```sh [yarn]
+yarn create plasmo
+```
+
+```sh [npm]
+npm create plasmo
+```
+
+此命令将会创建一个最简单的 Plasmo 浏览器插件项目，结构如下:
+
+| 文件名            | 描述                                                                                                  |
+| ----------------- | ----------------------------------------------------------------------------------------------------- |
+| `popup.tsx`       | 该文件导出默认的 React 组件，该组件会渲染到您弹出的页面中。这就是您在扩展弹出窗口上工作所需的全部内容 |
+| `assets Plasmo`   | 会自动生成一些小图标并将它们从`icon512.png` 文件配置到 manifest                                       |
+| `package.json`    | 常用的 Node.js 项目描述符                                                                             |
+| `.prettierrc.cjs` | 配置代码格式化                                                                                        |
+| `.gitignore`      | git 忽略文件                                                                                          |
+| `readme.md`       | READEME 文件                                                                                          |
+| `tsconfig.json`   | TypeScript 配置文件                                                                                   |
+
+- 弹出修改进入 popup.tsx
+- 选项页面修改进入 options.tsx
+- 内容脚本修改进入 content.ts
+- 后台服务修改进入 background.ts
+
+  #### 目录
+
+  您还可以在它们自己的目录中组织这些文件
+
+```json
+  ├───assets
+  | └───icon512.png
+  ├───popup
+  | ├───index.tsx
+  | └───button.tsx
+  ├───options
+  | ├───index.tsx
+  | ├───utils.ts
+  | └───input.tsx
+  ├───contents
+  | ├───site-one.ts
+  | ├───site-two.ts
+  | └───site-three.ts
+```
+
+最后，您还可以将源代码放在 `src` 子目录下，而不是将源代码放在根目录中。请注意，`asset` 和其他配置文件仍需要在根目录中
+
+#### 在源代码中使用 src 目录
+
+要使 TypeScript 正常工作，您需要在`tsconfig.json` 文件 `paths` 中将`~`前缀指向`./src/*`
+新配置如下所示：
+
+```json
+{
+  "extends": "plasmo/templates/tsconfig.base",
+  "exclude": ["node_modules"],
+  "include": [".plasmo/**/*", "./**/*.ts", "./**/*.tsx"],
+  "compilerOptions": {
+    "paths": {
+      "~_": ["./src/_"]
+    },
+    "baseUrl": "."
+  }
+}
+```
+
+请确保**所有源文件**（包括 Plasmo 的入口文件，如 `popup.tsx`、`options.tsx`、`background.ts` 等）都在 `src` 目录中。否则 Plasmo 将不知道在哪里可以找到入口文件，这将导致一个空的扩展程序
+
+#### 最重要的配置（mainfest.json）
+
+在我们开发浏览器插件的过程中，`manifest` 无疑是我们的基石性文件，也是浏览器插件唯一要求的必要文件，里面的配置涵盖了我们所有想要实现的功能，因此在开发浏览器插件之前，对 manifest 的了解是非常有必要的
+
+##### 常见的配置
+
+```json
+{
+  "name": "Getting Started Example", // 插件名称
+  "description": "Build an Extension!", // 简介
+  "version": "- 0", // 版本号
+  "manifest_version": 3, // 浏览器版本，目前一共有三种版本，分别是 1、2、和最新版 3
+  "background": {
+    // 后台脚本，第一次安装后，不会再次执行，因此特别适合做全局的状态管理和通信的中间站，
+    // 并且这个环境中运行的脚本可以跨域，适合请求外部资源
+    "service_worker": "background.js"
+  },
+  "action": {// 控制浏览器插件在 tab 栏中的表现的
+    "default_popup": "popup.html",// popup 的内容
+    "default_icon": {
+      "16": "/images/get_started16.png",
+      "32": "/images/get_started32.png",
+      "48": "/images/get_started48.png",
+      "128": "/images/get_started128.png"
+    }
+  },
+  "icons": { // 配置图标
+    "16": "/images/get_started16.png",
+    "32": "/images/get_started32.png",
+    "48": "/images/get_started48.png",
+    "128": "/images/get_started128.png"
+  },
+  "permissions": [
+    // 权限
+    // https://developer.chrome.com/docs/extensions/develop/concepts/declare-permissions?hl=zh-cn
+    "storage",
+    "activeTab",
+    "scripting",
+    "contextMenus",
+    "notifications",
+    "tabs"
+  ],
+  "options_page": "options.html",
+  "content_scripts": [// 内容脚本注入
+    {
+    "js": [ "content.js"],
+    "css":[ "content.css" ],
+    "matches": ["<all_urls>"] // 代表可以匹配所有的 url，支持正则匹配。
+    }
+  ]，
+  "commands": { // 键盘快捷键 最多支持四个
+    "_execute_browser_action": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+F",
+        "mac": "MacCtrl+Shift+F"
+      },
+      "description": "Opens popup.html"
+    }
+  }
+}
+```
+
+#### 运行开发环境服务
+
+当您创建了您的项目，您可以通过导航到您项目的目录，运行以下命令后，开始开发您的扩展程序：
+
+```sh title="pnpm"
+pnpm dev
+```
+
+```sh title="yarn"
+yarn dev
+```
+
+```sh title="npm"
+npm run dev
+```
+
+这将会为您的扩展程序创建一个开发包和一个可以**热加载**的开发环境，在文件更改的时候自动更新您的扩展包，并在源代码更改时重新加载您的浏览器
+
+#### 在浏览器中加载扩展程序
+
+- 前往 `chrome://extensions` 并启用开发者模式
+
+- 单击 `Load Unpacked（加载已解压的扩展程序）` 并导航到扩展程序的 `build/chrome-mv3-dev（或 build/chrome-mv3-prod`）目录加载您的插件
+- 查看您的弹出窗口，请单击 工具栏上的 pin 图标，然后单击您的扩展程序，将扩展程序固定到 Chrome 工具栏以便于访问
+
+#### 创建生产包
+
+要创建用于分发的生产包，请运行：
+
+::: code-group
+
+```sh [pnpm]
+pnpm build
+```
+
+```sh [yarn]
+yarn build
+```
+
+```sh [npm]
+npm run build
+```
+
+您可以选择为构建命令提供`--zip` 标志，用来创建上传到 Chrome 商店的的 zip 包
+::: code-group
+
+```sh [pnpm]
+pnpm build -- --zip
+```
+
+```sh [yarn]
+yarn build -- --zip
+```
+
+```sh [npm]
+npm run build -- --zip
+```
+
+**注意**:由于 Plasmo 的默认 Typescript 配置将左右源文件视为模块，若果您的代码没有任何导入导出，则必须在文件开头添加一行 `export {}` (您将会在创建第一个脚本内容时看到此警告)
+
+#### 添加弹出页面
+
+创建一个 `popup.tsx` 或 `popup/index.tsx` 文件来导出默认的 React 组件。这样您的弹出窗口就可以使用了
+
+有关示例，请参见 [with-popup](https://link.juejin.cn?target=https%3A%2F%2Fgithub.com%2FPlasmoHQ%2Fexamples%2Ftree%2Fmain%2Fwith-popup)
+
+#### 添加新标签页
+
+创建一个 `newtab.tsx` 或 `newtab/index.tsx` 文件，Plasmo 将负责渲染您的新标签页
+
+有关示例，请参见 [with-newtab](https://link.juejin.cn?target=https%3A%2F%2Fgithub.com%2FPlasmoHQ%2Fexamples%2Ftree%2Fmain%2Fwith-newtab)
+
+#### 添加后台服务
+
+在根目录创建一个 `background.ts` 文件
+
+有关示例，请参见 [with-background](https://link.juejin.cn?target=https%3A%2F%2Fgithub.com%2FPlasmoHQ%2Fexamples%2Ftree%2Fmain%2Fwith-background)
+
+#### 内容脚本
+
+内容脚本在网页上下文中运行。有以下最常见的用例：
+
+- 从当前网页抓取数据
+- 从当前网页选择、查找、样式化元素
+- 将 UI 元素注入到当前网页
+
+#### 添加单个内容脚本
+
+创建一个 `content.ts` 来导出空对象的文件（或导入一些库）
+
+有关示例，请参见 [with-content-script](https://link.juejin.cn?target=https%3A%2F%2Fgithub.com%2FPlasmoHQ%2Fexamples%2Ftree%2Fmain%2Fwith-content-script)
+
+#### 注入 main world
+
+如果您想从内容脚本访问 `window` 对象，则必须注入 `main world`
+目前，无法通过 `manifest` 的 `content_scripts` 字段以声明方式将内容脚本注入 `main world`
+相反，`Chrome`提供了一个 `chrome.scripting.executeScript` API，允许您将内容脚本注入 `main world`
+
+```ts
+chrome.scripting.executeScript(
+    {
+      target: {
+        tabId // the tab you want to inject into
+      },
+      world: "MAIN", // MAIN to access the window object
+      func: windowChanger // function to inject
+    },
+    () => {
+      console.log("Background script got callback after injection")
+    }
+  )
+}
+```
+
+对于 `func` 的值，您可以从项目中传入一个 Typescript 函数，该函数会在您的扩展程序打包时自动转换为 JavaScript 函数
+有关示例，请参见 [with-main-world-content-script-injection](https://link.juejin.cn?target=https%3A%2F%2Fgithub.com%2FPlasmoHQ%2Fexamples%2Ftree%2Fmain%2Fwith-main-world-content-script-injection)
+
+#### 注入 UI 元素
+
+Plasmo 支持通过脚本内容将 React 组件挂载到当前网页中
+
+- 重命名现有内容脚本或使用 `tsx` 扩展名创建一个新的内容脚本
+
+1. 导出默认的 React 组件
+2. 完成
+   有关示例，请参见 [with-content-scripts-ui](https://link.juejin.cn?target=https%3A%2F%2Fgithub.com%2FPlasmoHQ%2Fexamples%2Ftree%2Fmain%2Fwith-content-scripts-ui)
+
+#### 资源
+
+`Plasmo` 处理 `assets` 目录中的一些文件。建议使用此功能来存储您可能希望内联加载到源代码中的任何资源（而不是将它们复制到构建的包中）
+
+#### 扩展程序图标 assets/icon512.png
+
+框架使用 `assets/icon512.png` 文件作为扩展程序图标。它会自动为最终构建包生成更小分辨率版本的图标。因此，您需要处理的只是 `512x512` 版本
+
+#### 内联导入图像资源
+
+在扩展程序中加载图像的最简单方法是使用该 `data-base64` 方案。这会将图像转为 base64 编码数据内联到扩展程序的构建包中
+
+```ts
+import someCoolImage from "data-base64:~assets/some-cool-image.png"
+
+...
+
+<img src={someCoolImage} alt="Some pretty cool image" />
+```
+
+#### 环境变量
+
+Plasmo 框架与 `Next.js` 类似使用`dotenvpackage`的 `.env` 文件级联/覆盖策略。要添加可访问扩展程序的公共环境变量，请创建如下`.env`文件：
+
+```env
+PLASMO_PUBLIC_SHIP_NAME=ncc-1701
+PLASMO_PUBLIC_SHIELD_FREQUENCY=42
+
+PRIVATE*KEY=xxx
+```
+
+只有带 `PLASMO_PUBLIC*` 前缀的环境变量才会在您的扩展程序的构建版本中暴露，然后，您才可以在任何您的扩展程序的源文件中使用他们：
+
+```ts
+// For TSX (popups, options):
+const FrontHull = () => <h1>{process.env.PLASMO_PUBLIC_SHIP_NAME}</h1>;
+
+// For TS (content scripts or background-scripts):
+const shield = new Shield(process.env.PLASMO_PUBLIC_SHIELD_FREQUENCY);
+
+// Will throw error/be undefined
+console.log(process.env.PRIVATE_KEY);
+```
+
+若要覆盖使用 `plasmo build` 构建的生产包中的变量，您可以提供一个 .`env.production` 文件。由于 Plasmo 会**_级联_**这些 env 文件，因此您只需指定要替换的变量
+您可能还会喜欢带有环境变量的 `Typescript IntelliSence`，请使用以下声明创建一个 `index.d.ts` 文件
+
+```ts
+declare namespace NodeJS {
+  interface ProcessEnv {
+    PLASMO_PUBLIC_SHIP_NAME?: string;
+    PLASMO_PUBLIC_SHIELD_FREQUENCY?: number;
+  }
+}
+```
+
+##### 在远程代码导入语句中使用 `env`
+
+```ts
+import "https://www.plasmo.com/js?id=$PLASMO_PUBLIC_ITERO";
+```
+
+##### 在 manifest 覆盖中使用 env
+
+Plasmo 使您能够通过 `package.json` 文件的 `manifest` 属性覆盖最终生成的扩展程序的 manifest。更强大的是，Plasmo 还可以解析任何在 manifest 覆盖中使用的环境变量：
+
+```json
+"manifest": {
+  "key": "$CRX_PUBLIC_KEY"
+}
+```
+
+您可以同时使用公共（以 `PLASMO_PUBLIC` 为前缀）和私有环境变量
+注意： 如果 Plasmo 找不到环境变量，它将删除密钥
+
+#### 自动提交
+
+Plasmo 框架附带一个方便的 GitHub 操作，称为`Browser Platform Publish或`BPP`。此操作将自动将您的扩展程序发布到所有受支持的浏览器扩展市场。它默认在手动触发器上运行，但更改其配置可以使其在每次推送时运行。
+在开始发布您的扩展程序前，请先设置`keys.json `文件
+
+```json
+{
+  "$schema": "https://raw.githubusercontent.com/PlasmoHQ/bpp/v2/keys.schema.json"
+}
+```
+
+#### 常用 api
+
+- notifications
+  [用于在系统任务栏中向用户显示通知](https://developer.chrome.com/docs/extensions/reference/api/notifications?hl=zh-cn)
+
+```ts
+chrome.notifications.create(
+  {
+    type: "basic", // 通知类型
+    title: "Atom Honeycomb", // 标题
+    message: "Atom Honeycomb", // 内容
+    iconUrl: icon, // 图标
+  },
+  (notificationId) => {
+    // 回调函数 notificationId --- 当前通知Id
+    chrome.notifications.clear(notificationId);
+  }
+);
+```
+
+- chrome.tabs.create
+  [创建新标签页](https://developer.chrome.com/docs/extensions/reference/api/tabs?hl=zh-cn#method-create)
+
+```ts
+/**
+ * @function 创建一个新的标签页
+ */
+export const createTab = (option: any) => {
+  const { chrome, url } = option;
+  chrome.tabs.create({ url: `../tabs/${url}.html` });
+};
+```
+
+- chrome.tabs.query
+  [获取具有指定属性的所有标签页，如果未指定任何属性，则获取所有标签页](https://developer.chrome.com/docs/extensions/reference/api/tabs?hl=zh-cn#method-query)
+- chrome.tabs.sendMessage
+  [向指定标签页中的 content 脚本发送一条消息，并在发回响应时运行一个可选回调](https://developer.chrome.com/docs/extensions/reference/api/tabs?hl=zh-cn#method-sendMessage)
+
+```ts
+/**
+ * @function 通知信息
+ * type 类型
+ * origin 来源
+ * data 数据
+ */
+chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+  if (!tabs.length) return;
+  chrome.tabs.sendMessage(
+    tabs[0].id,
+    "我向contentScript发送了一条消息",
+    (res) => {
+      console.log("popup接收到了content的回复：", res);
+    }
+  );
+});
+```
+
+- chrome.runtime.sendMessage
+  [向扩展程序或其他扩展程序/应用中的事件监听器发送一条消息。请注意，扩展程序无法使用此方法向内容脚本发送消息](https://developer.chrome.com/docs/extensions/reference/api/runtime?hl=zh-cn#method-sendMessage)
+
+```ts
+/**
+ * @function 通知{popup,background}信息
+ */
+export const sendMessageRuntime = (option: TYPE.ISendMessage) => {
+  const { type, origin, data, chrome } = option;
+  return new Promise((resolve, reject) => {
+    chrome.runtime.sendMessage(
+      {
+        type,
+        origin,
+        data,
+      },
+      (res: any) => {
+        resolve(res);
+      }
+    );
+  });
+};
+```
+
+- chrome.runtime.onMessage.addListener
+  监听消息
+
+  ```ts
+  /**
+   * @function 监听来自 popup 的消息
+   */
+  chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+    console.log("content:" + "收到来自 popup 的消息--->", message, sender);
+    sendResponse("收到信息后向 popup 发送的回复");
+  });
+  ```
+
+  - chrome.contextMenus.create
+    [创建右键菜单（上下文菜单添加项）](https://developer.chrome.com/docs/extensions/reference/api/contextMenus?hl=zh-cn#method-create)
+  - chrome.contextMenus.onClicked.addListener
+    [右键菜单点击事件](https://developer.chrome.com/docs/extensions/reference/api/contextMenus?hl=zh-cn#method-create)
+    在背景脚本执行
+
+  ```ts
+  /**
+   * 右键菜单列表
+   */
+  export const menuList = [
+    {
+      id: "1",
+      title: "菜单 1",
+      onclick: function () {
+        console.log("点击菜单 1");
+      },
+    },
+    {
+      id: "2",
+      title: "菜单 2",
+      onclick: function () {
+        console.log("点击菜单 2");
+      },
+    },
+  ];
+  /**
+   * @function 创建右键菜单
+   */
+  menuList.forEach((item) => {
+    chrome.contextMenus.create({
+      id: item.id,
+      title: item.title,
+      contexts: ["all"],
+    });
+  });
+
+  /**
+   * @function 右键菜单点击事件
+   */
+  chrome.contextMenus.onClicked.addListener((info, tab) => {
+    const active = menuList.find((item) => item.id === info.menuItemId);
+    if (active) active.onclick();
+  });
+  ```
+
+#### 参考文档
+
+- [chrome 插件之通信](https://juejin.cn/post/7188738032248291385)
+- [浏览器插件开发 api](https://developer.chrome.com/docs/extensions/reference/api/action?hl=zh-cn)
