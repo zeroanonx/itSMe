@@ -25,6 +25,7 @@ export const CodeBlock = ({ html, language }: Props) => {
 
   async function handleCopy() {
     if (!preRef.current) return;
+    console.log("preRef.current", preRef.current.innerText);
 
     await navigator.clipboard.writeText(preRef.current.innerText);
     setCopied(true);

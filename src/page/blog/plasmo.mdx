@@ -220,17 +220,20 @@ npm create plasmo
 
 当您创建了您的项目，您可以通过导航到您项目的目录，运行以下命令后，开始开发您的扩展程序：
 
-```sh title="pnpm"
+<CodeGroup>
+```pnpm
 pnpm dev
 ```
 
-```sh title="yarn"
+```yarn
 yarn dev
 ```
 
-```sh title="npm"
+```npm
 npm run dev
 ```
+
+</CodeGroup>
 
 这将会为您的扩展程序创建一个开发包和一个可以**热加载**的开发环境，在文件更改的时候自动更新您的扩展包，并在源代码更改时重新加载您的浏览器
 
@@ -245,34 +248,39 @@ npm run dev
 
 要创建用于分发的生产包，请运行：
 
-::: code-group
+<CodeGroup>
 
-```sh [pnpm]
+```pnpm
 pnpm build
 ```
 
-```sh [yarn]
+```yarn
 yarn build
 ```
 
-```sh [npm]
+```npm
 npm run build
 ```
 
-您可以选择为构建命令提供`--zip` 标志，用来创建上传到 Chrome 商店的的 zip 包
-::: code-group
+</CodeGroup>
 
-```sh [pnpm]
+您可以选择为构建命令提供`--zip` 标志，用来创建上传到 Chrome 商店的的 zip 包
+
+<CodeGroup>
+
+```pnpm
 pnpm build -- --zip
 ```
 
-```sh [yarn]
+```yarn
 yarn build -- --zip
 ```
 
-```sh [npm]
+```npm
 npm run build -- --zip
 ```
+
+</CodeGroup>
 
 **注意**:由于 Plasmo 的默认 Typescript 配置将左右源文件视为模块，若果您的代码没有任何导入导出，则必须在文件开头添加一行 `export {}` (您将会在创建第一个脚本内容时看到此警告)
 

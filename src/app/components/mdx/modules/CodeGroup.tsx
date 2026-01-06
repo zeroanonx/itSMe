@@ -1,51 +1,69 @@
 "use client";
 
-import { createContext, useContext, useState, useRef, useEffect } from "react";
+import { createContext, useContext, useRef, useState } from "react";
 import { CodeBlock } from "./CodeBlock";
 import type { CodeItemProps } from "../mdx.server";
 
-const CodeGroupContext = createContext<{
-  register: (item: CodeItemProps) => number;
-  active: number;
-  setActive: (i: number) => void;
-} | null>(null);
+import {
+  Tabs,
+  TabsList,
+  TabsTrigger,
+  TabsContent,
+} from "@/app/components/shadcn/tabs";
+
+type Ctx = {
+  register: (item: CodeItemProps) => void;
+};
+
+const CodeGroupContext = createContext<Ctx | null>(null);
 
 export function CodeGroup({ children }: { children: React.ReactNode }) {
   const items = useRef<CodeItemProps[]>([]);
   const [, forceUpdate] = useState({});
-  const [active, setActive] = useState(0);
+
+  const keys = useRef(new Set<string>());
 
   const register = (item: CodeItemProps) => {
-    const index = items.current.length;
+    const key = `${item.language}:${item.title ?? ""}:${item.html}`;
+
+    if (keys.current.has(key)) return;
+
+    keys.current.add(key);
     items.current.push(item);
     forceUpdate({});
-    return index;
   };
 
+  if (items.current.length === 0) {
+    return (
+      <CodeGroupContext.Provider value={{ register }}>
+        {children}
+      </CodeGroupContext.Provider>
+    );
+  }
+
   return (
-    <CodeGroupContext.Provider value={{ register, active, setActive }}>
-      <div className="my-6">
-        <div className="flex gap-2 mb-2">
+    <CodeGroupContext.Provider value={{ register }}>
+      <Tabs defaultValue="0" className="my-6">
+        <TabsList className="mb-2">
           {items.current.map((item, i) => (
-            <button
+            <TabsTrigger
               key={i}
-              onClick={() => setActive(i)}
-              className={i === active ? "font-bold" : "opacity-60"}
+              value={String(i)}
+              className="font-mono text-xs"
             >
               {item.title || item.language}
-            </button>
+            </TabsTrigger>
           ))}
-        </div>
+        </TabsList>
 
-        {items.current[active] && (
-          <CodeBlock
-            html={items.current[active].html}
-            language={items.current[active].language}
-          />
-        )}
+        {items.current.map((item, i) => (
+          <TabsContent key={i} value={String(i)} className="mt-0">
+            <CodeBlock html={item.html} language={item.language} />
+          </TabsContent>
+        ))}
 
         {children}
-      </div>
+      </Tabs>
     </CodeGroupContext.Provider>
   );
 }
