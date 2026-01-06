@@ -1,3 +1,4 @@
+import { systemPrompt } from "@/app/constants/modules/systemPrompt";
 import { useState } from "react";
 
 export function useChat() {
@@ -14,8 +15,7 @@ export function useChat() {
         messages: [
           {
             role: "system",
-            content:
-              "你是一个有趣、可爱的女孩，请始终用俏皮、生动的中文回答用户的问题。",
+            content: systemPrompt,
           },
           {
             role: "user",
@@ -25,18 +25,69 @@ export function useChat() {
       }),
     });
 
-    if (!res.body) return;
+    if (!res.body) {
+      setLoading(false);
+      return;
+    }
 
     const reader = res.body.getReader();
     const decoder = new TextDecoder();
+    let buffer = "";
 
-    while (true) {
-      const { done, value } = await reader.read();
-      if (done) break;
-      setText((t) => t + decoder.decode(value));
+    try {
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+
+        buffer += decoder.decode(value, { stream: true });
+
+        // SSE events are separated by "\n\n"
+        const parts = buffer.split("\n\n");
+        // process all complete events, leave the last partial in buffer
+        for (let i = 0; i < parts.length - 1; i++) {
+          const event = parts[i]
+            .split("\n")
+            .map((line) =>
+              line.startsWith("data:") ? line.slice(5).trim() : ""
+            )
+            .filter(Boolean)
+            .join("\n");
+
+          if (!event) continue;
+          if (event === "[DONE]") continue;
+
+          try {
+            const obj = JSON.parse(event);
+            if (typeof obj.response === "string") {
+              setText((t) => t + obj.response);
+            }
+          } catch {
+            // ignore non-json fragments
+          }
+        }
+
+        buffer = parts[parts.length - 1];
+      }
+
+      // process any remaining buffered event
+      const remaining = buffer
+        .split("\n")
+        .map((line) => (line.startsWith("data:") ? line.slice(5).trim() : ""))
+        .filter(Boolean)
+        .join("\n");
+      if (remaining && remaining !== "[DONE]") {
+        try {
+          const obj = JSON.parse(remaining);
+          if (typeof obj.response === "string") {
+            setText((t) => t + obj.response);
+          }
+        } catch {
+          // ignore
+        }
+      }
+    } finally {
+      setLoading(false);
     }
-
-    setLoading(false);
   }
 
   return { text, send, loading };
