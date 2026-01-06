@@ -3,7 +3,8 @@ import { MDXRemote } from "next-mdx-remote/rsc";
 import { JSX } from "react/jsx-runtime";
 import { highlightCode } from "@/app/utils/modules/shiki";
 import { slugify } from "@/app/utils";
-import { CodeBlock } from "./modules/CodeBlock";
+import { CodeGroup } from "./modules/CodeGroup";
+import { CodeSlot } from "./modules/CodeSlot";
 
 type MDXComponents = ComponentProps<typeof MDXRemote>["components"];
 export type CodeItemProps = {
@@ -12,18 +13,20 @@ export type CodeItemProps = {
   title?: string;
 };
 
-const Pre = async (props: any) => {
+export const Pre = async (props: any) => {
   const child = props.children;
+  if (!child?.props?.children) return <pre {...props} />;
 
-  if (child?.props?.children) {
-    const code = child.props.children.trim();
-    const lang = child.props.className?.replace("language-", "");
+  const code = child.props.children.trim();
+  const className = child.props.className || "";
+  const meta = child.props.meta as string | undefined;
 
-    const html = await highlightCode(code, lang);
-    return <CodeBlock html={html} language={lang} />;
-  }
+  const language = className.replace("language-", "") || "text";
+  const title = meta && (/title="(.+?)"/.exec(meta)?.[1] ?? meta);
 
-  return <pre {...props} />;
+  const html = await highlightCode(code, language);
+
+  return <CodeSlot html={html} language={language} title={title} />;
 };
 
 const createHeading = (level: number) => {
@@ -35,6 +38,7 @@ const createHeading = (level: number) => {
 };
 export const mdxServerComponents: MDXComponents = {
   pre: Pre,
+  CodeGroup,
   h1: createHeading(1),
   h2: createHeading(2),
   h3: createHeading(3),
