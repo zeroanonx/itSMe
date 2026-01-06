@@ -1,5 +1,3 @@
-"use client";
-
 import { CodeBlock } from "./modules/CodeBlock";
 
 import LinkComponent from "@/app/components/ui/LinkComponent";
