@@ -40,7 +40,9 @@ export function useChat(): UseChatReturn {
     setInput("");
 
     try {
-      const res = await fetch("/api/ai/chat", {
+      const isProd = process.env.NODE_ENV === "production";
+      const baseURL = isProd ? "https://zeroanon.com" : "";
+      const res = await fetch(`${baseURL}/api/ai/chat`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

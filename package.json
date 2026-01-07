@@ -1,7 +1,8 @@
 {
   "private": true,
   "scripts": {
-    "dev": "pnpm build:search && next dev --port 3001 --turbopack",
+    "dev": "pnpm build:search && next dev --port 3001 --turbopack ",
+    "dev:test": "cross-env NODE_ENV=test pnpm dev",
     "build": "pnpm build:search && next build",
     "start": "next start",
     "build:search": "tsx scripts/build-search-index.ts"
@@ -54,6 +55,7 @@
     "@types/react": "npm:types-react@19.0.0-rc.1",
     "@types/react-dom": "npm:types-react-dom@19.0.0-rc.1",
     "autoprefixer": "^10.4.19",
+    "cross-env": "^10.1.0",
     "react": "^19.2.1",
     "react-dom": "^19.2.1",
     "typescript": "^5.5.2"
