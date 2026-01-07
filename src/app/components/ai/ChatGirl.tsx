@@ -5,7 +5,7 @@ import { useChat } from "@/app/hooks/modules/useChat";
 import { useGirlMemory } from "@/app/hooks/modules/useGirlMemory";
 
 export default function ChatGirl() {
-  const { messages, input, setInput, send, loading } = useChat("main-session");
+  const { messages, input, setInput, send, loading } = useChat();
   const { remember } = useGirlMemory();
   const bottomRef = useRef<HTMLDivElement>(null);
 

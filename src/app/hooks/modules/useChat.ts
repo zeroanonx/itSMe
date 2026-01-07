@@ -16,7 +16,7 @@ type UseChatReturn = {
   loading: boolean;
 };
 
-export function useChat(sessionId?: string): UseChatReturn {
+export function useChat(): UseChatReturn {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
