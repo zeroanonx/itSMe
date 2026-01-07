@@ -2,7 +2,6 @@
   "private": true,
   "scripts": {
     "dev": "pnpm build:search && next dev --port 3001 --turbopack ",
-    "dev:test": "cross-env NODE_ENV=development pnpm dev",
     "build": "pnpm build:search && cross-env NODE_ENV=production  next build",
     "start": "next start",
     "build:search": "tsx scripts/build-search-index.ts"
