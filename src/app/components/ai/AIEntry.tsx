@@ -25,7 +25,7 @@ export default function AIEntry() {
         className="
     fixed bottom-6 right-6 z-50
     h-14 w-14 rounded-full
-    bg-gradient-to-br from-indigo-500 to-purple-600
+    bg-linear-to-br from-indigo-500 to-purple-600
     text-white flex items-center justify-center
     shadow-xl transform-gpu
     hover:scale-105 active:scale-95

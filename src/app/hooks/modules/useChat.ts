@@ -1,94 +1,114 @@
-import { systemPrompt } from "@/app/constants/modules/systemPrompt";
-import { useState } from "react";
+"use client";
 
-export function useChat() {
-  const [text, setText] = useState("");
+import { useState, useRef } from "react";
+import { v4 as uuidv4 } from "uuid";
+
+export type ChatMessage = {
+  role: "user" | "assistant" | "system";
+  content: string;
+};
+
+type UseChatReturn = {
+  messages: ChatMessage[];
+  input: string;
+  setInput: (v: string) => void;
+  send: (content: string) => Promise<void>;
+  loading: boolean;
+};
+
+export function useChat(sessionId?: string): UseChatReturn {
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
+  const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
+  const assistantIdRef = useRef<string | null>(null);
+
+  // 每个会话一个固定 ID
+  const _sessionId = useRef(uuidv4()).current;
 
   async function send(content: string) {
+    if (!content.trim()) return;
+    const userMessage: ChatMessage = { role: "user", content };
+    const assistantMessage: ChatMessage = { role: "assistant", content: "" };
+    const assistantId = `${Date.now()}-${Math.random()
+      .toString(36)
+      .slice(2, 8)}`;
+    assistantIdRef.current = assistantId;
+
+    // 更新消息状态
+    setMessages((prev) => [...prev, userMessage, assistantMessage]);
     setLoading(true);
-    setText("");
-
-    const res = await fetch("/api/ai/chat", {
-      method: "POST",
-      body: JSON.stringify({
-        messages: [
-          {
-            role: "system",
-            content: systemPrompt,
-          },
-          {
-            role: "user",
-            content,
-          },
-        ],
-      }),
-    });
-
-    if (!res.body) {
-      setLoading(false);
-      return;
-    }
-
-    const reader = res.body.getReader();
-    const decoder = new TextDecoder();
-    let buffer = "";
+    setInput("");
 
     try {
+      const res = await fetch("/api/ai/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          sessionId: _sessionId,
+          messages: [...messages, userMessage],
+          stream: true,
+        }),
+      });
+
+      if (!res.body) throw new Error("No response body");
+
+      const reader = res.body.getReader();
+      const decoder = new TextDecoder();
+      let buffer = "";
+
       while (true) {
         const { done, value } = await reader.read();
         if (done) break;
-
         buffer += decoder.decode(value, { stream: true });
 
-        // SSE events are separated by "\n\n"
         const parts = buffer.split("\n\n");
-        // process all complete events, leave the last partial in buffer
         for (let i = 0; i < parts.length - 1; i++) {
-          const event = parts[i]
-            .split("\n")
-            .map((line) =>
-              line.startsWith("data:") ? line.slice(5).trim() : ""
-            )
-            .filter(Boolean)
-            .join("\n");
-
-          if (!event) continue;
-          if (event === "[DONE]") continue;
-
+          const line = parts[i].replace(/^data:\s*/, "");
+          if (!line || line === "[DONE]") continue;
           try {
-            const obj = JSON.parse(event);
+            const obj = JSON.parse(line);
             if (typeof obj.response === "string") {
-              setText((t) => t + obj.response);
+              setMessages((prev) =>
+                prev.map((m, idx) =>
+                  idx === prev.length - 1
+                    ? { ...m, content: prev[idx].content + obj.response }
+                    : m
+                )
+              );
             }
-          } catch {
-            // ignore non-json fragments
-          }
+          } catch {}
         }
-
         buffer = parts[parts.length - 1];
       }
 
-      // process any remaining buffered event
-      const remaining = buffer
-        .split("\n")
-        .map((line) => (line.startsWith("data:") ? line.slice(5).trim() : ""))
-        .filter(Boolean)
-        .join("\n");
-      if (remaining && remaining !== "[DONE]") {
+      // 处理剩余
+      if (buffer && buffer !== "[DONE]") {
         try {
-          const obj = JSON.parse(remaining);
+          const obj = JSON.parse(buffer.replace(/^data:\s*/, ""));
           if (typeof obj.response === "string") {
-            setText((t) => t + obj.response);
+            setMessages((prev) =>
+              prev.map((m, idx) =>
+                idx === prev.length - 1
+                  ? { ...m, content: prev[idx].content + obj.response }
+                  : m
+              )
+            );
           }
-        } catch {
-          // ignore
-        }
+        } catch {}
       }
+    } catch (err: any) {
+      setMessages((prev) =>
+        prev.map((m, idx) =>
+          idx === prev.length - 1
+            ? { ...m, content: `出错：${err.message ?? err}` }
+            : m
+        )
+      );
     } finally {
       setLoading(false);
+      assistantIdRef.current = null;
     }
   }
 
-  return { text, send, loading };
+  return { messages, input, setInput, send, loading };
 }

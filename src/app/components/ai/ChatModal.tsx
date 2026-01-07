@@ -15,7 +15,7 @@ export default function ChatModal({ onClose }: { onClose: () => void }) {
         animate={{ y: 0, opacity: 1 }}
         exit={{ y: 40, opacity: 0 }}
         className="
-          w-full sm:w-[420px] h-[70vh]
+          w-full sm:w-105 h-[70vh]
           rounded-t-3xl sm:rounded-3xl
           bg-white/80 dark:bg-neutral-900/80
           border border-border shadow-2xl
