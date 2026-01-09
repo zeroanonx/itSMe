@@ -4,7 +4,7 @@ import { z } from "zod";
 const schema = z.object({
   name: z.string().min(1),
   link: z.string().url(),
-  desc: z.string().min(10),
+  desc: z.string().min(4),
   icon: z.string().optional(),
 });
 

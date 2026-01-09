@@ -25,7 +25,7 @@ import {
 const formSchema = z.object({
   name: z.string().min(1, "请输入名称"),
   link: z.string().url("请输入有效的 URL"),
-  desc: z.string().min(10, "描述至少 10 个字"),
+  desc: z.string().min(4, "描述至少 4 个字"),
   icon: z.string().optional(),
 });
 
