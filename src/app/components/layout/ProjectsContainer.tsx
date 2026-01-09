@@ -22,7 +22,7 @@ export default function ProjectsContainer({ content }: Props) {
         </p>
       </header>
 
-      <div className="space-y-30">
+      <section className="space-y-30">
         {Object.entries(list).map(([groupName, projects]) => (
           <section key={groupName} className="relative slide-enter ">
             <div className="mb-6">
@@ -34,7 +34,7 @@ export default function ProjectsContainer({ content }: Props) {
               />
             </div>
 
-            <div className="grid gap-4 md:grid-cols-3 grid-cols-1 z-50">
+            <div className="grid gap-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 z-50">
               {projects.map((project) => (
                 <Link
                   key={project.name}
@@ -71,7 +71,8 @@ export default function ProjectsContainer({ content }: Props) {
             </div>
           </section>
         ))}
-      </div>
+      </section>
+
       <MoveTop />
     </section>
   );

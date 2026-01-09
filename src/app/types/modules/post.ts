@@ -31,7 +31,25 @@ export type PostsMap = {
   list: PostListItem[];
 };
 
+export interface ListType<T> {
+  content?: string;
+  date: string;
+  description: string;
+  list: Record<string, T[]>;
+  month: string;
+  slug: string;
+  title: string;
+  type: string;
+}
+
 export interface ProjectsListItem {
+  desc: string;
+  icon?: string;
+  link: string;
+  name: string;
+}
+
+export interface FriendsListItem {
   desc: string;
   icon?: string;
   link: string;
@@ -41,13 +59,9 @@ export interface ProjectsListItem {
 /**
  * @type 项目列表
  */
-export type ProjectsType = {
-  content?: string;
-  date: string;
-  description: string;
-  list: Record<string, ProjectsListItem[]>;
-  month: string;
-  slug: string;
-  title: string;
-  type: string;
-};
+export type ProjectsType = ListType<ProjectsListItem>;
+
+/**
+ * @type 友链
+ */
+export type FriendsType = ListType<FriendsListItem>;
