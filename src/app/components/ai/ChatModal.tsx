@@ -17,12 +17,13 @@ export default function ChatModal({ onClose }: { onClose: () => void }) {
         className="
           w-full sm:w-105 h-[70vh]
           rounded-t-3xl sm:rounded-3xl
-          bg-white/80 dark:bg-neutral-900/80
+           bg-background
+    text-foreground
           border border-border shadow-2xl
           flex flex-col
         "
       >
-        <div className="px-5 py-3 border-b text-xs opacity-60">她在你身边</div>
+        <div className="px-5 py-3 border-b text-xs opacity-60">Zero Anon</div>
         <ChatGirl />
       </motion.div>
     </motion.div>

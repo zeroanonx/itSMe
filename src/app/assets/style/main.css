@@ -12,6 +12,9 @@
   --accent-secondary: #7b61ff;
   --accent-tertiary: #ff6b6b;
   --accent-warm: #ffd93d;
+
+  --chat-bubble-bg: rgba(0, 0, 0, 0.04);
+  --chat-bubble-text: #111;
 }
 
 html {
@@ -35,6 +38,9 @@ html.dark {
   --c-scrollbar-hover: #222;
   /* logo路径 */
   --stroke-theme: white;
+
+  --chat-bubble-bg: rgba(255, 255, 255, 0.06);
+  --chat-bubble-text: #eee;
 }
 
 ::selection {

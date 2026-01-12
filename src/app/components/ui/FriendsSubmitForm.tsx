@@ -124,7 +124,7 @@ export default function FriendsSubmitForm() {
                   <FormControl>
                     <Textarea
                       rows={3}
-                      placeholder="一句话介绍你的项目（10~50 字）"
+                      placeholder="一句话介绍你的项目（4~50 字）"
                       {...field}
                     />
                   </FormControl>

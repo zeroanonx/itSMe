@@ -33,16 +33,10 @@ const GirlComponents = styled.div`
     padding: 8px 12px;
     font-size: 0.95rem;
     line-height: 1.3;
-    border-radius: 18px;
     word-break: break-word;
-    background: rgba(0, 0, 0, 0.04);
-    color: var(--theme);
+    background: var(--chat-bubble-bg);
+    color: var(--chat-bubble-text);
     border-radius: 18px 18px 18px 6px;
-  }
-
-  /* 在暗色模式下微调气泡 */
-  .dark .chat-bubble {
-    background: rgba(255, 255, 255, 0.04);
   }
 `;
 export default function ChatGirl() {
@@ -74,7 +68,7 @@ export default function ChatGirl() {
               m.role === "user" ? "flex justify-end" : "flex justify-start"
             }`}
           >
-            <div className="chat-bubble">{m.content}</div>
+            {m.content && <div className="chat-bubble">{m.content}</div>}
           </div>
         ))}
         {loading && (
