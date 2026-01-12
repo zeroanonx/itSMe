@@ -52,7 +52,7 @@ export default function RootLayout({
 
         {/* 各种 favicon 与 PWA 相关配置 */}
         <link rel="manifest" href="/favicon/site.webmanifest" />
-        <link rel="shortcut icon" href="/favicon/favicon.ico" />
+        <link rel="icon" href="/favicon/favicon.ico" sizes="any" />
         <link
           rel="icon"
           type="image/png"
