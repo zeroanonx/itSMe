@@ -5,6 +5,7 @@ import { highlightCode } from "@/app/utils/modules/shiki";
 import { slugify } from "@/app/utils";
 import { CodeGroup } from "./modules/CodeGroup";
 import { CodeSlot } from "./modules/CodeSlot";
+import ImagePreview from "../ui/ImagePreview";
 
 type MDXComponents = ComponentProps<typeof MDXRemote>["components"];
 export type CodeItemProps = {
@@ -36,9 +37,11 @@ const createHeading = (level: number) => {
     return <Tag id={id}>{children}</Tag>;
   };
 };
+
 export const mdxServerComponents: MDXComponents = {
   pre: Pre,
   CodeGroup,
+  img: ImagePreview,
   h1: createHeading(1),
   h2: createHeading(2),
   h3: createHeading(3),

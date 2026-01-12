@@ -3,6 +3,7 @@
 import * as React from "react";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { cn } from "@/app/utils";
+import { DialogTitle } from "@radix-ui/react-dialog";
 
 const Dialog = DialogPrimitive.Root;
 const DialogTrigger = DialogPrimitive.Trigger;
@@ -41,4 +42,4 @@ const DialogContent = React.forwardRef<
 ));
 DialogContent.displayName = DialogPrimitive.Content.displayName;
 
-export { Dialog, DialogTrigger, DialogContent, DialogClose };
+export { Dialog, DialogTrigger, DialogContent, DialogClose, DialogTitle };

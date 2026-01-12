@@ -67,7 +67,7 @@ export const TargetCursor = memo(
     cornerAnimationDuration = 0.15,
     onCursorStateChange,
   }: TargetCursorProps) => {
-    console.log("%cMade by https://linhan.atomnotion.com ", styles);
+    console.log("%cMade by https://zeroanon.com ", styles);
 
     // Refs
     const cursorContainerRef = useRef<HTMLDivElement>(null);
