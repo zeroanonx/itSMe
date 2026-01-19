@@ -10,7 +10,7 @@ export default function LinkComponent(props: Props) {
   return (
     <>
       {props.link ? (
-        <span className="text-zinc-500  transition-all hover:text-zinc-700 dark:hover:text-zinc-300 hover:underline inline-block">
+        <span className="text-zinc-500 px-1 transition-all hover:text-zinc-700 dark:hover:text-zinc-300 hover:underline inline-block">
           <a href={props.link} target="_blank">
             <span className="flex items-center gap-1">
               {props.icon && <Icon icon={props.icon} />}
@@ -19,7 +19,7 @@ export default function LinkComponent(props: Props) {
           </a>
         </span>
       ) : (
-        <span className="text-zinc-500 transition-all hover:text-zinc-700 dark:hover:text-zinc-300 hover:underline inline-block">
+        <span className="text-zinc-500 px-1 transition-all hover:text-zinc-700 dark:hover:text-zinc-300 hover:underline inline-block">
           <div className="flex items-center gap-1">
             {props.icon && <Icon icon={props.icon} />}
             {props.title && <span>{props.title}</span>}

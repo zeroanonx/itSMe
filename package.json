@@ -2,7 +2,7 @@
   "private": true,
   "scripts": {
     "dev": "pnpm format && pnpm build:search && next dev --port 3001 --turbopack ",
-    "build": "pnpm build:search && cross-env NODE_ENV=production  next build",
+    "build": "pnpm format && pnpm build:search && cross-env NODE_ENV=production  next build",
     "start": "next start",
     "build:search": "tsx scripts/build-search-index.ts",
     "format": "prettier --write \"src/**/*.{ts,tsx,js,jsx,json,css,md,mdx}\"",
