@@ -29,13 +29,19 @@ function highlight(text: string, query: string) {
 
 export function SearchDialog() {
   const router = useRouter();
-  const { search, ready } = useSearch();
+  const { search, ready, loadSearchIndex } = useSearch();
 
   const [open, setOpen] = React.useState(false);
   const [query, setQuery] = React.useState("");
   const [value, setValue] = React.useState<string>("");
 
   const results = ready ? search(query) : [];
+
+  React.useEffect(() => {
+    if (open && !ready) {
+      loadSearchIndex();
+    }
+  }, [open, ready, loadSearchIndex]);
 
   /* ⌘K / Ctrl+K */
   React.useEffect(() => {

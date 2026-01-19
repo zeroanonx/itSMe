@@ -54,6 +54,7 @@ export default function FriendsContainer({ content }: Props) {
                   key={project.name}
                   href={project.link}
                   target="_blank"
+                  prefetch={project.link.startsWith('/')}
                   className="
                     group
                     rounded-lg

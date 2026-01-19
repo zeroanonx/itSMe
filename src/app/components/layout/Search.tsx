@@ -26,6 +26,7 @@ export default function Search() {
               key={item.id}
               href={item.url}
               className="block px-3 py-2 hover:bg-gray-100 text-gray-600"
+              prefetch
             >
               {item.title}
             </Link>

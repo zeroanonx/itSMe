@@ -16,7 +16,11 @@ import Background from "./components/ui/Background";
 import AIEntry from "./components/ai/AIEntry";
 
 // 使用 Next.js 内置的 Inter 字体
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ 
+  subsets: ["latin"],
+  display: "swap", // 字体加载时使用系统字体，避免 FOIT (Flash of Invisible Text)
+  preload: true, // 预加载字体
+});
 
 // 默认全局的 SEO 信息（标题、描述、OG 图）
 export const metadata: Metadata = {

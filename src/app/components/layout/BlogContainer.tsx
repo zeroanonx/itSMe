@@ -21,8 +21,10 @@ export default function BlogContainer({ posts }: Props) {
   const list = posts.find((x) => x.type === activeMenu)?.list;
 
   useEffect(() => {
-    setActiveMenu(menu[0]);
-  }, []);
+    if (menu.length > 0) {
+      setActiveMenu(menu[0]);
+    }
+  }, [menu, setActiveMenu]);
 
   return (
     <section>

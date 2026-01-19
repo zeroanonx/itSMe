@@ -79,8 +79,10 @@ export const TargetCursor = memo(
     // 状态和位置
     const isOverTargetRef = useRef(false);
     const mousePosition = useRef({ x: 0, y: 0 });
+    const lastMousePosition = useRef({ x: 0, y: 0 }); // 上次鼠标位置
     const animationFrameId = useRef<number | null>(null);
     const rafActive = useRef(true);
+    const needsUpdate = useRef(false); // 是否需要更新
 
     // 用于记录上次检测到的目标元素
     const lastTargetRef = useRef<Element | null>(null);
@@ -295,15 +297,45 @@ export const TargetCursor = memo(
       [updateNormalCursor]
     );
 
-    // 处理鼠标移动 - 只更新位置
+    // 存储 checkAndUpdateCursor 的引用，避免循环依赖
+    const checkAndUpdateCursorRef = useRef<(() => void) | null>(null);
+
+    // 处理鼠标移动 - 只更新位置，标记需要更新
     const handleMouseMove = useCallback((e: MouseEvent) => {
-      mousePosition.current = { x: e.clientX, y: e.clientY };
+      const newX = e.clientX;
+      const newY = e.clientY;
+      
+      // 只有位置变化超过1px才标记需要更新（减少不必要的计算）
+      if (
+        Math.abs(newX - lastMousePosition.current.x) > 1 ||
+        Math.abs(newY - lastMousePosition.current.y) > 1
+      ) {
+        mousePosition.current = { x: newX, y: newY };
+        lastMousePosition.current = { x: newX, y: newY };
+        needsUpdate.current = true;
+        
+        // 如果动画循环未运行，启动它
+        const updateFn = checkAndUpdateCursorRef.current;
+        if (!animationFrameId.current && rafActive.current && updateFn) {
+          animationFrameId.current = requestAnimationFrame(updateFn);
+        }
+      }
     }, []);
 
     // 主循环：检查并更新光标状态
     const checkAndUpdateCursor = useCallback(() => {
-      if (!rafActive.current) return;
+      if (!rafActive.current) {
+        animationFrameId.current = null;
+        return;
+      }
 
+      // 性能优化：如果不需要更新且没有抑制状态，暂停循环
+      if (!needsUpdate.current && !suppressCursorRef.current) {
+        animationFrameId.current = null;
+        return;
+      }
+
+      needsUpdate.current = false;
       const { x, y } = mousePosition.current;
 
       // 处理 .no-cursor 的进入/退出逻辑：进入时抑制并隐藏光标，离开时恢复上次动画状态
@@ -327,9 +359,8 @@ export const TargetCursor = memo(
             switchToNormalCursor(x, y);
           }
         } else {
-          // 仍在 .no-cursor 上，保持隐藏
-          animationFrameId.current =
-            requestAnimationFrame(checkAndUpdateCursor);
+          // 仍在 .no-cursor 上，保持隐藏，继续检查
+          animationFrameId.current = requestAnimationFrame(checkAndUpdateCursor);
           return;
         }
       } else if (isOnNoCursor) {
@@ -427,8 +458,12 @@ export const TargetCursor = memo(
         updateNormalCursor(x, y);
       }
 
-      // 继续下一帧
-      animationFrameId.current = requestAnimationFrame(checkAndUpdateCursor);
+      // 继续下一帧（只在需要时）
+      if (rafActive.current) {
+        animationFrameId.current = requestAnimationFrame(checkAndUpdateCursor);
+      } else {
+        animationFrameId.current = null;
+      }
     }, [
       checkElementUnderMouse,
       onCursorStateChange,
@@ -437,6 +472,9 @@ export const TargetCursor = memo(
       updateCorners,
       updateNormalCursor,
     ]);
+
+    // 更新 ref
+    checkAndUpdateCursorRef.current = checkAndUpdateCursor;
 
     useEffect(() => {
       // 初始化
@@ -462,9 +500,9 @@ export const TargetCursor = memo(
       // 添加鼠标移动监听
       window.addEventListener("mousemove", handleMouseMove);
 
-      // 启动检查循环
+      // 启动检查循环（延迟启动，等待首次鼠标移动）
       rafActive.current = true;
-      animationFrameId.current = requestAnimationFrame(checkAndUpdateCursor);
+      // 不立即启动，等待鼠标移动时再启动
 
       return () => {
         // 清理
