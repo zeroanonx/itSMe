@@ -395,7 +395,7 @@ const shield = new Shield(process.env.PLASMO_PUBLIC_SHIELD_FREQUENCY);
 console.log(process.env.PRIVATE_KEY);
 ```
 
-若要覆盖使用 `plasmo build` 构建的生产包中的变量，您可以提供一个 .`env.production` 文件。由于 Plasmo 会**_级联_**这些 env 文件，因此您只需指定要替换的变量
+若要覆盖使用 `plasmo build` 构建的生产包中的变量，您可以提供一个 .`env.production` 文件。由于 Plasmo 会***级联***这些 env 文件，因此您只需指定要替换的变量
 您可能还会喜欢带有环境变量的 `Typescript IntelliSence`，请使用以下声明创建一个 `index.d.ts` 文件
 
 ```ts

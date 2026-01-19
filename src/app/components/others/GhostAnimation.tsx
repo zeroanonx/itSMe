@@ -16,7 +16,8 @@ const GhostAnimationCom = styled.div`
     position: relative;
     width: 80px;
     height: 120px;
-    background: radial-gradient(
+    background:
+      radial-gradient(
         circle at 60px 40px,
         var(--c-bg),
         var(--c-bg) 7px,

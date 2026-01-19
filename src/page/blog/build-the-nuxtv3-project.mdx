@@ -9,11 +9,9 @@ type: blog
 
 ## 创建 Nuxt3 应用
 
-
 ```npx
 npx nuxi@latest init <project-name>
 ```
-
 
 ```yarn
 yarn dlx nuxi@latest init <project-name>
@@ -37,7 +35,6 @@ yarn dlx nuxi@latest init <project-name>
 - 只需复制并粘贴类名称列表，即可使用 Tailwind 的 `@apply` 指令将重复的工具模式提取到自定义 CSS 类中。
 - 更便携的响应式断点
 
-
 - 安装命令
 
 ```sh
@@ -57,7 +54,7 @@ export default defineNuxtConfig({
       autoprefixer: {},
     },
   },
-})
+});
 ```
 
 - 在`tailwindcss.config.js`下添加
@@ -66,17 +63,17 @@ export default defineNuxtConfig({
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    './components/**/*.{js,vue,ts}',
-    './layouts/**/*.vue',
-    './pages/**/*.vue',
-    './plugins/**/*.{js,ts}',
-    './app.vue'
+    "./components/**/*.{js,vue,ts}",
+    "./layouts/**/*.vue",
+    "./pages/**/*.vue",
+    "./plugins/**/*.{js,ts}",
+    "./app.vue",
   ],
   theme: {
     extend: {},
   },
   plugins: [],
-}
+};
 ```
 
 - 在项目静态目录下（没有就创建`static/css/main.css`）
@@ -93,13 +90,13 @@ module.exports = {
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
-  css: ['~/static/css/main.css'], // 这一句
+  css: ["~/static/css/main.css"], // 这一句
   postcss: {
     plugins: {
       tailwindcss: {},
     },
   },
-})
+});
 ```
 
 #### 拓展：
@@ -135,72 +132,72 @@ eslint --init
 
 ```ts
 interface FetchResponse<T = any> {
-  data: Ref<T | null>
-  error: FetchError<T>
-  status: Ref<string>
-  pending: Ref<boolean>
-  refresh: () => Promise<void>
+  data: Ref<T | null>;
+  error: FetchError<T>;
+  status: Ref<string>;
+  pending: Ref<boolean>;
+  refresh: () => Promise<void>;
 }
 
 interface FetchError<T = any> {
-  error?: Ref<boolean>
-  message?: Ref<string>
-  statusCode?: Ref<number | null>
-  data?: Ref<T | null>
+  error?: Ref<boolean>;
+  message?: Ref<string>;
+  statusCode?: Ref<number | null>;
+  data?: Ref<T | null>;
 }
 
 // 请求的配置
 const config = reactive({
   timeOut: 5000, // 超时时间
-  retryCount: 0 // 重试次数
-})
+  retryCount: 0, // 重试次数
+});
 
-export async function fsFetch<T>(url: string, params: Record<string, any> = {}): Promise<FetchResponse<any>> {
-  let controller: AbortController
+export async function fsFetch<T>(
+  url: string,
+  params: Record<string, any> = {}
+): Promise<FetchResponse<any>> {
+  let controller: AbortController;
 
   const fetchWithRetry = async (): Promise<FetchResponse<T>> => {
-    controller = new AbortController() // 创建一个新的控制器
-    const signal = controller.signal
+    controller = new AbortController(); // 创建一个新的控制器
+    const signal = controller.signal;
 
     // 发起请求
     try {
       // 超时终止
       setTimeout(() => {
-        controller.abort()
-      }, config.timeOut)
+        controller.abort();
+      }, config.timeOut);
 
       // 发起请求
       const res = await useFetch<T>(url, {
         params,
-        signal
-      })
+        signal,
+      });
 
       // 如果请求成功且存在错误，则重试
-      if (res.status.value !== 'success' && config.retryCount < 5) {
-        config.retryCount++
-        return fetchWithRetry()
+      if (res.status.value !== "success" && config.retryCount < 5) {
+        config.retryCount++;
+        return fetchWithRetry();
       }
 
-      return res as FetchResponse<T>
-    }
-    catch (error) {
-      console.log(`请求失败，错误信息：${error}`)
+      return res as FetchResponse<T>;
+    } catch (error) {
+      console.log(`请求失败，错误信息：${error}`);
       if (config.retryCount < 5) {
-        config.retryCount++
-        return fetchWithRetry()
+        config.retryCount++;
+        return fetchWithRetry();
+      } else {
+        throw error; // 重试次数达到上限或非超时错误，抛出错误
       }
-      else {
-        throw error // 重试次数达到上限或非超时错误，抛出错误
-      }
-    }
-    finally {
+    } finally {
       if (controller.signal.aborted) {
-        console.log('请求已取消，重试次数：', config.retryCount)
+        console.log("请求已取消，重试次数：", config.retryCount);
       }
     }
-  }
+  };
 
-  return fetchWithRetry()
+  return fetchWithRetry();
 }
 ```
 
@@ -211,31 +208,31 @@ export async function fsFetch<T>(url: string, params: Record<string, any> = {}):
  * @function 获取新闻列表
  */
 async function getList() {
-  const res = await fsFetch('/front/get-news', {
+  const res = await fsFetch("/front/get-news", {
     page: params.page,
-    size: 500
-  })
+    size: 500,
+  });
 
   const {
     data: {
-      value: { data }
+      value: { data },
     },
-    status
-  } = res
+    status,
+  } = res;
 
-  if (status.value === 'success' && data && data.list) {
-    console.log('数据更新了-->', data.list)
+  if (status.value === "success" && data && data.list) {
+    console.log("数据更新了-->", data.list);
 
-    resStatus.value = status.value
+    resStatus.value = status.value;
 
-    newsList.value = data.list as INewsList[]
+    newsList.value = data.list as INewsList[];
   }
 }
 
 onMounted(() => {
-  console.log('新闻列表页面')
-  getList()
-})
+  console.log("新闻列表页面");
+  getList();
+});
 ```
 
 ### pinia
@@ -249,76 +246,77 @@ yarn add pinia @pinia/nuxt -D
 #### 根目录新建stores文件夹，并新建所需模块文件
 
 ```ts
-import { defineStore } from 'pinia'
-import type { ILanguageState } from '~/types/global'
+import { defineStore } from "pinia";
+import type { ILanguageState } from "~/types/global";
 
-export const useLangStore = defineStore('languageStore', {
+export const useLangStore = defineStore("languageStore", {
   state: () => ({
-    language: ''
+    language: "",
   }),
   actions: {
     setLanguage(language: string) {
-      console.log('要存储的值', language)
-      this.language = language
+      console.log("要存储的值", language);
+      this.language = language;
 
       // 只在客户端调用否则服务端是没有localStorage的
       if (process.client) {
-        localStorage.setItem('language', language)
+        localStorage.setItem("language", language);
       }
-    }
+    },
   },
   getters: {
     getLanguage: (state) => {
       if (process.client) {
-        return state.language as ILanguageState || localStorage.getItem('language') as ILanguageState
+        return (
+          (state.language as ILanguageState) ||
+          (localStorage.getItem("language") as ILanguageState)
+        );
       }
-    }
-  }
-})
+    },
+  },
+});
 ```
 
 #### 新增模块中转站
 
 ```ts
-export * from './language'
+export * from "./language";
 ```
 
 #### 使用
 
 ```ts
-import { useLangStore } from '~/stores'
+import { useLangStore } from "~/stores";
 
 /**
  * 判断当前环境是否为中文环境
  */
 export function isChineseEnvironment() {
-  const store = useLangStore()
+  const store = useLangStore();
 
   // 本地存储中存在语言设置，则直接返回
-  if (localStorage.getItem('language'))
-    return
+  if (localStorage.getItem("language")) return;
 
   /**
    * @description 如果是分享的链接是英文版，则首次打开是英文链接，这里直接将语言设置为英文
    * @waring 这里不能直接使用i18n
    */
-  if (window.location.href.includes('en')) {
-    return store.setLanguage('en')
+  if (window.location.href.includes("en")) {
+    return store.setLanguage("en");
   }
 
-  const language = navigator.language
+  const language = navigator.language;
 
   // 是否为中文
-  const isZH = language.startsWith('zh')
+  const isZH = language.startsWith("zh");
 
   // 中文 排除中文之外全部使用英文
   if (isZH) {
-    store.setLanguage('zh')
-    console.log('浏览器环境为中文')
-  }
-  else {
-    store.setLanguage('en')
-    console.log('浏览器环境为英文')
+    store.setLanguage("zh");
+    console.log("浏览器环境为中文");
+  } else {
+    store.setLanguage("en");
+    console.log("浏览器环境为英文");
   }
 }
 ```

@@ -30,7 +30,12 @@ export default function FriendsContainer({ content }: Props) {
 
   return (
     <section className="w-full">
-      <PostHeader title={title} desc={description} font='lh' color='--accent-secondary' />
+      <PostHeader
+        title={title}
+        desc={description}
+        font="lh"
+        color="--accent-secondary"
+      />
       <section className="space-y-30">
         {Object.entries(list).map(([groupName, projects]) => (
           <section key={groupName} className="relative slide-enter ">
@@ -49,7 +54,7 @@ export default function FriendsContainer({ content }: Props) {
                   key={project.name}
                   href={project.link}
                   target="_blank"
-                  prefetch={project.link.startsWith('/')}
+                  prefetch={project.link.startsWith("/")}
                   className="
                     group
                     rounded-lg

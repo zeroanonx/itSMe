@@ -79,7 +79,5 @@ export function useSearch() {
   // 这样可以在用户打开搜索对话框时才加载
   return { ready, loadSearchIndex, search };
 
-
-
   return { ready, loadSearchIndex, search };
 }

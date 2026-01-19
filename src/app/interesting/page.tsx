@@ -47,7 +47,12 @@ export default function BlogPage() {
     <Container size="default">
       <main className="prose mx-auto">
         <header className="mb-20 text-center">
-          <PostHeader title='Inspiration' desc='下面是陆陆续续收藏的或者开发的有趣的东西，不一定有用，但挺有趣的。' font='lh' color='--accent-primary' />
+          <PostHeader
+            title="Inspiration"
+            desc="下面是陆陆续续收藏的或者开发的有趣的东西，不一定有用，但挺有趣的。"
+            font="lh"
+            color="--accent-primary"
+          />
         </header>
         <BlogContainer posts={list} />
       </main>

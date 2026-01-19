@@ -304,7 +304,7 @@ export const TargetCursor = memo(
     const handleMouseMove = useCallback((e: MouseEvent) => {
       const newX = e.clientX;
       const newY = e.clientY;
-      
+
       // 只有位置变化超过1px才标记需要更新（减少不必要的计算）
       if (
         Math.abs(newX - lastMousePosition.current.x) > 1 ||
@@ -313,7 +313,7 @@ export const TargetCursor = memo(
         mousePosition.current = { x: newX, y: newY };
         lastMousePosition.current = { x: newX, y: newY };
         needsUpdate.current = true;
-        
+
         // 如果动画循环未运行，启动它
         const updateFn = checkAndUpdateCursorRef.current;
         if (!animationFrameId.current && rafActive.current && updateFn) {
@@ -360,7 +360,8 @@ export const TargetCursor = memo(
           }
         } else {
           // 仍在 .no-cursor 上，保持隐藏，继续检查
-          animationFrameId.current = requestAnimationFrame(checkAndUpdateCursor);
+          animationFrameId.current =
+            requestAnimationFrame(checkAndUpdateCursor);
           return;
         }
       } else if (isOnNoCursor) {

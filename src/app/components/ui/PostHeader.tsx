@@ -6,15 +6,24 @@ interface PostHeaderProps {
   font?: string;
   color?: string;
 }
-export default function PostHeader({ title, desc, font='lh', color='--accent-primary' }: PostHeaderProps) {
+export default function PostHeader({
+  title,
+  desc,
+  font = "lh",
+  color = "--accent-primary",
+}: PostHeaderProps) {
   return (
     <header className="mb-20 text-center">
-          <h1 className={cn("text-2xl! font-semibold tracking-tight", `font-${font}`)}>
-            {title}
-          </h1>
-          <p className={cn("mt-3 text-sm text-muted-foreground", `text-(${color})`)}>
-            {desc}
-          </p>
-        </header>
-  )
+      <h1
+        className={cn("text-2xl! font-semibold tracking-tight", `font-${font}`)}
+      >
+        {title}
+      </h1>
+      <p
+        className={cn("mt-3 text-sm text-muted-foreground", `text-(${color})`)}
+      >
+        {desc}
+      </p>
+    </header>
+  );
 }

@@ -125,18 +125,18 @@
 
 @layer utilities {
   .font-lh {
-    font-family: 'LH', sans-serif;
+    font-family: "LH", sans-serif;
   }
 
   .font-in {
-    font-family: 'IN', sans-serif;
+    font-family: "IN", sans-serif;
   }
 
   .font-sj {
-    font-family: 'SJ', sans-serif;
+    font-family: "SJ", sans-serif;
   }
 
   .font-al {
-    font-family: 'AL', sans-serif;
+    font-family: "AL", sans-serif;
   }
 }

@@ -48,8 +48,11 @@ body {
   color: #fff;
   font-size: 20px;
   cursor: pointer;
-  box-shadow: 60px -60px 0 2px var(--color), -60px -60px 0 2px var(--color),
-    -60px 60px 0 2px var(--color), 60px 60px 0 2px var(--color);
+  box-shadow:
+    60px -60px 0 2px var(--color),
+    -60px -60px 0 2px var(--color),
+    -60px 60px 0 2px var(--color),
+    60px 60px 0 2px var(--color);
   text-align: center;
 
   &:hover {
@@ -59,27 +62,43 @@ body {
 
 @keyframes border {
   0% {
-    box-shadow: 60px -60px 0 2px var(--color), -60px -60px 0 2px var(--color),
-      -60px 60px 0 2px var(--color), 60px 60px 0 2px var(--color),
+    box-shadow:
+      60px -60px 0 2px var(--color),
+      -60px -60px 0 2px var(--color),
+      -60px 60px 0 2px var(--color),
+      60px 60px 0 2px var(--color),
       0 0 0 2px transparent;
   }
   25% {
-    box-shadow: 0 -125px 0 2px var(--color), -60px -60px 0 2px var(--color),
-      -60px 60px 0 2px var(--color), 60px 60px 0 2px var(--color),
+    box-shadow:
+      0 -125px 0 2px var(--color),
+      -60px -60px 0 2px var(--color),
+      -60px 60px 0 2px var(--color),
+      60px 60px 0 2px var(--color),
       0 0 0 2px #fff;
   }
   50% {
-    box-shadow: 0 -125px 0 2px var(--color), -125px 0px 0 2px var(--color),
-      -60px 60px 0 2px var(--color), 60px 60px 0 2px var(--color),
+    box-shadow:
+      0 -125px 0 2px var(--color),
+      -125px 0px 0 2px var(--color),
+      -60px 60px 0 2px var(--color),
+      60px 60px 0 2px var(--color),
       0 0 0 2px #fff;
   }
   75% {
-    box-shadow: 0 -125px 0 2px var(--color), -125px 0px 0 2px var(--color),
-      0px 125px 0 2px var(--color), 60px 60px 0 2px var(--color), 0 0 0 2px #fff;
+    box-shadow:
+      0 -125px 0 2px var(--color),
+      -125px 0px 0 2px var(--color),
+      0px 125px 0 2px var(--color),
+      60px 60px 0 2px var(--color),
+      0 0 0 2px #fff;
   }
   100% {
-    box-shadow: 0 -125px 0 2px var(--color), -125px 0px 0 2px var(--color),
-      0px 125px 0 2px var(--color), 120px 40px 0 2px var(--color),
+    box-shadow:
+      0 -125px 0 2px var(--color),
+      -125px 0px 0 2px var(--color),
+      0px 125px 0 2px var(--color),
+      120px 40px 0 2px var(--color),
       0 0 0 2px #fff;
   }
 }

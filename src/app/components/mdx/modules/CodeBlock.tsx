@@ -32,7 +32,7 @@ export const CodeBlock = ({ html, language }: Props) => {
     setTimeout(() => setCopied(false), 1500);
   }
 
-  const label = language ? LANG_MAP[language] ?? language : null;
+  const label = language ? (LANG_MAP[language] ?? language) : null;
 
   return (
     <div className="relative group my-6">

@@ -33,8 +33,11 @@ const CircleShadowLoadingCom = styled.div`
     color: #fff;
     font-size: 20px;
     cursor: pointer;
-    box-shadow: 60px -60px 0 2px #e91e63, -60px -60px 0 2px #e91e63,
-      -60px 60px 0 2px #e91e63, 60px 60px 0 2px #e91e63;
+    box-shadow:
+      60px -60px 0 2px #e91e63,
+      -60px -60px 0 2px #e91e63,
+      -60px 60px 0 2px #e91e63,
+      60px 60px 0 2px #e91e63;
     text-align: center;
 
     &:hover {
@@ -44,28 +47,48 @@ const CircleShadowLoadingCom = styled.div`
 
   @keyframes border {
     0% {
-      box-shadow: 60px -60px 0 2px #e91e63, -60px -60px 0 2px #e91e63,
-        -60px 60px 0 2px #e91e63, 60px 60px 0 2px #e91e63, 0 0 0 2px transparent;
+      box-shadow:
+        60px -60px 0 2px #e91e63,
+        -60px -60px 0 2px #e91e63,
+        -60px 60px 0 2px #e91e63,
+        60px 60px 0 2px #e91e63,
+        0 0 0 2px transparent;
     }
 
     25% {
-      box-shadow: 0 -125px 0 2px #e91e63, -60px -60px 0 2px #e91e63,
-        -60px 60px 0 2px #e91e63, 60px 60px 0 2px #e91e63, 0 0 0 2px #fff;
+      box-shadow:
+        0 -125px 0 2px #e91e63,
+        -60px -60px 0 2px #e91e63,
+        -60px 60px 0 2px #e91e63,
+        60px 60px 0 2px #e91e63,
+        0 0 0 2px #fff;
     }
 
     50% {
-      box-shadow: 0 -125px 0 2px #e91e63, -125px 0px 0 2px #e91e63,
-        -60px 60px 0 2px #e91e63, 60px 60px 0 2px #e91e63, 0 0 0 2px #fff;
+      box-shadow:
+        0 -125px 0 2px #e91e63,
+        -125px 0px 0 2px #e91e63,
+        -60px 60px 0 2px #e91e63,
+        60px 60px 0 2px #e91e63,
+        0 0 0 2px #fff;
     }
 
     75% {
-      box-shadow: 0 -125px 0 2px #e91e63, -125px 0px 0 2px #e91e63,
-        0px 125px 0 2px #e91e63, 60px 60px 0 2px #e91e63, 0 0 0 2px #fff;
+      box-shadow:
+        0 -125px 0 2px #e91e63,
+        -125px 0px 0 2px #e91e63,
+        0px 125px 0 2px #e91e63,
+        60px 60px 0 2px #e91e63,
+        0 0 0 2px #fff;
     }
 
     100% {
-      box-shadow: 0 -125px 0 2px #e91e63, -125px 0px 0 2px #e91e63,
-        0px 125px 0 2px #e91e63, 120px 40px 0 2px #e91e63, 0 0 0 2px #fff;
+      box-shadow:
+        0 -125px 0 2px #e91e63,
+        -125px 0px 0 2px #e91e63,
+        0px 125px 0 2px #e91e63,
+        120px 40px 0 2px #e91e63,
+        0 0 0 2px #fff;
     }
   }
 `;

@@ -1004,7 +1004,8 @@ window.MyNamespace = window.MyNamespace || {};
  * points to the DOM document loaded in that window.
  */
 interface Window
-  extends EventTarget,
+  extends
+    EventTarget,
     AnimationFrameProvider,
     GlobalEventHandlers,
     WindowEventHandlers,

@@ -29,7 +29,7 @@ export default function BlogContainer({ posts }: Props) {
 
   return (
     <section>
-      <PostHeader title='Blog'/>
+      <PostHeader title="Blog" />
       <section className="tabs w-full flex items-center gap-x-4">
         {menu.map((item) => (
           <div

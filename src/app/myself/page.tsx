@@ -46,7 +46,12 @@ export default function MyselfPage() {
   return (
     <Container size="default">
       <main className="prose mx-auto">
-        <PostHeader title='Myself' desc='一些我自己的东西...' font='lh' color='--accent-primary' />
+        <PostHeader
+          title="Myself"
+          desc="一些我自己的东西..."
+          font="lh"
+          color="--accent-primary"
+        />
         <BlogContainer posts={list} />
       </main>
     </Container>

@@ -16,7 +16,12 @@ export default function ProjectsContainer({ content }: Props) {
 
   return (
     <section className="w-full">
-      <PostHeader title={title} desc={description} font='lh' color='--accent-primary' />
+      <PostHeader
+        title={title}
+        desc={description}
+        font="lh"
+        color="--accent-primary"
+      />
 
       <section className="space-y-30">
         {Object.entries(list).map(([groupName, projects]) => (
@@ -36,7 +41,7 @@ export default function ProjectsContainer({ content }: Props) {
                   key={project.name}
                   href={project.link}
                   target="_blank"
-                  prefetch={project.link.startsWith('/')}
+                  prefetch={project.link.startsWith("/")}
                   className="
                     group
                     rounded-lg
