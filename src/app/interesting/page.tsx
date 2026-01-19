@@ -3,6 +3,7 @@ import { Post } from "../types";
 import BlogContainer from "@/app/components/layout/BlogContainer";
 import dayjs from "dayjs";
 import Container from "@/app/components/layout/Container";
+import PostHeader from "@/app/components/ui/PostHeader";
 
 //  强制在 build 时生成 HTML
 export const dynamic = "force-static";
@@ -46,12 +47,7 @@ export default function BlogPage() {
     <Container size="default">
       <main className="prose mx-auto">
         <header className="mb-20 text-center">
-          <h1 className="text-2xl! font-semibold tracking-tight">
-            Inspiration
-          </h1>
-          <p className="mt-2 text-sm text-muted-foreground text-(--accent-primary)">
-            下面是陆陆续续收藏的或者开发的有趣的东西，不一定有用，但挺有趣的。
-          </p>
+          <PostHeader title='Inspiration' desc='下面是陆陆续续收藏的或者开发的有趣的东西，不一定有用，但挺有趣的。' font='lh' color='--accent-primary' />
         </header>
         <BlogContainer posts={list} />
       </main>

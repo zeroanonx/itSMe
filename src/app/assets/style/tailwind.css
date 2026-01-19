@@ -122,3 +122,21 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer utilities {
+  .font-lh {
+    font-family: 'LH', sans-serif;
+  }
+
+  .font-in {
+    font-family: 'IN', sans-serif;
+  }
+
+  .font-sj {
+    font-family: 'SJ', sans-serif;
+  }
+
+  .font-al {
+    font-family: 'AL', sans-serif;
+  }
+}

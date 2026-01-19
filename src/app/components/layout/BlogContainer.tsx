@@ -2,10 +2,11 @@
 
 import { cn, firstLetterToUpperCase } from "@/app/utils";
 import { usePosts } from "@/app/store/modules";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { PostListItem, PostsMap } from "@/app/types";
 import StrokeText from "@/app/components/ui/StrokeText";
 import Link from "next/link";
+import PostHeader from "../ui/PostHeader";
 
 type Props = {
   posts: PostsMap[];
@@ -16,18 +17,19 @@ export default function BlogContainer({ posts }: Props) {
   const setActiveMenu = usePosts((s) => s.setActiveMenu);
 
   // 分类
-  const menu = posts.map((item) => item.type);
+  const menu = useMemo(() => posts.map((item) => item.type), [posts]);
   // 分类下的列表
   const list = posts.find((x) => x.type === activeMenu)?.list;
 
   useEffect(() => {
-    if (menu.length > 0) {
+    if (menu.length > 0 && (!activeMenu || !menu.includes(activeMenu))) {
       setActiveMenu(menu[0]);
     }
-  }, [menu, setActiveMenu]);
+  }, [menu, activeMenu, setActiveMenu]);
 
   return (
     <section>
+      <PostHeader title='Blog'/>
       <section className="tabs w-full flex items-center gap-x-4">
         {menu.map((item) => (
           <div

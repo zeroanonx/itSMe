@@ -349,3 +349,23 @@ html:not(.dark) [img-dark] {
   background-color: hsl(var(--accent));
   box-shadow: 0 0 0 1px hsl(var(--primary) / 0.2);
 }
+
+@font-face {
+  font-family: 'LH';
+  src: url('../font/LH.ttf');
+}
+
+@font-face {
+  font-family: 'IN';
+  src: url('../font/IN.ttf');
+}
+
+@font-face {
+  font-family: 'SJ';
+  src: url('../font/SJ.ttf');
+}
+
+@font-face {
+  font-family: 'AL';
+  src: url('../font/AL.ttf');
+}

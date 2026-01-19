@@ -3,6 +3,7 @@ import { Post } from "../types";
 import BlogContainer from "@/app/components/layout/BlogContainer";
 import dayjs from "dayjs";
 import Container from "@/app/components/layout/Container";
+import PostHeader from "@/app/components/ui/PostHeader";
 
 //  强制在 build 时生成 HTML
 export const dynamic = "force-static";
@@ -45,12 +46,7 @@ export default function MyselfPage() {
   return (
     <Container size="default">
       <main className="prose mx-auto">
-        <header className="mb-20 text-center">
-          <h1 className="text-2xl! font-semibold tracking-tight">Myself</h1>
-          <p className="mt-2 text-sm text-muted-foreground text-(--accent-primary)">
-            一些我自己的东西...
-          </p>
-        </header>
+        <PostHeader title='Myself' desc='一些我自己的东西...' font='lh' color='--accent-primary' />
         <BlogContainer posts={list} />
       </main>
     </Container>

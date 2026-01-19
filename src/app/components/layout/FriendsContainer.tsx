@@ -7,6 +7,7 @@ import { Icon } from "@iconify-icon/react";
 import MoveTop from "@/app/components/ui/MoveTop";
 import FriendsSubmitForm from "../ui/FriendsSubmitForm";
 import { useRef, useState } from "react";
+import PostHeader from "../ui/PostHeader";
 
 interface Props {
   content: ProjectsType;
@@ -29,13 +30,7 @@ export default function FriendsContainer({ content }: Props) {
 
   return (
     <section className="w-full">
-      <header className="mb-30 text-center">
-        <h1 className="text-2xl font-semibold tracking-tight">{title}</h1>
-        <p className="mt-2 text-sm text-muted-foreground text-(--accent-secondary)">
-          {description}
-        </p>
-      </header>
-
+      <PostHeader title={title} desc={description} font='lh' color='--accent-secondary' />
       <section className="space-y-30">
         {Object.entries(list).map(([groupName, projects]) => (
           <section key={groupName} className="relative slide-enter ">

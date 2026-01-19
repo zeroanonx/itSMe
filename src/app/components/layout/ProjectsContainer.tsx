@@ -5,6 +5,7 @@ import StrokeText from "@/app/components/ui/StrokeText";
 import { ProjectsType } from "@/app/types";
 import { Icon } from "@iconify-icon/react";
 import MoveTop from "@/app/components/ui/MoveTop";
+import PostHeader from "../ui/PostHeader";
 
 interface Props {
   content: ProjectsType;
@@ -15,12 +16,7 @@ export default function ProjectsContainer({ content }: Props) {
 
   return (
     <section className="w-full">
-      <header className="mb-30 text-center">
-        <h1 className="text-2xl font-semibold tracking-tight">{title}</h1>
-        <p className="mt-2 text-sm text-muted-foreground text-(--accent-primary)">
-          {description}
-        </p>
-      </header>
+      <PostHeader title={title} desc={description} font='lh' color='--accent-primary' />
 
       <section className="space-y-30">
         {Object.entries(list).map(([groupName, projects]) => (
