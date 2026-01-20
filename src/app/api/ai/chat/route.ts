@@ -3,7 +3,6 @@ import { runChatPipeline } from "@/app/server/pipeline";
 
 type ChatMessage = { role: "user" | "assistant" | "system"; content: string };
 
-// 简单内存会话存储（可换成数据库或 KV 存储）
 const sessions = new Map<string, ChatMessage[]>();
 
 export const runtime = "edge";
