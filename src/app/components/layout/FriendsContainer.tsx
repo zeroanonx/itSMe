@@ -102,7 +102,7 @@ export default function FriendsContainer({ content }: Props) {
         <div className="w-full lg:w-1/2">
           <div className="rounded-xl border bg-muted/30 p-4">
             <h3 className="mb-2 text-sm font-medium flex items-center justify-between">
-              <div>我的友链</div>
+              <div>我的信息</div>
               <button
                 onClick={handleCopy}
                 className={`

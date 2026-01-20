@@ -9,11 +9,11 @@ import {
   FormControl,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "@/app/components/shadcn/form";
 import { Input } from "@/app/components/shadcn/input";
 import { Textarea } from "@/app/components/shadcn/textarea";
+import { Label } from "@/app/components/shadcn/label";
 import { Button } from "@/app/components/shadcn/button";
 import {
   Card,
@@ -90,8 +90,8 @@ export default function FriendsSubmitForm() {
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>名称 *</FormLabel>
-                  <FormControl>
+                  <Label>名称 *</Label>
+                  <FormControl className="mt-2">
                     <Input placeholder="项目 / 网站名称" {...field} />
                   </FormControl>
                   <FormMessage />
@@ -105,8 +105,8 @@ export default function FriendsSubmitForm() {
               name="link"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>访问链接 *</FormLabel>
-                  <FormControl>
+                  <Label>访问链接 *</Label>
+                  <FormControl className="mt-2">
                     <Input placeholder="https://example.com" {...field} />
                   </FormControl>
                   <FormMessage />
@@ -120,8 +120,8 @@ export default function FriendsSubmitForm() {
               name="desc"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>简短描述 *</FormLabel>
-                  <FormControl>
+                  <Label>简短描述 *</Label>
+                  <FormControl className="mt-2">
                     <Textarea
                       rows={3}
                       placeholder="一句话介绍你的项目（4~50 字）"
@@ -139,8 +139,8 @@ export default function FriendsSubmitForm() {
               name="icon"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>头像链接</FormLabel>
-                  <FormControl>
+                  <Label >头像链接</Label>
+                  <FormControl className="mt-2">
                     <Input placeholder="请输入完整头像链接" {...field} />
                   </FormControl>
                 </FormItem>
