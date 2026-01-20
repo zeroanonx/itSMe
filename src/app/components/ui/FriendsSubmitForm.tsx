@@ -139,7 +139,7 @@ export default function FriendsSubmitForm() {
               name="icon"
               render={({ field }) => (
                 <FormItem>
-                  <Label >头像链接</Label>
+                  <Label>头像链接</Label>
                   <FormControl className="mt-2">
                     <Input placeholder="请输入完整头像链接" {...field} />
                   </FormControl>
