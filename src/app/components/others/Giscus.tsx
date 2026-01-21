@@ -9,6 +9,7 @@ export default function Giscus({
   theme: "light" | "dark";
   mapping: "pathname" | "url";
 }) {
+    
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
