@@ -6,7 +6,6 @@ import { useEffect, useMemo } from "react";
 import { PostListItem, PostsMap } from "@/app/types";
 import StrokeText from "@/app/components/ui/StrokeText";
 import Link from "next/link";
-import PostHeader from "../ui/PostHeader";
 
 type Props = {
   posts: PostsMap[];
@@ -29,7 +28,6 @@ export default function BlogContainer({ posts }: Props) {
 
   return (
     <section>
-      <PostHeader title="Blog" />
       <section className="tabs w-full flex items-center gap-x-4">
         {menu.map((item) => (
           <div

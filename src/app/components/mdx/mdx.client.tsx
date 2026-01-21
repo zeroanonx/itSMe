@@ -9,8 +9,10 @@ import RuleDropShadow from "@/app/components/others/RuleDropShadow";
 import GhostAnimation from "@/app/components/others/GhostAnimation";
 import CircleShadowLoading from "@/app/components/others/CircleShadowLoading";
 import BallBlurLoading from "@/app/components/others/BallBlurLoading";
+import Comments from "../layout/Comments";
 
 export const mdxClientComponents = {
+  Comments,
   CodeBlock,
   LinkComponent,
   Logo,
