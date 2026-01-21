@@ -21,6 +21,7 @@
     "@tailwindcss/line-clamp": "^0.4.4",
     "@tailwindcss/postcss": "^4.1.18",
     "@tailwindcss/typography": "^0.5.19",
+    "@vercel/analytics": "^1.6.1",
     "ahooks": "^3.9.6",
     "ai": "^6.0.12",
     "class-variance-authority": "^0.7.1",

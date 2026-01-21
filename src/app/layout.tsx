@@ -2,6 +2,7 @@ import { MATE_TITLE, MATE_TITLE_IMG } from "@/app/constants";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import cn from "classnames";
+import { Analytics } from "@vercel/analytics/next";
 
 import "@/app/assets/style/tailwind.css";
 import "@/app/assets/style/main.css";
@@ -95,6 +96,7 @@ export default function RootLayout({
           <Footer />
           <TargetCursor />
         </main>
+        <Analytics />
       </body>
     </html>
   );
