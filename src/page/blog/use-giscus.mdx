@@ -1,0 +1,150 @@
+---
+title: 使用 giscus 为静态博客添加轻量评论系统
+date: 2026-01-20 10:00:00
+type: note
+duration: 10min
+---
+
+近期我的博客基础功能已基本完成，但一直希望添加评论互动功能。最初考虑过基于 Next.js 编写完整的评论 API，但这会带来不小的开发负担：
+
+- 需要搭建数据库存储评论
+- 设计评论前后端交互逻辑
+- 处理用户身份验证与垃圾评论防范
+- 长期维护服务器成本
+
+由于我的网站是静态生成，本身不具备服务器和数据库，因此我开始寻找更轻量、免后端方案。最终发现了 [giscus](https://giscus.app/zh-CN)
+
+一个基于 GitHub Discussions 构建的开源评论系统，让访客能直接通过 GitHub 账户在网站上留言互动。
+
+### 🌟 为什么选择 giscus？
+
+- 开源。🌏
+- 无跟踪，无广告，永久免费。📡 🚫
+- 无需数据库。所有数据均储存在 GitHub Discussions 中。:octocat:
+- 支持[自定义主题](https://github.com/giscus/giscus/blob/main/ADVANCED-USAGE.md#data-theme)！🌗
+- 支持多种[语言](https://github.com/giscus/giscus/blob/main/CONTRIBUTING.md#adding-localizations)。🌐
+- [高可配置性](https://github.com/giscus/giscus/blob/main/ADVANCED-USAGE.md)🔧
+- 自动从 GitHub 拉取新评论与编辑🔃
+- 可自建服务！🤳
+
+> 注意：
+> `giscus` 仍处于活跃开发中，GitHub 也还在活跃地开发 `Discussions` 及其 API，因此一些 `giscus` 的特性可能随时间损坏或变更。
+
+### 它如何运作
+
+`giscus` 加载时，会使用 `GitHub Discussions` 搜索 API 根据选定的映射方式（如 `URL`、`pathname`、`<title>` 等）来查找与当前页面关联的 `discussion`。如果找不到匹配的 `discussion`，`giscus` bot 就会在第一次有人留下评论或回应时自动创建一个 `discussion`。
+
+访客如果想要评论，必须按照 `GitHub OAuth` 流程授权 `giscus app` 代表他发布，或者可以直接在 `GitHub Discussion` 里评论。你可以在 `GitHub` 上管理评论。
+
+如果你的博客也需要这种评论组件，我非常建议你去试试！
+
+### 📦 实现步骤
+
+1. 创建 Giscus 客户端组件
+
+```tsx
+"use client";
+
+import { useEffect, useRef } from "react";
+
+export default function Giscus({
+  theme,
+  mapping,
+}: {
+  theme: "light" | "dark";
+  mapping: "pathname" | "url";
+}) {
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!ref.current) return;
+
+    ref.current.innerHTML = "";
+
+    const script = document.createElement("script");
+    script.src = "https://giscus.app/client.js";
+    script.async = true;
+    script.crossOrigin = "anonymous";
+
+    script.setAttribute("data-repo", "zeroanonx/itSMe");
+    script.setAttribute("data-repo-id", "R_kgDOQg6mxQ");
+    script.setAttribute("data-category", "Announcements");
+    script.setAttribute("data-category-id", "DIC_kwDOQg6mxc4C1OGn");
+
+    script.setAttribute("data-mapping", mapping);
+    script.setAttribute("data-theme", theme);
+    script.setAttribute("data-lang", "zh-CN");
+    script.setAttribute("data-input-position", "top");
+    script.setAttribute("data-reactions-enabled", "1");
+
+    ref.current.appendChild(script);
+  }, [theme, mapping]);
+
+  return <div ref={ref} className="mt-16" />;
+}
+```
+
+2. 封装评论区域组件
+
+```tsx
+"use client";
+
+import { useGiscus } from "@/app/hooks";
+import Giscus from "../others/Giscus";
+
+export default function Comments() {
+  const { theme, mapping, key } = useGiscus();
+  // 首页不需要
+  if (key === "/") return null;
+
+  return (
+    <section key={key} aria-label="Comments">
+      <Giscus theme={theme} mapping={mapping} />
+    </section>
+  );
+}
+```
+
+3. 实现主题同步 Hook
+
+```tsx
+"use client";
+
+import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
+
+export function useGiscus() {
+  const pathname = usePathname();
+  const [theme, setTheme] = useState<"light" | "dark">("dark");
+
+  // 跟随 Tailwind / next-themes
+  useEffect(() => {
+    const isDark = document.documentElement.classList.contains("dark");
+    setTheme(isDark ? "dark" : "light");
+
+    const observer = new MutationObserver(() => {
+      const isDark = document.documentElement.classList.contains("dark");
+      setTheme(isDark ? "dark" : "light");
+    });
+
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
+  return {
+    theme,
+    mapping: "pathname" as const,
+    key: pathname,
+  };
+}
+```
+
+4. 在 MDX 布局中使用
+
+最后，只需在博客文章布局组件中引入 `<Comments />` 组件即可。
+
+这套方案将评论数据完全托管于 GitHub，既保持了静态站点的轻量特性，又实现了完整的评论交互。如果你的博客也基于静态生成，不妨尝试这个优雅的解决方案！
