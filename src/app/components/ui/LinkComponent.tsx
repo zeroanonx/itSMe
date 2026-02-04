@@ -59,7 +59,7 @@ export default function LinkComponent(props: Props) {
         >
           <img
             src={props.previewImg}
-            className="w-full h-full object-cover m-0"
+            className="w-full h-full object-cover m-0!"
           />
         </a>
       </HoverCardContent>
