@@ -35,19 +35,18 @@ export const CodeBlock = ({ html, language }: Props) => {
   const label = language ? (LANG_MAP[language] ?? language) : null;
 
   return (
-    <div className="relative group my-6">
+    <div className="relative group pt-5 mb-6">
       {label && (
         <div
           className="
-            absolute left-3 top-3 z-10
-            rounded-md px-2 py-0.5
-            text-[11px] font-mono uppercase tracking-wide
+            absolute left-0 -top-2 z-10
+            rounded-md px-1 py-0.5
+            text-[10px] font-mono uppercase tracking-wide
             bg-white text-neutral-700
             dark:bg-neutral-700/80 dark:text-neutral-200
             backdrop-blur
             sm:opacity-0 group-hover:opacity-100
             transition
-
           "
         >
           {label}
@@ -57,7 +56,7 @@ export const CodeBlock = ({ html, language }: Props) => {
       <button
         onClick={handleCopy}
         className={`
-          absolute right-3 top-3 z-10
+          absolute right-0 -top-2 z-10
           flex items-center gap-1.5
           rounded-md px-2 py-1 text-xs
           transition
