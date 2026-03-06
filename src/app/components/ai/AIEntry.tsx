@@ -12,7 +12,7 @@ export default function AIEntry() {
   return (
     <>
       <motion.div
-        className="fixed bottom-10 right-10 w-60 h-60 flex items-center justify-center z-50 cursor-pointer"
+        className="fixed bottom-10 right-10 w-60 h-60  items-center justify-center z-50 cursor-pointer sm:flex hidden"
         animate={{
           y: [0, -10, 0, -6, 0], // 上下轻微漂浮
           rotate: [0, 5, -5, 0], // 微旋转

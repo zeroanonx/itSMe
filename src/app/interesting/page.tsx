@@ -46,7 +46,7 @@ export default function BlogPage() {
   return (
     <Container size="default">
       <main className="prose mx-auto">
-        <header className="mb-20 text-center">
+        <header className="sm:mb-20 mb-8 text-center">
           <PostHeader
             title="Inspiration"
             desc="下面是陆陆续续收藏的或者开发的有趣的东西，不一定有用，但挺有趣的。"

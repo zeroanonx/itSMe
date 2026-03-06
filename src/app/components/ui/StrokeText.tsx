@@ -15,9 +15,9 @@ interface Props {
 
 export default function StrokeText({
   text,
-  size = "text-9xl",
+  size = "sm:text-9xl text-6xl",
   left = "-left-2",
-  top = "-top-16",
+  top = "sm:-top-16 -top-14",
 }: Props) {
   return (
     <StrokeTextComponents

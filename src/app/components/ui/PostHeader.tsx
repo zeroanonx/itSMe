@@ -13,7 +13,7 @@ export default function PostHeader({
   color = "--accent-primary",
 }: PostHeaderProps) {
   return (
-    <header className="mb-20 text-center">
+    <header className="sm:mb-20 mb-8 text-center">
       <h1
         className={cn("text-2xl! font-semibold tracking-tight", `font-${font}`)}
       >

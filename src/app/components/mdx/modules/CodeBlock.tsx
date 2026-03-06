@@ -1,11 +1,13 @@
 "use client";
 
+import { cn } from "@/app/utils";
 import { Icon } from "@iconify-icon/react";
 import { useRef, useState } from "react";
 
 type Props = {
   html: string;
   language?: string;
+  isCodeGroup?: boolean;
 };
 
 const LANG_MAP: Record<string, string> = {
@@ -19,7 +21,7 @@ const LANG_MAP: Record<string, string> = {
   json: "json",
 };
 
-export const CodeBlock = ({ html, language }: Props) => {
+export const CodeBlock = ({ html, language ,isCodeGroup}: Props) => {
   const preRef = useRef<HTMLDivElement>(null);
   const [copied, setCopied] = useState(false);
 
@@ -35,8 +37,11 @@ export const CodeBlock = ({ html, language }: Props) => {
   const label = language ? (LANG_MAP[language] ?? language) : null;
 
   return (
-    <div className="relative group pt-5 mb-6">
-      {label && (
+    <div className={cn(
+      'relative group  mb-6',
+      isCodeGroup ? '' : 'pt-5'
+    )}>
+      {label && !isCodeGroup && (
         <div
           className="
             absolute left-0 -top-2 z-10
@@ -56,7 +61,7 @@ export const CodeBlock = ({ html, language }: Props) => {
       <button
         onClick={handleCopy}
         className={`
-          absolute right-0 -top-2 z-10
+          absolute right-0  z-10
           flex items-center gap-1.5
           rounded-md px-2 py-1 text-xs
           transition
@@ -64,6 +69,9 @@ export const CodeBlock = ({ html, language }: Props) => {
             copied
               ? "bg-emerald-600 text-white"
               : "bg-neutral-800/80 text-white"
+          }
+          ${
+              isCodeGroup ? '-top-10' : '-top-2'
           }
           sm:opacity-0 sm:group-hover:opacity-100
         `}

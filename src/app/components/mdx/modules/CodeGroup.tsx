@@ -58,7 +58,7 @@ export function CodeGroup({ children }: { children: React.ReactNode }) {
 
         {items.current.map((item, i) => (
           <TabsContent key={i} value={String(i)} className="mt-0">
-            <CodeBlock html={item.html} language={item.language} />
+            <CodeBlock isCodeGroup={true} html={item.html} language={item.language} />
           </TabsContent>
         ))}
 
