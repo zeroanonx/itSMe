@@ -21,7 +21,7 @@ const LANG_MAP: Record<string, string> = {
   json: "json",
 };
 
-export const CodeBlock = ({ html, language ,isCodeGroup}: Props) => {
+export const CodeBlock = ({ html, language, isCodeGroup }: Props) => {
   const preRef = useRef<HTMLDivElement>(null);
   const [copied, setCopied] = useState(false);
 
@@ -37,10 +37,7 @@ export const CodeBlock = ({ html, language ,isCodeGroup}: Props) => {
   const label = language ? (LANG_MAP[language] ?? language) : null;
 
   return (
-    <div className={cn(
-      'relative group  mb-6',
-      isCodeGroup ? '' : 'pt-5'
-    )}>
+    <div className={cn("relative group  mb-6", isCodeGroup ? "" : "pt-5")}>
       {label && !isCodeGroup && (
         <div
           className="
@@ -70,9 +67,7 @@ export const CodeBlock = ({ html, language ,isCodeGroup}: Props) => {
               ? "bg-emerald-600 text-white"
               : "bg-neutral-800/80 text-white"
           }
-          ${
-              isCodeGroup ? '-top-10' : '-top-2'
-          }
+          ${isCodeGroup ? "-top-10" : "-top-2"}
           sm:opacity-0 sm:group-hover:opacity-100
         `}
       >

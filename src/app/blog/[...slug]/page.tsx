@@ -41,7 +41,7 @@ export default async function Post(props: Params) {
   return (
     <Container size="default">
       <section className="prose mx-auto">
-        <h1>{post.title}</h1>
+        <h1 className="sm:text-3xl! text-2xl!">{post.title}</h1>
         <p>
           <span>{post.date}</span>
           <span> • </span>

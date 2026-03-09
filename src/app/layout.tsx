@@ -91,7 +91,9 @@ export default function RootLayout({
         <Background />
         <main>
           <Header />
-          <div className="min-h-screen w-screen overflow-x-hidden">{children}</div>
+          <div className="min-h-screen w-screen overflow-x-hidden">
+            {children}
+          </div>
           <AIEntry />
           <Footer />
           <TargetCursor />
