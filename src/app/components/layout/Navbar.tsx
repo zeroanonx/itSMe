@@ -66,7 +66,7 @@ export default function Navbar() {
         title="RSS"
         target="_blank"
         rel="noopener noreferrer"
-        className="cursor-target flex items-center justify-center"
+        className="flex items-center justify-center no-cursor"
       >
         <Icon icon="ri:rss-line" />
       </Link>
