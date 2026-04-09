@@ -196,6 +196,13 @@ export const CORE_FRONTEND_SKILLS: SkillItem[] = [
     category: SKILL_CATEGORY.coreFrontend,
   },
   {
+    label: "Next.js",
+    href: "https://nextjs.org/",
+    icon: "logos:nextjs-icon",
+    image: "/assets/images/home/next.png",
+    category: SKILL_CATEGORY.coreFrontend,
+  },
+  {
     label: "uniApp",
     href: "https://uniapp.dcloud.net.cn/",
     icon: "logos:vue",
