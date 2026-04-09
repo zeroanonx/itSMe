@@ -36,7 +36,6 @@ const SvgLogo = styled.div`
   }
 
   .logo-text {
-    font-size: 60px;
     font-weight: 400;
     letter-spacing: 0;
     stroke: var(--stroke-theme);
@@ -64,16 +63,33 @@ export default function Logo({ isPosition = true }: { isPosition?: boolean }) {
       ])}
     >
       <svg
-        viewBox="0 0 340 110"
-        height="50"
-        className="svg-logo"
+        viewBox="0 20 340 130"
+        className="svg-logo !block h-[36px] sm:!hidden"
         role="img"
         aria-label="zeroanonx animated logo"
       >
         <text
           x="6"
           y="76"
-          className={cn("logo-text logo-path", playwrite.className)}
+          className={cn("logo-text logo-path text-5xl", playwrite.className)}
+        >
+          zeroanonx
+        </text>
+      </svg>
+
+      <svg
+        viewBox="0 10 340 130"
+        className="svg-logo !hidden h-[42px] sm:!block md:h-[50px]"
+        role="img"
+        aria-label="zeroanonx animated logo"
+      >
+        <text
+          x="6"
+          y="76"
+          className={cn(
+            "logo-text logo-path sm:text-6xl text-4xl",
+            playwrite.className
+          )}
         >
           zeroanonx
         </text>
