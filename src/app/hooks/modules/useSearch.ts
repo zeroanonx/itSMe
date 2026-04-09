@@ -55,10 +55,18 @@ export function useSearch() {
 
     // 创建新的加载 Promise
     loadingPromise = fetch("/search-index.json")
-      .then((r) => r.json())
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`Failed to load search index: ${response.status}`);
+        }
+
+        return response.json();
+      })
       .then((docs: SearchDoc[]) => {
         // 遍历文档并添加到索引和文档映射中
         docs.forEach((doc) => {
+          if (docMap.has(doc.id)) return;
+
           index.add(doc);
           docMap.set(doc.id, doc);
         });
@@ -77,7 +85,5 @@ export function useSearch() {
 
   // 不在组件挂载时自动加载，而是提供加载函数
   // 这样可以在用户打开搜索对话框时才加载
-  return { ready, loadSearchIndex, search };
-
   return { ready, loadSearchIndex, search };
 }

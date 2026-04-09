@@ -61,6 +61,11 @@ const CursorStyles = styled.div`
   }
 `;
 
+interface CornerQuickToSet {
+  x: (value: number) => gsap.core.Tween;
+  y: (value: number) => gsap.core.Tween;
+}
+
 export const TargetCursor = memo(
   ({
     targetSelector = ".cursor-target",
@@ -81,8 +86,7 @@ export const TargetCursor = memo(
     const mousePosition = useRef({ x: 0, y: 0 });
     const lastMousePosition = useRef({ x: 0, y: 0 }); // 上次鼠标位置
     const animationFrameId = useRef<number | null>(null);
-    const rafActive = useRef(true);
-    const needsUpdate = useRef(false); // 是否需要更新
+    const updateScheduledRef = useRef(false);
 
     // 用于记录上次检测到的目标元素
     const lastTargetRef = useRef<Element | null>(null);
@@ -96,6 +100,19 @@ export const TargetCursor = memo(
       wasOverTarget: false,
       lastTarget: null,
     });
+    const bigBallXRef = useRef<((value: number) => gsap.core.Tween) | null>(
+      null
+    );
+    const bigBallYRef = useRef<((value: number) => gsap.core.Tween) | null>(
+      null
+    );
+    const smallBallXRef = useRef<((value: number) => gsap.core.Tween) | null>(
+      null
+    );
+    const smallBallYRef = useRef<((value: number) => gsap.core.Tween) | null>(
+      null
+    );
+    const cornerSettersRef = useRef<CornerQuickToSet[]>([]);
 
     // 检查鼠标位置下的元素是否匹配选择器
     const checkElementUnderMouse = useCallback(
@@ -138,7 +155,8 @@ export const TargetCursor = memo(
     // 更新角点位置
     const updateCorners = useCallback(
       (target: Element, x: number, y: number) => {
-        if (!cornersRef.current) return;
+        if (!cornersRef.current || cornerSettersRef.current.length === 0)
+          return;
 
         const rect = target.getBoundingClientRect();
         const { borderWidth, cornerSize, parallaxStrength } = {
@@ -181,16 +199,11 @@ export const TargetCursor = memo(
         blOffset.y += mouseOffsetY;
 
         // 更新角点位置
-        const corners = Array.from(cornersRef.current);
         const offsets = [tlOffset, trOffset, brOffset, blOffset];
 
-        corners.forEach((corner, index) => {
-          gsap.to(corner, {
-            x: offsets[index].x,
-            y: offsets[index].y,
-            duration: cornerAnimationDuration,
-            ease: "power2.out",
-          });
+        cornerSettersRef.current.forEach((corner, index) => {
+          corner.x(offsets[index].x);
+          corner.y(offsets[index].y);
         });
       },
       [cornerAnimationDuration]
@@ -198,23 +211,27 @@ export const TargetCursor = memo(
 
     // 更新普通光标位置
     const updateNormalCursor = useCallback((x: number, y: number) => {
-      if (!bigBallRef.current || !smallBallRef.current) return;
+      if (
+        !bigBallXRef.current ||
+        !bigBallYRef.current ||
+        !smallBallXRef.current ||
+        !smallBallYRef.current
+      ) {
+        return;
+      }
 
-      gsap.to(bigBallRef.current, {
-        duration: 0.6,
-        x: x - 30,
-        y: y - 30,
-        opacity: 1,
-        ease: "power2.out",
-      });
+      bigBallXRef.current(x - 30);
+      bigBallYRef.current(y - 30);
+      smallBallXRef.current(x - 7);
+      smallBallYRef.current(y - 7);
 
-      gsap.to(smallBallRef.current, {
-        duration: 0.1,
-        x: x - 7,
-        y: y - 7,
-        opacity: 1,
-        ease: "power2.out",
-      });
+      if (bigBallRef.current) {
+        gsap.set(bigBallRef.current, { opacity: 1 });
+      }
+
+      if (smallBallRef.current) {
+        gsap.set(smallBallRef.current, { opacity: 1 });
+      }
     }, []);
 
     // 切换到目标光标
@@ -297,45 +314,42 @@ export const TargetCursor = memo(
       [updateNormalCursor]
     );
 
-    // 存储 checkAndUpdateCursor 的引用，避免循环依赖
-    const checkAndUpdateCursorRef = useRef<(() => void) | null>(null);
+    const processPointerRef = useRef<(() => void) | null>(null);
 
-    // 处理鼠标移动 - 只更新位置，标记需要更新
-    const handleMouseMove = useCallback((e: MouseEvent) => {
-      const newX = e.clientX;
-      const newY = e.clientY;
+    const schedulePointerUpdate = useCallback(() => {
+      const processPointer = processPointerRef.current;
 
-      // 只有位置变化超过1px才标记需要更新（减少不必要的计算）
-      if (
-        Math.abs(newX - lastMousePosition.current.x) > 1 ||
-        Math.abs(newY - lastMousePosition.current.y) > 1
-      ) {
-        mousePosition.current = { x: newX, y: newY };
-        lastMousePosition.current = { x: newX, y: newY };
-        needsUpdate.current = true;
+      if (updateScheduledRef.current || !processPointer) return;
 
-        // 如果动画循环未运行，启动它
-        const updateFn = checkAndUpdateCursorRef.current;
-        if (!animationFrameId.current && rafActive.current && updateFn) {
-          animationFrameId.current = requestAnimationFrame(updateFn);
-        }
-      }
+      updateScheduledRef.current = true;
+      animationFrameId.current = requestAnimationFrame(() => {
+        updateScheduledRef.current = false;
+        animationFrameId.current = null;
+        processPointer();
+      });
     }, []);
 
-    // 主循环：检查并更新光标状态
-    const checkAndUpdateCursor = useCallback(() => {
-      if (!rafActive.current) {
-        animationFrameId.current = null;
-        return;
-      }
+    // 处理鼠标移动 - 合并为每帧最多一次状态计算
+    const handleMouseMove = useCallback(
+      (e: MouseEvent) => {
+        const newX = e.clientX;
+        const newY = e.clientY;
 
-      // 性能优化：如果不需要更新且没有抑制状态，暂停循环
-      if (!needsUpdate.current && !suppressCursorRef.current) {
-        animationFrameId.current = null;
-        return;
-      }
+        // 只有位置变化超过1px才标记需要更新（减少不必要的计算）
+        if (
+          Math.abs(newX - lastMousePosition.current.x) > 1 ||
+          Math.abs(newY - lastMousePosition.current.y) > 1
+        ) {
+          mousePosition.current = { x: newX, y: newY };
+          lastMousePosition.current = { x: newX, y: newY };
+          schedulePointerUpdate();
+        }
+      },
+      [schedulePointerUpdate]
+    );
 
-      needsUpdate.current = false;
+    // 主更新：只在鼠标位置变化时执行一次
+    const processPointerPosition = useCallback(() => {
       const { x, y } = mousePosition.current;
 
       // 处理 .no-cursor 的进入/退出逻辑：进入时抑制并隐藏光标，离开时恢复上次动画状态
@@ -358,10 +372,6 @@ export const TargetCursor = memo(
             if (onCursorStateChange) onCursorStateChange(false);
             switchToNormalCursor(x, y);
           }
-        } else {
-          // 仍在 .no-cursor 上，保持隐藏，继续检查
-          animationFrameId.current =
-            requestAnimationFrame(checkAndUpdateCursor);
           return;
         }
       } else if (isOnNoCursor) {
@@ -407,7 +417,6 @@ export const TargetCursor = memo(
           });
         }
 
-        animationFrameId.current = requestAnimationFrame(checkAndUpdateCursor);
         return;
       }
 
@@ -458,15 +467,9 @@ export const TargetCursor = memo(
       else if (!isNowOverTarget) {
         updateNormalCursor(x, y);
       }
-
-      // 继续下一帧（只在需要时）
-      if (rafActive.current) {
-        animationFrameId.current = requestAnimationFrame(checkAndUpdateCursor);
-      } else {
-        animationFrameId.current = null;
-      }
     }, [
       checkElementUnderMouse,
+      checkNoCursorUnderMouse,
       onCursorStateChange,
       switchToTargetCursor,
       switchToNormalCursor,
@@ -474,8 +477,7 @@ export const TargetCursor = memo(
       updateNormalCursor,
     ]);
 
-    // 更新 ref
-    checkAndUpdateCursorRef.current = checkAndUpdateCursor;
+    processPointerRef.current = processPointerPosition;
 
     useEffect(() => {
       // 初始化
@@ -492,6 +494,43 @@ export const TargetCursor = memo(
         });
       }
 
+      if (bigBallRef.current) {
+        bigBallXRef.current = gsap.quickTo(bigBallRef.current, "x", {
+          duration: 0.6,
+          ease: "power2.out",
+        });
+        bigBallYRef.current = gsap.quickTo(bigBallRef.current, "y", {
+          duration: 0.6,
+          ease: "power2.out",
+        });
+      }
+
+      if (smallBallRef.current) {
+        smallBallXRef.current = gsap.quickTo(smallBallRef.current, "x", {
+          duration: 0.1,
+          ease: "power2.out",
+        });
+        smallBallYRef.current = gsap.quickTo(smallBallRef.current, "y", {
+          duration: 0.1,
+          ease: "power2.out",
+        });
+      }
+
+      if (cornersRef.current) {
+        cornerSettersRef.current = Array.from(cornersRef.current).map(
+          (corner) => ({
+            x: gsap.quickTo(corner, "x", {
+              duration: cornerAnimationDuration,
+              ease: "power2.out",
+            }),
+            y: gsap.quickTo(corner, "y", {
+              duration: cornerAnimationDuration,
+              ease: "power2.out",
+            }),
+          })
+        );
+      }
+
       // 设置初始鼠标位置
       mousePosition.current = {
         x: window.innerWidth / 2,
@@ -501,19 +540,20 @@ export const TargetCursor = memo(
       // 添加鼠标移动监听
       window.addEventListener("mousemove", handleMouseMove);
 
-      // 启动检查循环（延迟启动，等待首次鼠标移动）
-      rafActive.current = true;
-      // 不立即启动，等待鼠标移动时再启动
-
       return () => {
         // 清理
         window.removeEventListener("mousemove", handleMouseMove);
 
-        rafActive.current = false;
         if (animationFrameId.current) {
           cancelAnimationFrame(animationFrameId.current);
           animationFrameId.current = null;
         }
+        updateScheduledRef.current = false;
+        cornerSettersRef.current = [];
+        bigBallXRef.current = null;
+        bigBallYRef.current = null;
+        smallBallXRef.current = null;
+        smallBallYRef.current = null;
 
         // 清理所有动画
         if (cursorContainerRef.current) {
@@ -532,7 +572,7 @@ export const TargetCursor = memo(
           gsap.killTweensOf(Array.from(cornersRef.current));
         }
       };
-    }, [handleMouseMove, checkAndUpdateCursor]);
+    }, [cornerAnimationDuration, handleMouseMove]);
 
     return (
       <CursorStyles>

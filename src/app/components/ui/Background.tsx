@@ -13,16 +13,28 @@ export default function Background(): ReactNode {
 
   const [type, setType] = useState<BackgroundType>("off");
   const [mounted, setMounted] = useState(false);
+  const [reduceMotion, setReduceMotion] = useState(false);
 
   useEffect(() => {
     setMounted(true);
 
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const handleMotionChange = (event: MediaQueryListEvent) => {
+      setReduceMotion(event.matches);
+    };
+
+    setReduceMotion(mediaQuery.matches);
+    mediaQuery.addEventListener("change", handleMotionChange);
+
+    return () => mediaQuery.removeEventListener("change", handleMotionChange);
+  }, []);
+
+  useEffect(() => {
     if (!pathname) return;
 
     const bg = getBackgroundByPathname(pathname);
-
-    setType(bg);
-  }, [pathname]);
+    setType(reduceMotion && bg === "tree" ? "off" : bg);
+  }, [pathname, reduceMotion]);
 
   if (!mounted || type === "off") return null;
 
@@ -34,7 +46,7 @@ export default function Background(): ReactNode {
         <PatternBackground
           variant="Dot"
           size="lg"
-          animate
+          animate={!reduceMotion}
           direction="TopRight"
           speed={90000}
           className="fixed inset-0 -z-10 text-neutral-300 dark:text-neutral-700"

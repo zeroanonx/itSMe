@@ -14,7 +14,6 @@ import Footer from "@/app/components/layout/Footer";
 import { TargetCursor } from "./components/ui/TargetCursor";
 import SlideEnterController from "@/app/components/layout/SlideEnterController";
 import Background from "./components/ui/Background";
-import AIEntry from "./components/ai/AIEntry";
 
 // 使用 Next.js 内置的 Inter 字体
 const inter = Inter({
@@ -94,7 +93,6 @@ export default function RootLayout({
           <div className="min-h-screen w-screen overflow-x-hidden">
             {children}
           </div>
-          <AIEntry />
           <Footer />
           <TargetCursor />
         </main>

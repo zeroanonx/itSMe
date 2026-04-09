@@ -10,11 +10,12 @@ export default function Giscus({
   mapping: "pathname" | "url";
 }) {
   const ref = useRef<HTMLDivElement>(null);
+  const loadedRef = useRef(false);
 
   useEffect(() => {
     if (!ref.current) return;
 
-    ref.current.innerHTML = "";
+    if (loadedRef.current) return;
 
     const script = document.createElement("script");
     script.src = "https://giscus.app/client.js";
@@ -33,7 +34,27 @@ export default function Giscus({
     script.setAttribute("data-reactions-enabled", "1");
 
     ref.current.appendChild(script);
-  }, [theme, mapping]);
+    loadedRef.current = true;
+  }, [mapping, theme]);
+
+  useEffect(() => {
+    const iframe = ref.current?.querySelector<HTMLIFrameElement>(
+      "iframe.giscus-frame"
+    );
+
+    if (!iframe?.contentWindow) return;
+
+    iframe.contentWindow.postMessage(
+      {
+        giscus: {
+          setConfig: {
+            theme,
+          },
+        },
+      },
+      "https://giscus.app"
+    );
+  }, [theme]);
 
   return <div ref={ref} className="mt-16" />;
 }

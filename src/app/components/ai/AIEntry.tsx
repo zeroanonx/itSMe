@@ -3,7 +3,6 @@
 import { useState } from "react";
 import ChatModal from "./ChatModal";
 import { motion, AnimatePresence } from "motion/react";
-
 import Spline from "@splinetool/react-spline";
 
 export default function AIEntry() {

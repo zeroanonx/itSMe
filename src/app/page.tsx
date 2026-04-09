@@ -1,6 +1,7 @@
 import { getPostBySlug } from "@/app/utils/modules/generateRoutes";
 import PostBody from "@/app/components/layout/PostBody";
 import Container from "@/app/components/layout/Container";
+import AIEntry from "@/app/components/ai/AIEntry";
 
 export default function Index() {
   const homePost = getPostBySlug("index");
@@ -10,6 +11,7 @@ export default function Index() {
       <main className="py-12 prose mx-auto slide-enter">
         <PostBody post={homePost} />
       </main>
+      <AIEntry />
     </Container>
   );
 }
