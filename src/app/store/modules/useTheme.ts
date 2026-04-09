@@ -9,7 +9,9 @@ export const useTheme = create<{
 }>(() => ({
   theme:
     typeof document !== "undefined"
-      ? (document.documentElement.dataset.theme as Theme) || "light"
-      : "light",
+      ? document.documentElement.classList.contains("dark")
+        ? "dark"
+        : "light"
+      : "dark",
   setTheme: () => {},
 }));

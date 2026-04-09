@@ -4,15 +4,15 @@ import { Icon } from "@iconify-icon/react";
 import { useEffect, useState } from "react";
 
 export default function ToggleTheme() {
-  const [theme, setTheme] = useState<"light" | "dark">("light");
+  const [theme, setTheme] = useState<"light" | "dark">("dark");
 
   /** 只在浏览器读取 */
   useEffect(() => {
     const stored = localStorage.getItem("theme");
-    if (stored === "dark") {
-      setTheme("dark");
-      document.documentElement.classList.add("dark");
-    }
+    const nextTheme = stored === "light" ? "light" : "dark";
+
+    setTheme(nextTheme);
+    document.documentElement.classList.toggle("dark", nextTheme === "dark");
   }, []);
 
   const toggleTheme = (event: React.MouseEvent) => {

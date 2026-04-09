@@ -45,7 +45,7 @@ export default function RootLayout({
               (function () {
                 try {
                   const theme = localStorage.getItem("theme");
-                  if (theme === "dark") {
+                  if (theme !== "light") {
                     document.documentElement.classList.add("dark");
                   }
                 } catch (_) {}
@@ -81,10 +81,7 @@ export default function RootLayout({
       </head>
 
       <body
-        className={cn(
-          inter.className,
-          "bg-white text-black dark:bg-(--c-bg) dark:text-(--theme) relative"
-        )}
+        className={cn(inter.className, "bg-(--c-bg) text-(--theme) relative")}
       >
         <SlideEnterController />
         <Background />
