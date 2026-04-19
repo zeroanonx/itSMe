@@ -14,10 +14,7 @@ export default function Footer() {
             className="black"
           >
             <TextLoop className="text-xs text-zinc-500">
-              <span>
-                © 2025{" "}
-                <span className="text-(--accent-primary)">ZeroAnon.</span>
-              </span>
+              <span>© 2025 HangZhou</span>
               <span>
                 Made with ❤️ by
                 <span className="text-(--accent-primary)"> zeroanon</span>
